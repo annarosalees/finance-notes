@@ -1,5 +1,7 @@
 # CFD（差金決済取引）ノート
 
+🇬🇧 [English version](./cfd.en.md)
+
 CFD（Contract for Difference＝差金決済取引）について、
 仕組みと実務の観点から整理する。対象例：指数（日本225）、
 商品（WTI原油）、米国株、ETF など。
