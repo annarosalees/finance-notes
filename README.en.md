@@ -14,7 +14,8 @@ leaning too heavily on jargon.
 ## Notes included
 - `notes/cfd.md` (JP) / `notes/cfd.en.md` (EN) — CFDs (cash-settled
   contracts for difference): indices, commodities, US stocks, ETFs, etc.
-- `notes/fx.md` — FX (margin foreign exchange trading) *planned*
+- [`notes/fx.md`](./notes/fx.md) (JP) / [`notes/fx.en.md`](./notes/fx.en.md) (EN) — FX
+  (margin foreign exchange trading)
 - `notes/binary.md` — Binary options *planned*
 
 ## Structure of each note
