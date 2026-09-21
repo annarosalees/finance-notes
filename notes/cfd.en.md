@@ -153,11 +153,24 @@ A few other misconceptions beginners often run into:
 - Assuming a CFD's price exactly matches the futures or ETF price it
   references: a CFD's price includes things like the spread (the gap
   between the bid and ask), so it can differ slightly from the
-  reference price.
+  reference price (see Note ③ below).
 - Assuming that trading a stock or ETF via CFD means you "bought the
   stock": since a CFD never involves owning the physical asset, none
   of the rights that come with being a shareholder (voting rights,
   shareholder perks, etc.) apply.
+
+Note ③: What is the spread (offer / bid)?
+
+A CFD's price is always quoted as two values side by side.
+
+- Offer rate (Ask): the price quoted by whoever wants to sell. If
+  you're buying, this is the price you buy at.
+- Bid rate (Bid): the price quoted by whoever wants to buy. If you're
+  selling, this is the price you sell at.
+
+The offer (the seller's asking price) is normally higher than the
+bid (the buyer's asking price). The gap between the two is the
+"spread," and it's the CFD's real trading cost.
 
 ### Why does a CFD exist as a product? (How it differs from the physical asset)
 Trading the physical asset means owning the asset itself — stocks,
