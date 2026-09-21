@@ -289,6 +289,170 @@ than they would with the physical asset. "No delivery, so it's
 convenient" and "lower risk" are two different things, and using a
 CFD means understanding its specific costs and risks too.
 
+### Long and Short
+
+#### What are long and short, in a nutshell?
+Long (buy) and short (sell) describe the "direction" of a trade.
+
+- Holding a long: holding a buy position. You profit if the price
+  rises above the price you entered at.
+- Holding a short: holding a sell position. You profit if the price
+  falls below the price you entered at.
+
+Closing a position (settlement) is done with a trade in the opposite
+direction:
+
+- A long is closed by selling (going short)
+- A short is closed by buying (going long)
+
+So a long is "enter by buying, finish by selling," and a short is
+"enter by selling, finish by buying" — mirror images of each other.
+
+#### Why can a CFD be opened with a sell? (How it differs from the physical asset)
+In physical trading, you can't sell something you don't hold. A CFD,
+on the other hand, uses "difference settlement," so it's a trade
+where only the price difference from entry to exit changes hands.
+
+"Opening with a sell" means you hold the right to receive the
+difference between your sell price and the price you later buy back
+at, along with the obligation to buy it back. At settlement, you
+exercise that right and obligation, which locks in the difference as
+your realized P&L.
+
+This is what makes it possible to short-sell without holding the
+physical asset. Unlike margin trading in stocks, there's no need to
+borrow shares from a broker and pay interest on them.
+
+Here's an analogy: imagine borrowing a game console from a friend
+and selling it for ¥1,000, then later buying it back and returning
+it to your friend. If the buy-back price has fallen to ¥800 by then,
+the ¥200 difference between your ¥1,000 sale and ¥800 buy-back is
+your profit. That's the basic mechanics of short-selling. With a
+CFD, the broker handles this entire "borrow, sell, buy back, return"
+process behind the scenes, so the client only ever has to think
+about the exchange of rights and obligations — i.e., holding a short
+position.
+
+#### Stock lending and short-selling restrictions
+A CFD itself is cash-settled, so looking only at the trade with the
+client, there's no need to borrow any physical shares. But the
+broker sometimes hedges (covers) the risk from a client's short
+position in the actual stock market (more on this under "The idea
+behind cover deals"). When that hedge requires the broker — or
+whoever the broker covers with — to sell the physical stock, they
+need to borrow it from somewhere first, just as in margin trading.
+This is called "stock lending."
+
+How stock lending works:
+
+- An investor holding shares lends them to a broker. In return, the
+  lender earns interest (often higher than a bank deposit rate).
+  While the shares are on loan, the lender can still sell them on
+  the market as normal at any time.
+- The broker re-lends the shares it collects this way to
+  institutional investors or margin traders who want to short-sell,
+  earning a fee in the process.
+
+In other words, opening a short in the physical stock market always
+requires one extra step: borrowing shares from someone.
+
+When shares can't be borrowed, the broker can no longer hedge in the
+physical market. Continuing to accept short positions without being
+able to hedge would leave the broker itself carrying directional
+risk (a loss if the market moves the wrong way). So for any stock
+where shares aren't available to borrow, the broker has no choice
+but to restrict new short trades on that product.
+
+This isn't purely up to the broker either — it's tied to exchange-
+level rules (short-selling restrictions such as Japan's "Rule 201")
+and to any stock-lending restrictions imposed on the broker's own
+cover counterparty. When a broker offering CFDs over the counter
+sees its cover counterparty hit a stock-lending restriction, it
+restricts new client short-selling accordingly.
+
+#### A concrete example: what happens to P&L, long vs. short, when the price rises or falls?
+Say you trade one unit of the Japan 225 CFD at 24,000.
+
+| Position | Entry price | Exit price | P&L calculation | Result |
+|---|---|---|---|---|
+| Long | 24,000 | 24,500 (up) | 24,500 − 24,000 | +500 profit |
+| Long | 24,000 | 23,500 (down) | 23,500 − 24,000 | −500 loss |
+| Short | 24,000 | 23,500 (down) | 24,000 − 23,500 | +500 profit |
+| Short | 24,000 | 24,500 (up) | 24,000 − 24,500 | −500 loss |
+
+So a long's P&L is "exit price − entry price," and a short's P&L is
+"entry price − exit price." When the price rises, longs gain and
+shorts lose; when it falls, the reverse happens — they're always
+mirror images.
+
+#### Where does operations (me) track and manage position direction?
+Because a CFD is a bilateral (OTC) contract between the broker and
+the client, the starting point is understanding the flip:
+"client long → we're short," "client short → we're long." Operations
+tracks and manages position direction with that relationship in
+mind, in a few specific areas:
+
+- Monitoring net position: each product has a defined risk tolerance
+  for its net position. Operations watches the market, client limit
+  orders, and technical signals to make fast hedging (cover)
+  decisions that keep the net position within that tolerance. If it
+  looks like it might be exceeded, more cover is added.
+- Reconciling positions with cover counterparties: we check that our
+  hedge positions match what our PB (prime broker) or LPs (liquidity
+  providers) show on their side — looking for any "stray"
+  transactions that exist on our side but not theirs, or vice versa.
+  When a discrepancy turns up, we contact the LP to confirm rate
+  discrepancies or whether a trade actually executed. This
+  reconciliation happens at least once during each of the Tokyo,
+  London, and New York sessions — in practice, about twice per
+  session. Since positions are monitored continuously, a slipped
+  execution usually triggers an alert, and each one leads to
+  back-and-forth with the LP.
+- Monitoring stop-outs and margin levels: shorts generally tend to
+  run lower margin levels than longs, for two main reasons. First,
+  the dividend-equivalent adjustment paid whenever a dividend is
+  declared goes to longs and comes out of shorts, so a short
+  position's equity erodes gradually over time purely from the
+  passage of time. Second, equity indices and individual stocks tend
+  to rise over the long run, so for the same volatility, shorts are
+  statistically more likely to sit in an unrealized loss for
+  extended periods. On top of that, when the market moves sharply in
+  one direction during high volatility, it can burn through the
+  margin of clients holding the opposite-direction position very
+  quickly. A wave of client stop-outs can also increase the
+  position the firm itself is carrying, with a risk that cover
+  orders get rejected — so this needs constant monitoring.
+- Short-specific regulatory response: when a stock-lending
+  restriction or a short-selling restriction (such as Rule 201)
+  comes into effect, new client short trades on that product are
+  halted and a notice is posted on the client trading page. When the
+  restriction is lifted, the lift date is posted on the client page
+  as well.
+- Reporting: trading volume, client stop-out activity, and related
+  data are subject to reporting obligations, handled on a monthly
+  basis.
+
+#### Where my three-years-ago self would get stuck
+- Assuming short = doing something bad: the word "short-selling" can
+  sound like it's working against the market, but in a CFD, short is
+  just one of two equally valid trade directions — no different in
+  kind from long.
+- Assuming that if the client profits, the firm profits too: because
+  a CFD is a bilateral contract, when a client is long and profiting,
+  the broker is theoretically sitting on the mirror-image short with
+  an unrealized loss (in practice, hedging offsets this through the
+  cover relationship, but looking only at the client relationship,
+  it's the exact opposite).
+- Picturing a CFD short the same way as "borrowing a stock": from
+  the client's side, a CFD is cash-settled, so no shares are actually
+  borrowed. Stock lending only comes into play when the broker hedges
+  in the physical market — that's a separate layer from the client's
+  own contract.
+- Assuming shorts run lower margin "just because the market is
+  going up": there's also a structural factor at play — the dividend
+  adjustment paid out by shorts — so margin can erode over time even
+  when the price isn't moving at all.
+
 ### What is a rollover?
 A rollover involves two things happening together:
 1. Rollover (contract rollover): When a futures contract reaches its
