@@ -289,6 +289,93 @@ than they would with the physical asset. "No delivery, so it's
 convenient" and "lower risk" are two different things, and using a
 CFD means understanding its specific costs and risks too.
 
+### Leverage and Margin
+
+#### What is leverage, in a nutshell?
+Leverage is a mechanism that lets you trade an amount many times
+larger than the margin (the money you deposit as collateral) you put
+up. In Japan, you can trade up to 25 times your margin.
+
+For example, if you deposit ¥100,000 as margin, 25x leverage lets
+you trade a position worth ¥2,500,000. In other words, even though
+the capital you actually put up is ¥100,000, you receive the full
+price movement on ¥2,500,000 as your P&L.
+
+#### What is margin, and how does it relate to leverage?
+Margin is the money you deposit with the broker as collateral in
+order to trade.
+
+Leverage is the mechanism of trading many times the amount of that
+margin, so margin and leverage are two sides of the same coin. The
+ratio of the margin you actually deposit to the trade amount you
+want to trade is called the "margin rate," and leverage is the
+inverse of the margin rate (e.g., a 4% margin rate = 25x leverage).
+
+Margin isn't just the "initial margin" needed to open a position —
+it also acts as a cushion that absorbs any unrealized loss. The
+ratio of your account's remaining equity (effective margin) to the
+required margin is called the "margin level" (or maintenance
+margin ratio). When this level falls below a certain threshold, the
+broker may ask for additional margin (a margin call) or forcibly
+close the position (a stop-out).
+
+#### A concrete example: with X margin and Y leverage, how large a trade can you make?
+Take a Japan 225 CFD as an example. You deposit ¥100,000 as margin
+and trade at 25x leverage.
+
+- Tradable amount: ¥100,000 × 25 = ¥2,500,000
+- Margin rate: 1 ÷ 25 = 4%
+- Required margin (the margin needed to trade ¥2,500,000 worth): ¥2,500,000 × 4% = ¥100,000
+
+So "trade amount × margin rate" gives you the required margin, and
+"margin × leverage" (or "margin ÷ margin rate") gives you the
+tradable amount.
+
+#### Where does operations (me) step in when margin runs short (a margin call)?
+The margin level is calculated as "account equity (effective margin)
+÷ required margin × 100%." What happens next depends on how far the
+level has dropped — but the exact thresholds and grace periods vary
+by broker. The following is just one illustrative example.
+
+- If the margin level is below 100% and carries over into the next
+  business day: there's a grace period. If the client tops up margin
+  (a margin call payment) or closes part of the position to bring
+  the level back up before a set deadline (e.g., by the end of the
+  next business day), forced liquidation of the entire position can
+  be avoided. If the deadline passes without resolution, the broker
+  closes the entire position.
+- If the margin level falls below a certain threshold (e.g., 50%):
+  there's no grace period at all. The instant it crosses that line,
+  the entire position is forcibly closed (a stop-out). This also
+  serves as a safeguard to keep the client's losses from growing any
+  further.
+
+Operations continuously monitors margin levels account by account,
+sends margin-call notices to accounts that cross the threshold with
+a grace period, and confirms that the stop-out process has run
+correctly for accounts that cross the no-grace-period threshold.
+
+#### Where my three-years-ago self would get stuck
+- Assuming leverage means "trading with borrowed money": leverage
+  isn't a loan — it's a mechanism for trading a multiple of your
+  margin, which serves as collateral. If an unrealized loss exceeds
+  the margin, the position is forcibly closed; the system isn't
+  designed around the idea of taking on debt beyond your margin.
+- Assuming you should always use the maximum leverage available:
+  being able to trade at up to 25x doesn't mean 25x is the normal
+  way to trade. The higher the leverage, the faster the margin level
+  can drop from even a small price move, so it's common practice to
+  keep some buffer rather than using the full amount.
+- Treating a 100% margin level as a "safe line": in reality, once the
+  level drops below 100% it's already subject to a margin call. To
+  keep trading safely, you need to maintain a level comfortably above
+  100%.
+- Confusing a margin call with a stop-out: a margin call comes with a
+  grace period — resolving it in time avoids forced liquidation — but
+  a stop-out closes everything instantly, with no grace period. The
+  triggering margin level and the room to respond are both different
+  between the two.
+
 ### Long and Short
 
 #### What are long and short, in a nutshell?
