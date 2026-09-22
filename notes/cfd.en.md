@@ -376,6 +376,136 @@ correctly for accounts that cross the no-grace-period threshold.
   triggering margin level and the room to respond are both different
   between the two.
 
+### What Is Cash Settlement?
+
+> The basic definition of cash settlement ("a trade with no physical
+> delivery, where only the price difference between entry and exit
+> is settled") was already covered under "What is a CFD?" This
+> section builds on that and goes deeper into three angles: when
+> P&L is actually locked in, how P&L is calculated across multiple
+> trades, and what operations does with settlement itself.
+
+#### When exactly is P&L on a cash-settled trade locked in?
+With cash settlement, P&L is locked in at the moment you place an
+opposite trade (a closing order) against your open position. While a
+position stays open, its unrealized P&L just fluctuates with every
+price move — it isn't yet locked in as anything real.
+
+There are two basic ways to place an order:
+
+- Market order: executes immediately at whatever rate is showing
+  right now
+- Limit order: executes once the rate reaches a rate you specified
+  in advance
+
+Either type can be used both to open a position (a new order) and to
+close one (a settlement order).
+
+| | New order (opening a position) | Settlement order (closing a position) |
+|---|---|---|
+| **Market** | Opens a new position immediately at the current rate | Closes the position immediately at the current rate |
+| **Limit** | Opens a new position once the specified rate is reached | Closes the position once the specified rate is reached |
+
+A settlement order can either lock in a profit ("take-profit") or
+lock in a loss ("stop-loss"), and either can be placed as a market
+or a limit order.
+
+For example, say you open a position with a market order at 100. If
+you want to lock in a profit once the price reaches 105, you place a
+limit settlement order (take-profit) at 105. Conversely, if you want
+to cap your loss in case the price falls to 90, you place a limit
+settlement order (stop-loss) at 90.
+
+```mermaid
+graph LR
+    A["New order (market)<br/>Open position at 100"] --> B{Which way does the price move?}
+    B -->|Rises to 105| C["Take-profit line (limit settlement)<br/>Close at 105 → +5 profit"]
+    B -->|Falls to 90| D["Stop-loss line (limit settlement)<br/>Close at 90 → −10 loss"]
+```
+
+Setting take-profit and stop-loss lines in advance like this lets
+you lock in P&L without having to watch the price constantly.
+
+#### A concrete example: how is P&L calculated across multiple trades? (The idea of average execution price)
+When you trade the same product multiple times — adding to a
+position in stages — P&L is calculated based on the "average
+execution price."
+
+**Adding to a long position across multiple trades**
+
+| Trade | Execution rate |
+|---|---|
+| 1st (opening) | 100 |
+| 2nd (add) | 103 |
+| 3rd (add) | 105 |
+| 4th (add) | 104 |
+| **Average execution price** | (100+103+105+104) ÷ 4 = **103** |
+
+Since the average execution price is 103, closing above 103 produces
+a profit, and closing below it produces a loss.
+
+**Adding to a short position across multiple trades**
+
+Say you open a short at 100, expecting the price to fall. Instead,
+it rises, so you add to the short at 103. It keeps rising to 105 and
+you add there too, then it starts to turn, so you add once more at
+104.
+
+| Trade | Execution rate |
+|---|---|
+| 1st (opening) | 100 |
+| 2nd (add) | 103 |
+| 3rd (add) | 105 |
+| 4th (add) | 104 |
+| **Average execution price** | (100+103+105+104) ÷ 4 = **103** |
+
+For a short, it works the other way around from a long: closing
+below the average execution price produces a profit. Looking only at
+the original 100 entry, it might seem like you were sitting on an
+unrealized loss once the rate ran up to 105 — but measured against
+the average execution price (103), the position turns profitable
+again once the rate falls back below 103.
+
+#### Where does operations (me) touch the settlement process itself?
+- Managing positions net, not gross: on the broker's side, client
+  positions aren't tracked gross (keeping every short and every long
+  as separate entries) — they're tracked net (shorts and longs offset
+  into a single combined position). This is exactly the "average
+  execution price" idea from above playing out in practice: no
+  matter how many trades a client makes, they collapse into one net
+  position in the end.
+- Correcting executions after a rate-feed problem: if the rate feed
+  malfunctions, a trade can end up executed at an incorrect rate.
+  When that happens, operations manually corrects it to the right
+  rate and notifies the affected client.
+- Reconciling settlements: checking that a client's settlement result
+  matches both the internal system's records and the cover
+  counterparty's (LP/PB) records. This is the settlement-side
+  counterpart to the position reconciliation described under Long
+  and Short.
+- Confirming P&L and balance updates: verifying that P&L locked in by
+  a settlement is correctly reflected in the client's account
+  balance.
+- Handling slippage: for a limit settlement order, the actual
+  execution rate can differ from the rate the client specified
+  (slippage). Operations checks whether that gap exceeds the
+  acceptable tolerance and responds if it does.
+
+#### Where my three-years-ago self would get stuck
+- Treating unrealized P&L as if it were already locked in: no matter
+  how large an unrealized gain or loss looks, it's just a mark-to-
+  market number until a settlement order actually executes. P&L is
+  only locked in once that happens.
+- Assuming multiple trades are tracked separately: in practice, the
+  broker tracks positions net rather than gross, so what matters is
+  the single "average execution price," not each individual trade's
+  rate. It's more useful in practice to watch where the average
+  execution price sits than to react to every price swing along the
+  way.
+- Assuming a limit settlement order guarantees execution at exactly
+  that rate: because of slippage and rate-feed conditions, the actual
+  execution rate can differ from the rate you specified.
+
 ### Long and Short
 
 #### What are long and short, in a nutshell?
