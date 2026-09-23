@@ -36,6 +36,35 @@ constantly, is actually a type of CFD too — you can think of FX as
 "a CFD on a currency pair." CFD is the umbrella category, and equity
 indices, commodities, and FX all sit inside it.
 
+A CFD is an over-the-counter (OTC) product: the broker (dealer) and
+the client enter into a one-to-one contract without going through an
+exchange. In Japanese this is also called 相対取引 (aitai torihiki),
+literally "face-to-face trading."
+
+In exchange trading (say, exchange-traded equities), many buyers' and
+sellers' orders sit together in an "order book," and price is set by
+that supply and demand. A CFD doesn't use an order book at all — the
+client trades against a price (rate) that the broker itself quotes.
+This difference gives rise to a few characteristics:
+
+- Because there's no rigid exchange-style specification (lot sizes,
+  expiry dates, and so on), the broker has room to set terms
+  flexibly. This flexibility is also why "rollover" exists as a
+  concept for CFDs — the broker can roll a position forward on its
+  own even though the underlying futures contract it references has
+  a fixed contract month (covered in the rollover section).
+- The broker quotes a buy price (Ask) and a sell price (Bid), and the
+  difference between them — the spread — is effectively the cost of
+  the trade.
+- Because there's no exchange or clearing house guaranteeing
+  settlement, there's a risk that the counterparty (the broker)
+  could fail to honor the contract, e.g., through insolvency
+  (counterparty risk).
+
+How the spread gets decided, and how the broker deals with the risk
+it picks up from trading with clients, are covered later under "How
+Are Rates Generated?" and "The Idea Behind Cover Deals."
+
 #### Why can you trade without holding the underlying?
 A CFD is built by referencing the price of an underlying asset (a
 stock, a commodity, etc.), but it doesn't require the full amount of
@@ -480,7 +509,7 @@ again once the rate falls back below 103.
   rate and notifies the affected client.
 - Reconciling settlements: checking that a client's settlement result
   matches both the internal system's records and the cover
-  counterparty's (LP/PB) records. This is the settlement-side
+  counterparty's (CP) records. This is the settlement-side
   counterpart to the position reconciliation described under Long
   and Short.
 - Confirming P&L and balance updates: verifying that P&L locked in by
@@ -680,6 +709,12 @@ A CFD's rate also isn't a single number — it's quoted as two values,
 an ask (buy) and a bid (sell). The gap between those two values is
 the spread, which is the CFD's real underlying cost.
 
+The reason it's quoted as two values instead of one is that a CFD is
+an over-the-counter (OTC) product, not an exchange-traded one. There's
+no order book publicly showing supply and demand the way there is on
+an exchange, so the broker itself quotes a bid and an ask and takes
+the difference — the spread — as its effective fee.
+
 #### How the referenced futures/physical price relates to the rate
 A CFD's rate moves in step with the exchange price of whatever it
 references (futures or physical). For products that roll over,
@@ -744,7 +779,7 @@ actually is.
     an abnormal value, and the system catches it
 
   Note that the rate generated for clients and the rate sent to the
-  cover counterparty (an LP) are two different things, so a
+  cover counterparty (a CP) are two different things, so a
   rejection on the cover side (so-called "last look") is, strictly
   speaking, a separate issue from rate generation. That said, using a
   cover side that's currently erroring out as a reference input for
@@ -785,7 +820,7 @@ it's simply how the mechanism works.
 Everything described above under "rate generation" is purely about
 what price gets shown to the client. Separately, "cover" — the
 broker hedging its own risk externally — is about how the client's
-order gets routed to a cover counterparty (an LP). These are two
+order gets routed to a cover counterparty (a CP). These are two
 different pieces of work, two different processes.
 
 They can look connected, but they're not the same thing. For
@@ -795,6 +830,223 @@ counterparty gets rejected (last look). "Rates are being generated
 correctly" doesn't necessarily mean "cover is also going through
 correctly" — a distinction that's easy to conflate at first. This
 gets covered in more depth under "The idea behind cover deals."
+
+### The Idea Behind Cover Deals
+A cover deal means holding a position outside the firm (with a cover
+counterparty / CP) in the opposite direction to the client's order.
+
+In the course of offering CFDs and similar products to clients, the
+broker ends up holding the opposite side of the client's order for
+itself. For example, if a client goes long (buys), the broker ends
+up holding the opposite, a short (sell) position. That's a state of
+carrying "market risk" — the risk of a loss from the price of a held
+position moving.
+
+If the broker let this market risk build up unchecked, a large market
+move could seriously damage its own financial position. So it offloads
+the position it's holding to an outside cover counterparty (CP) to
+manage the risk down. This whole sequence of trades is called a
+"cover trade," or a "cover deal."
+
+A CFD is a bilateral (aitai, 相対) contract between the broker and the
+client — a one-to-one agreement with no exchange in between. This
+bilateral nature is what produces the following three-layer structure.
+
+Example: a client opens a long "buy" position in a Nikkei 225 CFD
+
+1. Client position: long ("buy") on the underlying (Nikkei 225)
+2. Broker's client-facing position (the CFD itself): because it's a
+   bilateral trade, the broker automatically ends up holding the
+   opposite side — a short ("sell") — as the client's counterparty
+3. Broker's hedge position (the cover): to offset the price-move risk
+   from the short it's now holding, the broker holds a "buy" in the
+   underlying or futures with an outside cover counterparty (CP)
+
+The end result is that the position the broker holds externally for
+hedging (a buy) points in the same direction as the client's original
+position (also a buy). By running "short against the client" and
+"long in the market" side by side, the broker mechanically creates a
+state where its own P&L is offset no matter which way the market
+moves (delta neutral).
+
+The risk of loss from a held position's value moving as the price of
+the underlying moves is called "delta risk." Delta is a sensitivity
+measure: how much the value of your position moves when the price of
+the underlying moves by 1 unit.
+
+- A long position in the physical asset or futures: delta is +1. If
+  the underlying rises 100 yen, the position's value rises by 100
+  yen too; if it falls, the value falls.
+- A short position in the physical asset or futures: delta is -1. If
+  the underlying falls 100 yen, the position's value rises by 100 yen
+  (i.e., a rise in price means a loss).
+
+Being "exposed to delta risk" means your total delta across your
+positions is tilted positive or negative — you're in a state where
+"a move in one particular direction in the market will cost you"
+(i.e., you're carrying directional risk).
+
+An example of the delta risk a broker takes on: a client opens a
+one-unit long ("buy," +1) position in a Nikkei 225 CFD. The broker,
+as the counterparty, automatically ends up holding a one-unit short
+("sell," -1) in Nikkei 225. The broker is now carrying "a delta of
+-1." If the Nikkei then spikes upward, the loss on the broker's short
+position grows without limit. This is the state of "delta risk being
+left open (unhedged)."
+
+A financial institution's business model is to earn steadily from
+fees and spreads collected from clients, not to gamble on which way
+the market will move. So it does the work of eliminating the delta
+risk it's picked up — delta hedging. To offset its own "-1" delta,
+the broker buys one unit of the Nikkei 225 (the physical index or a
+future) with an outside cover counterparty (CP). The buy position at
+the cover counterparty produces a "+1" delta, so the short against the
+client (-1) plus the buy at the cover counterparty (+1) nets out to a
+total delta of 0.
+
+A state where the total delta across all held positions nets out to
+zero is called "delta neutral."
+
+#### A concrete example: when a client opens a long position, what does the firm do?
+Say a client opens a new long ("buy") order in a WTI crude oil CFD.
+Because a CFD is a bilateral trade between the broker and the client,
+the moment the client goes long, the broker automatically ends up
+holding the opposite side — a short ("sell") position.
+
+Left as is, the broker is now stuck holding a short position that
+loses money if the oil price rises. So the broker places a matching
+buy order with a cover counterparty (CP), taking a long position
+there. This lets the broker offset (hedge) the risk from the short it
+picked up with the client, using the opposite trade at the cover
+counterparty.
+
+In other words, the position created by the client trade and the
+position created by the cover-counterparty trade point in opposite
+directions (client long → broker short against the client → broker
+long against the cover counterparty). This whole flow is what a cover
+deal actually looks like in practice.
+
+#### Where does operations (me) fit into confirming and executing cover trades?
+The work operations does around cover trades breaks down into six
+main areas.
+
+**Checking trading-liquidity risk**
+
+Operations regularly checks for "trading-liquidity risk" — the risk
+that a cover trade can't be executed smoothly. Concretely, this means
+checking the credit rating of cover counterparties (making sure
+there's no credit concern), plus logging and analyzing any incident
+where a cover trade wasn't executed promptly. The main causes fall
+into four patterns:
+
+- A system failure (at the firm itself, the cover counterparty, or
+  the exchange) causing the cover to be rejected
+- The cover being rejected because the exchange hit limit-down or a
+  daily price-move limit
+- The cover being rejected because the cover counterparty is short on
+  margin, has hit a position limit, or triggers a margin call
+- A carry-over caused by a corporate action (a stock split, merger,
+  spin-off, etc.)
+
+**Credit management of the cover counterparty (CP)**
+
+The creditworthiness of the cover counterparty itself is also managed
+on an ongoing basis. Metrics watched include: ratings from credit
+agencies; CDS (Credit Default Swap — insurance-like protection that
+pays out if the counterparty defaults; the higher the "premium rate,"
+the stronger the signal of credit concern); whether exposure is overly
+concentrated in one particular cover counterparty; and whether the
+counterparty is a G-SIFI (Global Systemically Important Financial
+Institution — a large international institution whose failure could
+seriously disrupt the global financial system, and which is therefore
+subject to special supervision).
+
+**Timing and automating cover trades**
+
+When covering manually, it's more efficient to do it during a
+liquid period — when that instrument is most actively traded. Covering
+during a thin-liquidity window tends to have a bigger price impact and
+higher cost.
+
+When covering automatically, a "cover limit" (the maximum tolerable
+position size) is set in advance, and once that's exceeded, a cover
+trade fires automatically. How that limit is set is worked out in
+detail per broker and per instrument, and it ties directly into a
+management-level judgment call: how much risk (position) the firm is
+willing to carry (the relationship between limit size and
+profitability is covered under "Position Limits and Cover Strategy").
+
+**Day-to-day confirmation work**
+
+This is an ongoing process: confirming execution details, reconciling
+(matching the books against actual balances), checking the firm's own
+positions, and confirming that the cover counterparty's margin
+maintenance ratio and trading limits haven't been breached.
+
+**Cover rollovers**
+
+For products with a contract month (i.e., not perpetual), it's not
+just the CFD itself that needs to roll — the cover counterparty
+position also needs to roll from the near month to the next month.
+The reference at the cover counterparty needs to be switched over too.
+
+**How halt decisions are made**
+
+When something goes wrong with cover trading or rate distribution,
+the response is judged case by case, falling into three patterns:
+
+- Cases where both cover and price should be halted: a delay in the
+  rate feed from a cover counterparty, a cover counterparty's system
+  failure meaning no rate or a bad rate, an inability to connect to
+  a cover counterparty due to a problem on the firm's own side, etc.
+- Cases where only cover should be halted: a large volume of
+  unmatched trades with a particular cover counterparty, the cover
+  counterparty approaching a position limit, etc.
+- Cases where only pricing should be halted: cases where only some
+  cover counterparties have unstable rates and other counterparties
+  can still be used instead
+
+#### Where my three-years-ago self would get stuck
+The first time you hear about cover trades, the point of "why bother
+doing an offsetting trade at all" can be hard to grasp. The key is
+that the broker ends up carrying market risk it never wanted, the
+instant it trades with a client. If a client goes long, the firm ends
+up short, and that position's value moves with the price. A cover
+trade is the act of pushing that "unwanted risk" out to an external
+cover counterparty, bringing the firm's own position close to zero.
+The thing worth internalizing early is that this is "a trade to avoid
+holding risk," not "a trade to make money."
+
+A few more misconceptions worth flagging:
+
+- Treating "cover isn't working" as one single kind of problem: in
+  reality there are three different kinds of causes — system/
+  connectivity issues (a failure at the firm, the cover counterparty,
+  or the exchange), issues in the market itself (price-move limits,
+  liquidity drying up), and issues on the cover counterparty's side
+  (a margin shortfall, hitting a position limit). Rather than lumping
+  it all together as "the cover failed," in practice it matters to
+  separate out which kind it is.
+- Assuming "a client's loss = the firm's profit": as long as cover
+  trades are being done properly, the risk created by a client's
+  trade has already been pushed out externally, so a client winning
+  or losing doesn't directly translate into the firm's own P&L.
+- Assuming "the cover counterparty = the exchange": a cover
+  counterparty is simply a financial institution the firm has a
+  trading relationship with (a CP) — it isn't directly connected to
+  the exchange the CFD references.
+- Assuming "every single order gets covered individually": in
+  practice, positions are often held in aggregate within the limit
+  and covered once certain conditions are met, rather than being
+  covered order by order.
+- Conflating "a rejection from the cover counterparty" with "an abort
+  on our own side": a rejection from the cover counterparty (so-
+  called "last look") is the cover counterparty itself declining the
+  trade it was offered. An abort, on the other hand, is the firm's
+  own mechanism for temporarily halting the rate it distributes to
+  clients and cover counterparties when it detects an abnormal
+  value. These happen in different places, for different reasons —
+  they're separate issues.
 
 ### What is a rollover?
 A rollover involves two things happening together:
