@@ -670,6 +670,132 @@ mind, in a few specific areas:
   adjustment paid out by shorts — so margin can erode over time even
   when the price isn't moving at all.
 
+### How Are Rates Generated?
+A CFD's rate is generated independently by the broker, based on the
+exchange price of whatever it references (a futures contract or the
+physical asset). The broker doesn't simply pass that reference price
+straight through to clients, though.
+
+A CFD's rate also isn't a single number — it's quoted as two values,
+an ask (buy) and a bid (sell). The gap between those two values is
+the spread, which is the CFD's real underlying cost.
+
+#### How the referenced futures/physical price relates to the rate
+A CFD's rate moves in step with the exchange price of whatever it
+references (futures or physical). For products that roll over,
+though, "which contract month is currently being referenced" has a
+direct effect on the rate, which makes managing the reference month
+especially important.
+
+#### A concrete example: where do the rates for Japan 225 or WTI crude oil actually come from?
+Raw exchange data is difficult to work with as-is, so it's usually
+supplied in a cleaned-up form — as tick data or one-minute bars — by
+major data vendors such as Bloomberg or Refinitiv. A broker offering
+CFDs receives real-time data from one of these providers, layers on
+adjustments like the spread, and generates the rate it quotes to
+clients.
+
+It's technically possible to source data directly from an exchange,
+but that means setting up a connection and a contract with every
+individual exchange, which adds development cost. If a broker offers
+20 different products, for example, contracting with a data provider
+is far more efficient — both contractually and in terms of system
+development — than connecting individually to every exchange
+involved (CME, ICE, NYSE, and so on).
+
+Brokers also typically contract with more than one data provider, so
+that an outage at one provider doesn't have to interrupt the rates
+quoted to clients (more on this below).
+
+#### Where does operations (me) monitor rate generation and distribution?
+Operations continuously monitors two things: that rates never stop
+flowing, and that they never drift away from where the market
+actually is.
+
+- Deciding on failover: if the main data provider has an outage and
+  client-facing rates become abnormal (or stop being generated at
+  all), the priority is the client — operations switches over to the
+  secondary data provider. Before switching, operations checks the
+  secondary provider's rate against actual market levels (using yet
+  another provider not used for rate generation) to confirm there's
+  no significant discrepancy. Investigating the root cause of the
+  outage comes later; responding to clients comes first.
+- Managing spread width: how wide the spread is set depends on the
+  risk and cost profile of each product, and it's the broker that
+  sets it.
+- Monitoring for abnormal rates ("abort"): this doesn't refer to a
+  sudden spike or drop in the market price itself — it refers to a
+  mechanism that automatically halts processing before an incorrect
+  rate reaches clients or the cover counterparty, when abnormal price
+  movement is detected. That movement might reflect a genuine market
+  event (a major economic data release, for example) or a data
+  problem — the two can't be told apart in the moment. So the
+  procedure is to pause distribution, confirm where the market
+  actually is, and resume once there's no issue.
+
+  Typical triggers for an abort include:
+  - Stale pricing from latency: network delay causes a gap between
+    the rate and the firm's own latest internal rate that exceeds a
+    pre-set tolerance
+  - Sharp volatility: around major economic data releases, for
+    example, the market price moves so fast that price reliability
+    temporarily can't be guaranteed
+  - Detecting an outlier (a spike): the feed itself contains a bug or
+    an abnormal value, and the system catches it
+
+  Note that the rate generated for clients and the rate sent to the
+  cover counterparty (an LP) are two different things, so a
+  rejection on the cover side (so-called "last look") is, strictly
+  speaking, a separate issue from rate generation. That said, using a
+  cover side that's currently erroring out as a reference input for
+  rate generation would be dangerous, so it's still something
+  operations keeps in mind when monitoring rate generation (covered
+  in more detail under "The idea behind cover deals").
+
+  This term "abort" is internal shorthand — elsewhere in the
+  industry it may be called "abnormal rate detection" or "price
+  rejection."
+
+- Post-trade monitoring: how often aborts happen, and which triggers
+  are most common, is an important thing middle/back office keeps an
+  eye on. A sudden spike in the abort rate, or an unnatural
+  clustering of them, can be a sign of a system bug or a
+  misconfiguration — so this monitoring includes reviewing order
+  history and logs to confirm no client was unfairly disadvantaged.
+
+#### Where my three-years-ago self would get stuck
+Two points in particular are easy to mix up, so they're worth
+spelling out a bit more.
+
+**① Assuming "the rate is the exchange price itself"**
+
+Looking at the rate on a CFD screen, it can look as if the exchange
+price is simply flowing straight through. In reality, it goes
+through three stages before it ever reaches the client: exchange
+price → cleaned up by a data provider → generated into a final price
+by the broker, spread and all.
+
+In other words, a CFD's rate isn't "a copy of the exchange price" —
+it's "a separate price the broker builds on top of the exchange
+price." Not matching the reference price exactly isn't an anomaly;
+it's simply how the mechanism works.
+
+**② Treating "rate generation" and "cover (hedging)" as the same thing**
+
+Everything described above under "rate generation" is purely about
+what price gets shown to the client. Separately, "cover" — the
+broker hedging its own risk externally — is about how the client's
+order gets routed to a cover counterparty (an LP). These are two
+different pieces of work, two different processes.
+
+They can look connected, but they're not the same thing. For
+example, rates can be generated and distributed to clients
+completely normally while, separately, an order to the cover
+counterparty gets rejected (last look). "Rates are being generated
+correctly" doesn't necessarily mean "cover is also going through
+correctly" — a distinction that's easy to conflate at first. This
+gets covered in more depth under "The idea behind cover deals."
+
 ### What is a rollover?
 A rollover involves two things happening together:
 1. Rollover (contract rollover): When a futures contract reaches its
