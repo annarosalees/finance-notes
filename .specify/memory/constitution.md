@@ -1,3 +1,18 @@
+<!--
+Sync Impact Report
+- Version change: 1.2.0 → 1.2.1 (PATCH: clarification, no new principle)
+- Modified principles:
+  - VII. 本文執筆の主体 (User Owns the Writing) — added one clarifying paragraph:
+    names `study-issue` skill as the primary source for what counts as an explicit
+    drafting request, and describes its two operating modes (「一緒に進めて」 =
+    draft-and-confirm co-writing cycle; plain issue-start instructions = wall-bounce
+    only, no drafting). Resolves an apparent tension surfaced during live testing on
+    issue #61, where a strict no-draft interpretation proved too rigid for the
+    learning workflow the user actually wants.
+- Added sections: none
+- Removed sections: none
+- Follow-up TODOs: none
+-->
 # finance-notes Constitution
 
 ## Core Principles
@@ -34,7 +49,31 @@
 ユーザーの合意を得てから進める。一度に多くの項目を進めず、1項目ずつ確認しながら進め
 る。`/speckit-implement` のように複数タスクを一括実行するコマンドは、ユーザーが範囲
 を明示的に許可した場合にのみ使い、全タスクの自動実行をデフォルトにしない。不明点は
-想像で埋めず、ユーザーに確認する。
+想像で埋めず、ユーザーに確認する。ノート本文の執筆に関する進行方法は原則VIIに従う。
+
+### VII. 本文執筆の主体 (User Owns the Writing)
+`notes/*.md`（および対となる`notes/*.en.md`）の本文の新規執筆・書き足しは、ユーザー
+自身が行う。これはユーザーが自分の言葉で理解を書き出すという本リポジトリの学習目的
+そのものであり、Claude・spec-kitのワークフロー（`/speckit-implement`等のタスク一括
+実行コマンドを含む）・および本文執筆を支援する目的で作られるスキルやコマンドは、
+ユーザーから明示的に「代わりに書いて」と依頼されない限り、セクションの文章を書いて
+コミットしてはならない。Issue（学習トピック）や目次を見て「代わりに書いておきました」
+と先回りして進めることも禁止する。
+これらのツール・ワークフローに許される役割は次の3つに限定される：
+1. **壁打ち**：ユーザーが書こうとしている内容について、理解を確認する質問を投げる
+   （答えを直接言わず、気づきを促す）。
+2. **不足の指摘**：説明として足りない部分・論理が飛んでいる部分を指摘する
+   （正解は言わず、考え直すきっかけを与える）。
+3. **軽い添削**：誤字脱字・言い回しの軽い修正は提案してよい。ただし新しい段落や
+   具体例を丸ごと書き足すことはしない。
+ただし、事実の誤りは壁打ちの対象にせず、はっきり誤りと正解を伝える。金融知識として
+誤った内容がノートに残ることは、学習目的よりも優先して防止する。
+「ユーザーから明示的に代筆を依頼された」場合の具体的な運用は `study-issue` スキル
+（`.claude/skills/study-issue/SKILL.md`）が一次情報源となる。同スキルが定義する
+「一緒に進めて」形式の依頼は、観点ごとにユーザーの口頭説明を聞いた上でドラフトを
+提示し、確認・修正を経て確定するサイクルであり、これ自体が本原則の言う明示的な
+代筆依頼にあたる。この形式の依頼がない、単なる着手指示（「issueに進む」等）の場合は、
+上記3役（壁打ち・不足の指摘・軽い添削）に限定したモードで進める。
 
 ## 追加制約
 
@@ -48,7 +87,9 @@
   （`/speckit-specify` → `/speckit-plan` → `/speckit-tasks` → `/speckit-implement`）に従い、
   着手前にspecでノートの対象読者・記述範囲・完了基準を明確化する。
 - `/speckit-implement` を実行する際も、原則VI（対話的な進行）に従い、タスクを区切って
-  ユーザーと合意を取りながら進める。全タスクを無条件に自動実行しない。
+  ユーザーと合意を取りながら進める。全タスクを無条件に自動実行しない。タスクに
+  「ノートに〜を追加する」等の本文執筆が含まれる場合は、原則VII（本文執筆の主体）に
+  従い、Claudeがタスクを消化する形で本文を書いてはならない。
 - specの「User Scenarios」は「読者がこのノートを読んで何を理解・判断できるようになるか」、
   「Functional Requirements」は「ノートが満たすべき記述項目」として記述する。
 
@@ -57,4 +98,4 @@
 本constitutionはREADME.mdの記載事項と矛盾しないものとし、矛盾が生じた場合は両方を
 同時に更新する。原則の追加・変更は、変更理由をコミットメッセージに明記した上で行う。
 
-**Version**: 1.1.0 | **Ratified**: 2026-09-16 | **Last Amended**: 2026-09-18
+**Version**: 1.2.1 | **Ratified**: 2026-09-16 | **Last Amended**: 2026-09-23
