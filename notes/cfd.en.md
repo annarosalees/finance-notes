@@ -1141,3 +1141,284 @@ from interest rates and (for some products) dividends, the very
 things that shape the futures price in the first place. Rollover,
 the adjustment, and interest/dividends aren't separate topics — they
 all fall out of one fact: futures contracts expire.
+
+---
+
+### Position Limits and Cover Strategy (Capital Adequacy and Market Risk Management)
+The capital adequacy ratio is a metric showing how much financial
+cushion a financial instruments business operator (a broker or an
+FX/CFD firm) has to absorb an unexpected loss or a price swing on its
+own. It expresses, as a ratio, how much readily usable capital the
+firm has relative to the risk it's carrying.
+
+$$\text{Capital Adequacy Ratio} = \frac{\text{Non-fixed capital}}{\text{Risk-equivalent amount}} \times 100$$
+
+- Non-fixed capital (the numerator): capital minus fixed assets and
+  the like — the portion that's readily convertible to cash or
+  available to absorb risk
+- Risk-equivalent amount (the denominator): the total of the risks
+  the business can incur, converted into a monetary figure, made up
+  of three components:
+  - Market risk: the risk of loss from price moves in held positions
+    (equities, commodities, etc.) — FX is covered separately, in
+    `notes/fx.en.md`
+  - Counterparty risk: the risk of loss from a trading counterparty
+    (a cover counterparty or a client) defaulting or going insolvent
+  - Operational risk: the risk of loss from system failures,
+    processing errors, legal trouble, and the like
+
+Under Japan's Financial Instruments and Exchange Act, a financial
+instruments business operator is legally required to maintain a
+capital adequacy ratio of at least 120% at all times (Article 46-6,
+Paragraph 2). Regulatory measures escalate in stages: dropping below
+140% triggers a mandatory filing with the FSA (Financial Services
+Agency); dropping below 120% lets the FSA order changes to business
+practices or require a deposit of assets, among other supervisory
+measures; and dropping below 100% can lead to an order suspending all
+or part of the business for up to three months. In practice, brokers
+and FX/CFD firms typically manage themselves to a much higher safety
+margin — 140–200% or more, day to day — using tools like position
+limits and cover-deal operations, to stay ready for sudden market
+moves or a spike in client positions.
+
+#### How is market risk calculated?
+Market risk is the risk of loss from a revaluation of a held
+position. Under the law, when a financial instruments business
+operator holds a position, a set proportion of it is calculated as
+"market risk," which feeds into the risk-equivalent amount (the
+denominator of the capital adequacy ratio). The calculation method
+differs between equities and commodities.
+
+**For equities**
+
+- Market risk equals "net amount × 8% (general risk)" plus "gross
+  amount × 8% (specific risk)."
+- Net amounts can be netted within the same country (e.g., a long in
+  the Dow and a short in the S&P 500 can be netted; a long in Nikkei
+  225 and a short in the Dow cannot).
+- Gross amounts are exempt for "major stock indices of designated
+  countries" (Nikkei 225, S&P 500, DAX, FTSE, and so on). Also,
+  unlike commodities, this isn't "gross across CP and client
+  positions" — it only covers the uncovered (uncleared) portion.
+- For foreign-currency-denominated names, an FX risk charge (held
+  position × 8%) is booked separately on top of the above.
+
+Concrete example: say a firm holds only a long position worth 10
+million yen in a Nikkei 225 CFD. The net amount is 10 million yen, so
+the net-side market risk is 10 million × 8% = 800,000 yen. Since
+Nikkei 225 qualifies as a "major stock index of a designated
+country," the gross-side 8% that would normally also apply is
+exempted. So the market risk here comes out to 800,000 yen.
+
+**For commodities**
+
+- Gold: market risk equals "net amount × 8%." Under the law it's
+  classified as an FX risk (gold's market risk = the absolute value
+  of gold's uncovered position in yen × 8%).
+- Everything else: market risk equals "net amount × 15%" plus "the
+  sum of each instrument's gross position in yen × 3%." This gross
+  position means "all positions across both CP and client sides,"
+  and it's the sum of the absolute value of each position,
+  regardless of buy/sell direction.
+- Net amounts can't be netted across different instruments (e.g., a
+  long in crude oil and a short in corn can't offset). Total
+  commodity risk = SUM(absolute value of each held position × 15%).
+- For foreign-currency-denominated names, an FX risk charge (held
+  position × 8%) is booked separately on top of the above.
+
+Concrete example: say a firm holds only a long position worth 5
+million yen in WTI crude oil CFDs (a non-gold commodity). The net
+amount is 5 million yen and the gross position is also 5 million
+yen. The net-side market risk is 5,000,000 × 15% = 750,000 yen, and
+the gross-side market risk is 5,000,000 × 3% = 150,000 yen, for a
+combined market risk of 900,000 yen.
+
+Note: the market risk calculation for FX is covered separately, in
+`notes/fx.en.md`.
+
+#### What is a position limit, and why set one?
+A position limit is a cap on the size of the position (long or
+short) a firm is allowed to hold. Along with some related terms,
+it breaks down as follows:
+
+- **Limit**: once the position size (long or short) exceeds this
+  value, a cover trade is triggered.
+- **Return level**: a cover trade is executed so that the resulting
+  position size lands somewhere between this level and the limit.
+- **Cover threshold**: a rough quantity (in units of the underlying)
+  used as a guide when covering manually.
+
+A position limit is set by working backward from an acceptable loss
+tolerance. As covered above, the capital adequacy ratio is managed
+day to day to stay within a 140–200%-plus safety margin. The firm
+first decides how much loss it can absorb in a sudden market move —
+in other words, how far the capital adequacy ratio can drop before
+it breaches that safety margin — and then works backward from that
+to arrive at "this is the position size we can hold and still be
+fine." That's what a position limit really is.
+
+Setting a limit means deciding on two numbers:
+
+- An overall cap across all instruments combined
+- A per-instrument limit quantity
+
+#### How should limit size be weighed against profitability and risk?
+The size of the limit is, within the bounds set by working backward
+from an acceptable loss tolerance (above), a direct call about how
+to balance profitability against risk.
+
+**The relationship between limit size, cover ratio, and cost**
+
+- Limit size and cover ratio tend to run: "limit 0 (i.e., 100% cover
+  ratio) > small limit > medium limit > large limit."
+- Since executing a cover trade carries some cost, a larger limit
+  (by suppressing the cover ratio) reduces overall cover cost.
+- That said, a larger limit also means the firm holds a larger
+  position of its own, so the impact of market moves on P&L grows
+  (and market moves tend to work against profitability more often
+  than not).
+- So "bigger limit is always better" doesn't hold — striking the
+  right balance between profitability and risk is what matters.
+
+**Profitability tendencies by limit size**
+
+- The relationship between limit size and expected return: "limit 0
+  < small limit > medium limit << large limit."
+- The relationship between limit size and the spread (variance) of
+  returns: "limit 0 < small limit < medium limit < large limit."
+- A small limit is ideal in the sense of "keeping the spread of
+  returns down while still lifting the expected value," but
+  depending on market conditions it may not be able to bank that
+  expected value at all.
+- A large limit has the potential to maximize expected return, but
+  the spread is so wide it's hard to use well.
+
+**Profitability tendencies factoring in market conditions**
+
+Here, "trend-following" means trading in the direction the market is
+already moving (buying when it's rising, selling when it's falling),
+and "contrarian" means the opposite — betting on a reversal (selling
+when it's rising, buying when it's falling). Depending on the market
+environment (i.e., the pattern of price moves and how clients are
+trading), the relationship between limit size and profitability
+tends to look like this:
+
+- When client trading is random, or price moves have no clear
+  pattern: returns tend to be fairly stable, though there's not much
+  room for outsized gains either. The optimal limit tends to scale
+  with client trading volume.
+- When the market trends in one direction and clients are trading
+  contrarian: the larger the limit, the higher the expected return
+  tends to be (without much added spread). This is because the
+  position clients generate for the firm tends to end up, in a good
+  way, trend-following.
+
+  Concrete example: say WTI crude oil rises steadily in one
+  direction, from $70 to $80 a barrel. If, through this move, clients
+  keep entering short (betting "it should turn down soon" —
+  contrarian), the broker ends up building up a long position on the
+  other side. With a large limit — and a correspondingly low cover
+  ratio — the broker gets to hold onto more of the unrealized gain on
+  that long position as oil keeps rising. Cover frequently with a
+  small limit instead, and the firm keeps pushing its position out to
+  the cover counterparty mid-rally, missing out on the gains from the
+  rest of the move.
+- When the market trends in one direction and clients are trading
+  trend-following: a large limit tends to lower expected return. If
+  the market is moving slowly, lowering the limit can recover some of
+  that return. If the market is moving fast, lowering the limit
+  often doesn't help much either, because the cover counterparty's
+  spread tends to widen at the same time.
+- When the market moves choppily and clients are trading contrarian:
+  regardless of limit size, the firm's own returns tend to be poor.
+  The position clients generate for the firm tends to end up looking
+  like "selling the bottom, buying the top." Lowering the limit
+  doesn't fix this either — the resulting cover trades can make the
+  market even choppier, which is usually counterproductive.
+
+#### Where does operations (me) fit into limit management and halt decisions?
+The work I (operations) do around limit management and halt
+decisions breaks down into two main areas.
+
+**Halt decisions (in detail)**
+
+When something goes wrong with cover trading or rate distribution,
+the response is judged case by case, falling into three patterns:
+
+- Cases where both cover and price should be halted: a delay in the
+  rate feed from a cover counterparty; a cover counterparty's system
+  failure meaning no rate or a bad rate; an inability to connect to a
+  cover counterparty due to a problem on the firm's own side; a
+  problem on the firm's own systems serious enough that, as part of
+  the response, the connection to the cover counterparty needs to be
+  cut.
+- Cases where only cover should be halted: a large volume of
+  unmatched trades with a particular cover counterparty on the
+  post-trade processing/matching platform; the cover counterparty (or
+  the prime broker tied to it) approaching its net open position
+  (NOP — the aggregate exposure per currency or instrument) limit;
+  the cover counterparty's price feed is normal, but for some reason
+  cover trades aren't executing. (Note: if unmatched trades are
+  breaking out simultaneously across many different cover
+  counterparties, this pattern doesn't apply — cutting off many cover
+  counterparties at once has the side effect of leaving the firm
+  unable to cover at all, and the more likely cause in that case is a
+  problem on the post-trade platform itself rather than any
+  individual counterparty; typically the unmatched trades clear up
+  once the platform recovers.)
+- Cases where only pricing should be halted: a temporary situation
+  where the mid-price at some cover counterparties has converged (if
+  this can be handled), such as the spread widening on only one side,
+  or a rate at the counterparty where the price converged coming and
+  going intermittently.
+
+**Responding when "cover isn't working" or "the rate isn't moving" comes up on the CFD exchange side**
+
+First, check whether there's trouble at the cover counterparty's
+exchange. If the cover counterparty's exchange is in a trading halt,
+stop distributing the CFD rate. For instruments quoted off multiple
+exchanges, it can sometimes be handled by having more than one cover
+counterparty (CP) set up as a reference.
+
+The reason for halting is that if the firm allows client trading to
+continue while it's unable to cover, it risks accumulating unbounded
+market risk. There's also a risk that, if it's unclear whether the
+rate coming from the cover counterparty reflects real market levels,
+leaving things running could end up distributing a broken rate to
+clients.
+
+Concrete situations that call for halting trading include:
+
+- A short-selling restriction on individual-stock CFDs is triggered,
+  either by the exchange or the broker (applies to new short sales
+  only)
+- The cover counterparty's exchange takes a sudden unscheduled
+  holiday and there isn't time to adjust trading hours
+- A system failure or circuit breaker is triggered at the cover
+  counterparty's exchange
+- The firm's own systems suffer a serious failure and can't keep
+  distributing rates
+- A system failure means end-of-day (EOD) processing hasn't finished
+  — letting the next day's trading start as-is would compound the
+  system failure, so for CFDs, trading has to be halted manually
+- An extreme event — a serious natural disaster, terrorism, war, and
+  so on — has drained market liquidity
+
+#### Where my three-years-ago self would get stuck
+The first time you hear about capital adequacy ratios and limits,
+it's easy to fall into a few misconceptions worth flagging.
+
+- Treating "market risk" as the same thing as actual unrealized P&L
+  (how much you're up or down right now): in reality, market risk is
+  a regulatory calculated figure — an estimate of how much you could
+  potentially lose — and it's a different thing from your actual,
+  current P&L.
+- Assuming "once a position limit is hit, clients' new orders stop
+  going through": in reality, as the definition of a position limit
+  spells out, what happens once the limit is exceeded is a cover
+  trade — it's not a mechanism for halting client trading itself.
+- Assuming "a smaller limit is always safer": as covered above,
+  depending on market conditions, too small a limit can actually
+  cost you trading opportunity or hurt performance. It's tempting to
+  equate "smaller" with "safer," but in practice there's a real
+  trade-off.
