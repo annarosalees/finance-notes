@@ -27,8 +27,17 @@ stock-index or commodity futures) is the price it references. Instead
 of an exchange-traded futures price, FX references the spot price
 formed through over-the-counter (OTC) dealing directly between
 financial institutions. Because there is no exchange involved, FX has
-no concept of a futures expiry ("limit month") or rollover, and it
-trades almost 24 hours a day on weekdays.
+no futures expiry (contract month), so there's no futures-style
+contract-month rollover, and it trades almost 24 hours a day on
+weekdays.
+
+That doesn't mean delivery never comes into play, though. A spot
+trade settles (delivers) two business days after the trade. To avoid
+delivery, FX rolls the value date forward every time a position is
+carried to the next day, and this daily rolling forward is also
+called a "rollover" in the industry. The swap points described below
+arise from this daily rollover (spot gold, covered in "Examples by
+Product Type" in the CFD notes, works the same way).
 
 ## How Price and P&L Work
 
