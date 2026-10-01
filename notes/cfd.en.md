@@ -1089,7 +1089,32 @@ A rollover involves two things happening together:
 A CFD itself has no expiry, but the futures contract it's based on
 does — so a rollover is needed to keep the CFD running. The contract
 month used as the reference is always the one with the highest
-trading volume.
+trading volume. A high-volume month trades actively, so its price is
+stable and reliable. Referencing a low-volume month, on the other
+hand, causes problems like these:
+
+- The rate looks frozen: so few trades go through that the rate
+  appears stuck for long stretches.
+- The spread widens: low-volume months have a wide gap between bid
+  and ask (the spread). Referencing one widens the CFD spread quoted
+  to clients too, giving them a worse price.
+- The price is easily distorted: small orders can move the price a
+  lot, so the reference price may drift away from where the market
+  really is.
+- It diverges from the market's representative price: the price
+  shown in the news or by other firms is normally that of the
+  high-volume month. Referencing a different month means the CFD rate
+  differs from what clients see elsewhere, which causes confusion.
+- Cover is impossible, or expensive: with little trading, the risk
+  taken on from client trades can't be covered in that month. Even if
+  it can, fills at unfavorable prices are likely with so little size
+  available, and cover costs go up.
+
+The center of trading volume normally sits in the near month, but it
+shifts to the far month as expiry approaches. Precisely because the
+principle is "reference the month with the highest volume," the
+reference month is rolled over in step with that shift (for the
+timing of rollover, see "Why does a rollover happen?" next).
 
 ### Why does a rollover happen?
 Futures contracts have a "contract month" — a promise for when and
@@ -1102,6 +1127,27 @@ date — not on the day itself — and the exact timing varies by
 product. How the timing is chosen (for example, around the day when
 liquidity is about to shift from the near month to the far month)
 is covered in "Examples by Product Type."
+
+The specific rollover day (the price adjustment day) isn't set by the
+exchange — each CFD provider sets its own. The only common rule is
+that the rollover happens before the referenced futures contract's
+last trading day; how many business days before that varies by
+provider and product. A planned day may also be changed depending on
+liquidity and volume at the reference.
+
+When there are holidays, the rollover day can be pulled forward. The
+referenced futures contract's last trading day is fixed by the
+exchange's rules, and if it falls on a holiday or other non-business
+day it moves to the previous business day (for example, the last
+trading day for Nikkei 225 futures is the business day before the SQ
+date — the second Friday of the contract month — and if that's a
+non-business day, it moves back another business day). Since the
+price adjustment day has to come before that last trading day, it
+ends up being pulled forward as a result.
+
+The price adjustment schedule is announced in advance on the
+provider's website or trading screen, so clients can decide ahead of
+time what to do with their positions.
 
 ### What happens to the rate and position at rollover?
 Whenever the "front month" (the contract month with the highest
