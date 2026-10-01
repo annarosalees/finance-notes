@@ -1515,7 +1515,8 @@ adjustment.
   rollover. That direction is tied to what's inside the price gap
   (interest, dividends, storage costs, supply and demand) — see
   "What is a rollover?"
-- Dividend adjustment: longs receive, shorts pay.
+- Dividend adjustment: longs receive, shorts pay (for the dates involved and
+  the full mechanism, see "When a Dividend Is Paid (Dividend Adjustment)").
   A long moves the same way as someone holding the stock, so like a
   shareholder it receives the dividend. A short is in the same
   position as someone who borrowed the stock and sold it; that
@@ -2069,9 +2070,8 @@ separated. So the price is adjusted to a level that deducts that amount, and
 the deducted amount is paid or charged as a rights adjustment amount. As
 with dividends, clients holding a long receive it and clients holding a
 short pay it.
-The rights adjustment amount is the same mechanism used for dividends (to be
-covered in detail in "When a Dividend Is Paid").
-<!-- The "When a Dividend Is Paid" section has not been written yet. To be added in a separate issue. -->
+The rights adjustment amount is the same mechanism used for dividends (covered
+in detail in "When a Dividend Is Paid (Dividend Adjustment)").
 
 Some brokers, instead of settling in cash, give clients a new CFD position
 in the separated company in line with the spin-off ratio (e.g., 1 share for
@@ -2302,6 +2302,267 @@ calculation has no quote, the following points need attention.
   split, fractions can appear even when the ratio is a whole number. For
   example, in a 4-to-1 reverse split, a client holding 6 CFDs ends up with
   1.5 CFDs, so the 0.5 CFD that falls short of 1 is forcibly closed
+
+---
+
+### When a Dividend Is Paid (Dividend Adjustment)
+
+#### What are a dividend and a CFD dividend adjustment, in a nutshell?
+
+- **Dividend**: a company returning part of the profit it earned from its
+  business to shareholders in cash
+- **Dividend adjustment**: the mechanism for passing an amount equivalent
+  to the dividend to CFD holders. Also called a "dividend-equivalent
+  amount" (in Japanese, *kenri chōseigaku*, literally a "rights
+  adjustment amount")
+
+Part of the profit a company earns is kept as funds to grow the business
+(retained earnings), and the rest is distributed to shareholders. That is
+a dividend. It is usually paid in proportion to the number of shares held,
+as "X dollars per share." Depending on business results, no dividend may
+be paid at all (a zero dividend).
+
+A CFD holder does not hold the physical stock, so they are not a
+shareholder and cannot receive the dividend itself. Instead, an amount
+equivalent to the dividend is passed on as a dividend adjustment.
+The rights adjustment amount used in "When a Spin-off, Reverse Split, or
+Stock Split Happens" to pass on the value of the company separated in a
+spin-off is the same mechanism.
+
+Note that the term "dividend adjustment" also appears in "What is a
+rollover?", but there it means the expected dividends baked into the
+futures price — not something paid or received directly in the client's
+account. What this section covers is the dividend adjustment paid or
+received directly in the account for single-stock and ETF CFDs (for the
+difference, see "Same words — 'interest adjustment' and 'dividend
+adjustment' — different roles" in "Examples by Product Type").
+For ETFs, the payout is called a distribution rather than a dividend, but
+it is handled the same way.
+
+**Four dates involved in a dividend**
+
+Dividends come with several dates that have similar-sounding names.
+
+| Date | Meaning |
+|---|---|
+| Last cum-dividend date | The last day on which holding the stock at the close of trading earns you the right to the dividend |
+| Ex-dividend date | The business day after the last cum-dividend date. Buying the stock on or after this day does not get you this dividend |
+| Record date | The day the company fixes, in its shareholder register, which shareholders will receive the dividend |
+| Payment date | The day the dividend is actually paid to shareholders. Often several weeks after the record date |
+
+A stock trade takes some days from execution until it is actually reflected
+in the shareholder register (settlement). So to be on the register on the
+record date, you have to buy the stock beforehand. The "last day that is
+still in time" is the last cum-dividend date.
+
+| | US stocks | Japanese stocks |
+|---|---|---|
+| Days until settlement | The business day after execution (T+1) | Two business days after execution (T+2) |
+| Last cum-dividend date | The business day before the record date | Two business days before the record date |
+| Ex-dividend date | Same day as the record date | The business day before the record date |
+
+On the ex-dividend date, the share price tends to fall by the amount of the
+dividend. From this day on, buying the stock no longer gets you the
+dividend, so the stock is worth that much less.
+
+With CFDs, the dividend adjustment is paid or received not on the payment
+date but around the ex-dividend date (on a day set by the broker).
+Many brokers credit it, during the daily processing on the ex-dividend
+date, to clients who held a position at the close of trading on the last
+cum-dividend date. However, the reference day used to determine eligible
+positions, and the time it is reflected in the account, differ from broker
+to broker.
+Some brokers book the adjustment on the ex-dividend date but carry out the
+actual movement of funds on the payment date.
+
+#### Why do longs receive and shorts pay with CFDs?
+
+As seen above, on the ex-dividend date the share price tends to fall by the
+amount of the dividend. A shareholder in the physical stock loses nothing
+overall, because even though the price falls, they receive that amount as
+the dividend.
+
+A CFD holder, however, cannot receive the dividend itself. So without a
+dividend adjustment, the following would happen with CFDs.
+
+| | Price drop on the ex-dividend date | Without a dividend adjustment | With a dividend adjustment |
+|---|---|---|---|
+| Long | Loses | Stays at a loss — worse off than a shareholder in the physical stock | Receives the amount of the drop, so loses nothing overall |
+| Short | Gains | Keeps the gain — better off than someone who short-sold the physical stock | Pays the amount of the drop, so gains nothing overall |
+
+In other words, for a reason unrelated to market movement — the drop by the
+amount of the dividend — longs would lose and shorts would gain. The
+dividend adjustment offsets this imbalance so that CFD P&L matches the
+result for the physical stock.
+
+Why shorts pay can also be explained through stock lending. Someone who
+borrowed a stock and sold it must pay the dividend amount to the lender
+when a dividend is paid. A CFD short is in the same position (for details,
+see "Direction of payment" in "Examples by Product Type" and the stock
+lending part of "Long and Short").
+
+Also, for stocks from countries where tax is withheld at source on
+dividends, the amount a long receives and the amount a short pays may not
+match (see "Direction of payment" for this as well).
+
+#### A concrete example: how much changes hands when a single-stock CFD pays a dividend?
+
+**Example: Coca-Cola's dividend (September 2026)**
+
+Coca-Cola is a classic dividend stock that has kept raising its dividend
+for decades. Its September 2026 dividend was as follows.
+
+| Item | Details |
+|---|---|
+| Dividend per share | $0.53 |
+| Last cum-dividend date | Monday, September 14 |
+| Ex-dividend date / record date | Tuesday, September 15 (the same day, since it's a US stock) |
+| Payment date | Thursday, October 1 |
+
+The share price moved as follows.
+
+| Date | Close |
+|---|---|
+| September 14 (last cum-dividend date) | $89.35 |
+| September 15 (ex-dividend date) | $88.71 |
+
+The price fell $0.64 on the ex-dividend date. Of this, $0.53 is the
+dividend, and the remaining $0.11 is the day's market movement.
+
+**What longs and shorts receive and pay**
+
+Consider a client who held 100 Coca-Cola CFDs (equivalent to 100 shares) at
+the close of trading on the last cum-dividend date. The dividend adjustment
+is calculated as follows, without using the price.
+
+　Dividend adjustment = dividend per share × quantity held = $0.53 × 100 = $53
+
+| | P&L from the price drop | Dividend adjustment | Net |
+|---|---|---|---|
+| Long 100 CFDs | (88.71 − 89.35) × 100 = −$64 | +$53 | −$11 |
+| Short 100 CFDs | (89.35 − 88.71) × 100 = +$64 | −$53 | +$11 |
+
+The $11 left over is P&L from the day's market movement, unrelated to the
+dividend. The drop by the amount of the dividend ($53) is exactly offset by
+the dividend adjustment.
+
+**Converted to yen**
+
+The dividend adjustment is calculated in dollars, but if the client's
+account is in yen, it is converted to yen before being paid or received.
+The conversion uses the yen conversion rate (the rate for exchanging dollars
+into yen) at mark-to-market on the day it is applied.
+Assuming, for illustration, $1 = 150 yen:
+
+　$53 × 150 yen = 7,950 yen
+
+The long receives 7,950 yen and the short pays 7,950 yen.
+
+**When tax is withheld**
+
+When tax is withheld at source on a dividend, what a long receives is the
+after-tax amount. Some domestic (Japanese) CFD brokers deduct an amount
+equivalent to US withholding tax (a 10% rate) when crediting dividend
+adjustments on US stock CFDs. On the other hand, no withholding-tax
+equivalent is deducted from what a short pays — the short pays the pre-tax
+amount as is.
+
+　Long receives: $53 × (1 − 0.1) = $47.70
+　Short pays: $53 (the pre-tax amount)
+
+So the amount a long receives and the amount a short pays are not the same.
+The rate also varies with the client's country of residence and the broker;
+some brokers deduct 30%.
+
+#### What does operations (me) check and handle when a dividend is announced?
+
+Compared with spin-offs, reverse splits, and splits, dividends involve a
+simpler workflow, since there is no need to halt trading or force-close
+positions. However, some stock or other goes ex-dividend almost every day,
+so the volume is high. A registration error hits client accounts directly,
+which makes accuracy especially important.
+
+**From announcement to crediting**
+
+1. Check the announcement: when the company announces a dividend, check the
+   ex-dividend date, payment date, and dividend per share
+2. Register in the system: register those details in the system before the
+   ex-dividend date
+3. Correct if anything changes: if the company changes the dividend amount
+   or schedule before the ex-dividend date, correct the registration each
+   time
+4. Fix the eligible clients: clients holding a position at the close of
+   trading on the last cum-dividend date are fixed as eligible at that
+   day's clearing (mark-to-market) processing
+5. Credit the dividend adjustment: on the ex-dividend date, the dividend
+   adjustment is applied to eligible clients' accounts (longs receive,
+   shorts pay)
+
+**Checks after crediting**
+
+6. Check client accounts: confirm the dividend adjustment was correctly
+   applied to client accounts
+7. Reconcile with the cover counterparty: dividend-equivalent amounts are
+   also paid or received with the cover counterparty (CP). Reconcile the
+   amounts paid or received on the positions the firm holds at the CP
+   against the firm's own records
+
+For checking whether tax is withheld, why adjustments are calculated
+together in daily processing, and the rate used for yen conversion, see
+"When and at what price are adjustments calculated?" and "Does operations
+(me) handle things differently depending on product type?" in "Examples by
+Product Type."
+
+**Cases handled differently from a regular dividend**
+
+- Special dividend: a one-off dividend paid separately from the regular
+  dividend, for example when results have been especially strong. It is
+  often larger than the regular dividend. For CFDs, it is basically paid or
+  received as a dividend adjustment, the same as a regular dividend.
+  Because the amount is larger, though, both the price drop on the
+  ex-dividend date and the dividend adjustment paid or received are larger
+- Stock dividend: a dividend may be paid in shares rather than cash. How
+  CFDs handle this differs by broker: some increase the CFD position by the
+  number of additional shares, while others leave the position unchanged
+  and pay or receive the value of the shares in cash
+
+#### Where my three-years-ago self would get stuck
+
+- Being confused that "it's the ex-dividend date, but the price doesn't
+  look like it fell by the dividend": for stocks whose dividend is very
+  small relative to the share price, the drop by the amount of the dividend
+  is buried in the day's normal price movement and can't be picked out. For
+  example, Apple's August 2026 dividend was $0.27 per share. Its close on
+  the ex-dividend date (August 10) fell $5.07, from $313.33 on the last
+  cum-dividend date (August 7) to $308.26 — but only $0.27 of that was the
+  dividend, about 5% of the total. The rest was the day's market movement.
+  Unless the dividend is fairly large relative to the share price, as in
+  the Coca-Cola example, the drop by the amount of the dividend is not
+  something you can see with your own eyes
+- Thinking "if I go long on the last cum-dividend date and close the next
+  day, I gain the dividend": in reality, the price falls by the amount of
+  the dividend on the ex-dividend date, so even after receiving the
+  dividend adjustment you gain nothing overall. Where tax is withheld, what
+  you receive is the after-tax amount, so you actually end up worse off by
+  the amount of the tax.
+  For example, in the Coca-Cola case, going long 100 CFDs on the last
+  cum-dividend date and closing on the ex-dividend date: the drop by the
+  amount of the dividend is −$53 and the dividend adjustment received is
+  +$47.70 after tax, so the dividend-related part alone comes to −$5.30
+- Assuming the dividend adjustment arrives on the dividend's "payment
+  date": shareholders of the physical stock are paid the dividend on the
+  payment date, but with CFDs the adjustment is applied not on the payment
+  date but around the ex-dividend date (on a day set by the broker). In the
+  Coca-Cola example, the payment date was October 1, but the CFD dividend
+  adjustment was paid or received around the ex-dividend date of
+  September 15
+- Thinking the dividend adjustment that appears in "rollover" is the same
+  thing as the one covered here: for stock index CFDs that reference
+  futures (e.g., Japan 225), expected dividends are already priced into the
+  futures price, so even when dividends are paid, no dividend adjustment is
+  paid or received in the client's account (it is settled within the price
+  adjustment at rollover). Dividend adjustments are paid or received on
+  single-stock and ETF CFDs
 
 ---
 
