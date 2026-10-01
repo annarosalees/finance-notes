@@ -75,22 +75,28 @@ Are Rates Generated?"](./cfd-pricing-and-cover.en.md) and ["The Idea Behind Cove
 
 #### Why can you trade without holding the underlying?
 A CFD is built by referencing the price of an underlying asset (a
-stock, a commodity, etc.), but it doesn't require the full amount of
-capital that buying the underlying outright would. Since a CFD only
+stock or commodity itself, or its futures), but it doesn't require
+the full amount of capital that buying the physical asset outright
+would. Since a CFD only
 settles the price difference, it lets you trade with less capital
 (this connects to the idea of leverage, covered in its own section).
 
-Trading the physical underlying also comes with the hassle of
-delivery. For something like WTI crude oil, if you keep holding a
-futures position past its contract month, physical delivery would
-normally be triggered. With a CFD, the broker handles all of that
-delivery-related work on the client's behalf, so the client can just
-focus on the difference-settlement trade without ever having to
-think about the underlying itself.
+Trading the physical asset or its futures also comes with the
+hassle of delivery. For example, if you trade WTI crude oil futures
+and keep holding the position past its contract month (the month in
+which the contract expires), delivery of the physical asset (crude
+oil itself) would normally be triggered. To avoid that, you'd have to
+roll over to the next contract month yourself before expiry. With a
+CFD, the broker handles all of that delivery and rollover work on the
+client's behalf, so the client can just focus on the
+difference-settlement trade without ever having to think about the
+physical asset.
 
-On top of that, physical trading is only possible while the relevant
-exchange is open, whereas CFDs can be traded overnight and on
-holidays too.
+On top of that, trading on an exchange is only possible while that
+exchange is open. CFD trading hours are set by the broker, and while
+they follow the reference market's hours, many products can be
+traded overnight and on holidays when domestic exchanges are
+closed.
 
 #### A concrete example: what is a CFD actually referencing?
 What a CFD's price actually tracks depends on the product type.
@@ -253,30 +259,41 @@ advantages:
   limited to exchange hours — many products can be traded overnight,
   including overseas markets.
 
-#### A concrete example: physical WTI crude oil vs. WTI crude oil CFD
-To see the difference concretely, compare WTI crude oil futures
-(physical) with a WTI crude oil CFD.
+#### A concrete example: how do physical WTI crude oil, WTI futures, and a WTI CFD differ?
+To see the difference concretely, compare three things: physical WTI
+crude oil, WTI crude oil futures, and a WTI crude oil CFD. Futures are
+included because what a WTI crude oil CFD references is the futures
+price, not the physical price — and contract months and rollover are
+properties of futures in the first place.
 
-| Item | Physical WTI crude oil | WTI crude oil CFD |
-|---|---|---|
-| Delivery | Physical delivery is triggered when the contract month arrives; avoiding it requires rolling over yourself | No delivery ever happens; the broker handles the rollover on your behalf |
-| Capital required | The full trade amount | Margin only (leverage applies) |
-| Short selling | Requires borrowing the physical asset first — costly and cumbersome | Can be opened directly as a new short position |
-| Trading hours | Limited to the crude oil futures exchange's hours | Often tradable overnight and on holidays |
-| Storage / incidental costs | Storage and transport costs can apply | No concept of storage; costs are folded into things like the spread |
+| Item | Physical WTI crude oil | WTI crude oil futures | WTI crude oil CFD |
+|---|---|---|---|
+| What's traded | The crude oil itself (actually owned) | A promise to deliver crude oil on a future date (a contract per contract month) | A contract that references the futures price and settles only the price difference |
+| Delivery / rollover | You receive the crude oil when you buy it; there's no concept of a contract month | Holding to expiry triggers delivery of crude oil; avoiding it requires rolling over to the next contract month yourself | No delivery ever happens; the broker handles the rollover on your behalf |
+| Capital required | The full trade amount | Margin only (leverage applies) | Margin only (leverage applies) |
+| Short selling | You can't sell crude oil you don't hold | Can be opened directly as a new short position | Can be opened directly as a new short position |
+| Trade size | Mostly large-lot trading; buying and selling small amounts isn't realistic for individuals | Large size per contract | Often tradable in smaller units than futures |
+| Trading hours | Mostly bilateral trading, not on an exchange | Limited to the futures exchange's hours | Hours set by the broker (often following the referenced futures' hours) |
+| Storage / incidental costs | Storage and transport costs apply | No storage costs, but trading fees and the cost of trading at rollover apply | No concept of storage; costs are folded into things like the spread and price adjustments at rollover |
 
-So even though the underlying price movement is identical, that one
-difference — whether or not you hold the physical asset — cascades
-into differences in capital, risk management, and trading
-flexibility.
+So even though the underlying price movement is the same, the
+differences arise in two steps. Going from physical to futures adds
+flexibility — "no need for the full amount of capital," "you can
+start with a sell" — but because futures have contract months, you
+now have to manage delivery and rollover yourself. A CFD references
+the futures price while having the broker take on that delivery and
+rollover work, so the client doesn't have to think about either
+"whether to hold the physical asset" or "how to manage contract
+months."
 
 #### Where does operations (me) notice the difference between physical and CFD trading?
 Because a CFD never holds the physical asset, it creates operations
 work that has no counterpart in physical trading. In practice, this
 difference shows up especially in:
 
-- Rollover (rolling the contract month): the rollover process itself
-  is unique to CFDs and has no equivalent in physical trading
+- Rollover (rolling the contract month): in futures trading the
+  investor rolls over themselves; with a CFD, the broker does it on
+  the client's behalf — the rollover work itself
 - Managing the adjustment amount: calculating and applying the
   adjustment that offsets the price discontinuity caused by rollover
   (for single stocks and spot products, this also includes
@@ -318,11 +335,13 @@ risk, timing, units) to the operations side.
 separate product called a CFD even exist?" — that might be your
 first reaction. "Why not just trade the physical asset directly?"
 
-But trading the physical asset directly means you'd have to roll
-over the position yourself every time the contract month arrives —
-which is a hassle, and if you got it wrong, you could actually end
-up with the physical asset (crude oil or some other commodity)
-delivered to you. A CFD exists precisely because the broker takes on
+But for a commodity like crude oil, trading the physical asset
+directly requires the full amount of capital and the trouble of
+storage, which isn't realistic for individuals. Trading futures
+directly instead means you'd have to roll over the position yourself
+every time the contract month arrives — which is a hassle, and if you
+forgot, delivery of the physical asset (the crude oil itself) could
+actually be triggered. A CFD exists precisely because the broker takes on
 that hassle and delivery risk on your behalf.
 
 That said, this doesn't mean "a CFD is simply the better deal." A
@@ -397,19 +416,31 @@ by broker. The following is just one illustrative example.
   there's no grace period at all. The instant it crosses that line,
   the entire position is forcibly closed (a stop-out). This also
   serves as a safeguard to keep the client's losses from growing any
-  further.
+  further. Note, though, that a stop-out is a mechanism that
+  "triggers closing once that level is reached"; it doesn't guarantee
+  the position is closed at that level's rate. When the market moves
+  sharply or gaps (opens far away from the previous close), the
+  position can be closed at a rate much worse than the stop-out
+  level, creating a loss larger than the margin deposited (a
+  deficit). In that case, the client has to deposit funds to pay the
+  deficit.
 
 Operations continuously monitors margin levels account by account,
 sends margin-call notices to accounts that cross the threshold with
 a grace period, and confirms that the stop-out process has run
-correctly for accounts that cross the no-grace-period threshold.
+correctly for accounts that cross the no-grace-period threshold. For
+accounts left with a deficit after a stop-out, operations also
+notifies the client and confirms the deposit.
 
 #### Where my three-years-ago self would get stuck
 - Assuming leverage means "trading with borrowed money": leverage
   isn't a loan — it's a mechanism for trading a multiple of your
-  margin, which serves as collateral. If an unrealized loss exceeds
-  the margin, the position is forcibly closed; the system isn't
-  designed around the idea of taking on debt beyond your margin.
+  margin, which serves as collateral. That said, "not a loan" doesn't
+  mean "you can't lose more than your margin." When the margin level
+  falls below a certain threshold, the position is forcibly closed by
+  a stop-out — but if the market moves sharply, the close can't keep
+  up, and a loss larger than the margin (a deficit) can arise, which
+  you're obliged to pay.
 - Assuming you should always use the maximum leverage available:
   being able to trade up to the cap (e.g., 10x for an equity index
   CFD) doesn't mean trading at the full cap is the normal way to
@@ -441,12 +472,16 @@ opposite trade (a closing order) against your open position. While a
 position stays open, its unrealized P&L just fluctuates with every
 price move — it isn't yet locked in as anything real.
 
-There are two basic ways to place an order:
+There are three basic ways to place an order:
 
 - Market order: executes immediately at whatever rate is showing
   right now
-- Limit order: executes once the rate reaches a rate you specified
-  in advance
+- Limit order: you specify a rate more favorable than the current
+  one, and the order executes once that rate is reached (for a buy, a
+  rate below the current one; for a sell, a rate above it)
+- Stop order: you specify a rate less favorable than the current one,
+  and the order executes once that rate is reached (for a buy, a rate
+  above the current one; for a sell, a rate below it)
 
 Either type can be used both to open a position (a new order) and to
 close one (a settlement order).
@@ -454,27 +489,35 @@ close one (a settlement order).
 | | New order (opening a position) | Settlement order (closing a position) |
 |---|---|---|
 | **Market** | Opens a new position immediately at the current rate | Closes the position immediately at the current rate |
-| **Limit** | Opens a new position once the specified rate is reached | Closes the position once the specified rate is reached |
+| **Limit** | Opens a new position once a specified rate more favorable than the current one is reached | Closes the position once a specified rate more favorable than the current one is reached |
+| **Stop** | Opens a new position once a specified rate less favorable than the current one is reached | Closes the position once a specified rate less favorable than the current one is reached |
 
 A settlement order can either lock in a profit ("take-profit") or
-lock in a loss ("stop-loss"), and either can be placed as a market
-or a limit order.
+lock in a loss ("stop-loss"). Taking profit means closing at a rate
+more favorable than the current one, so it uses a limit order; a
+stop-loss means closing at a rate less favorable than the current
+one, so it uses a stop order (either can also be done with a market
+order if you want to close right away).
 
-For example, say you open a position with a market order at 100. If
-you want to lock in a profit once the price reaches 105, you place a
-limit settlement order (take-profit) at 105. Conversely, if you want
-to cap your loss in case the price falls to 90, you place a limit
-settlement order (stop-loss) at 90.
+For example, say you open a long (buy) position with a market order
+at 100. Closing this position means selling. If you want to lock in
+a profit once the price reaches 105, you place a limit sell
+settlement order (take-profit) at 105. Conversely, if you want to cap
+your loss in case the price falls to 90, you place a stop sell
+settlement order (stop-loss) at 90. If you mistakenly placed a
+"limit" sell order at 90, it would mean "sell at 90 or higher," and
+it would execute immediately at the current 100.
 
 ```mermaid
 graph LR
-    A["New order (market)<br/>Open position at 100"] --> B{Which way does the price move?}
-    B -->|Rises to 105| C["Take-profit line (limit settlement)<br/>Close at 105 → +5 profit"]
-    B -->|Falls to 90| D["Stop-loss line (limit settlement)<br/>Close at 90 → −10 loss"]
+    A["New order (market)<br/>Open a long position at 100"] --> B{Which way does the price move?}
+    B -->|Rises to 105| C["Take-profit line (limit settlement)<br/>Sell to close at 105 → +5 profit"]
+    B -->|Falls to 90| D["Stop-loss line (stop settlement)<br/>Sell to close at 90 → −10 loss"]
 ```
 
-Setting take-profit and stop-loss lines in advance like this lets
-you lock in P&L without having to watch the price constantly.
+Setting the take-profit line with a limit order and the stop-loss
+line with a stop order in advance like this lets you lock in P&L
+without having to watch the price constantly.
 
 #### A concrete example: how is P&L calculated across multiple trades? (The idea of average execution price)
 When you trade the same product multiple times — adding to a
@@ -536,10 +579,12 @@ again once the rate falls back below 103.
 - Confirming P&L and balance updates: verifying that P&L locked in by
   a settlement is correctly reflected in the client's account
   balance.
-- Handling slippage: for a limit settlement order, the actual
-  execution rate can differ from the rate the client specified
-  (slippage). Operations checks whether that gap exceeds the
-  acceptable tolerance and responds if it does.
+- Handling slippage: with market orders and stop orders, the actual
+  execution rate can differ unfavorably from the rate seen (or
+  specified) when the order was placed (slippage). Operations checks
+  whether that gap exceeds the acceptable tolerance and responds if it
+  does. Limit orders only execute "at the specified rate or better,"
+  so unfavorable slippage doesn't occur with them.
 
 #### Where my three-years-ago self would get stuck
 - Treating unrealized P&L as if it were already locked in: no matter
@@ -552,9 +597,12 @@ again once the rate falls back below 103.
   rate. It's more useful in practice to watch where the average
   execution price sits than to react to every price swing along the
   way.
-- Assuming a limit settlement order guarantees execution at exactly
-  that rate: because of slippage and rate-feed conditions, the actual
-  execution rate can differ from the rate you specified.
+- Assuming a stop-loss placed with a stop order guarantees execution
+  at exactly that rate: a stop order is an order to "close once the
+  specified rate is reached," and it doesn't guarantee execution at
+  that rate. When the market moves sharply, or depending on rate-feed
+  conditions, it can execute at a rate worse than the one specified
+  (slippage).
 
 ### Long and Short
 
@@ -630,12 +678,17 @@ risk (a loss if the market moves the wrong way). So for any stock
 where shares aren't available to borrow, the broker has no choice
 but to restrict new short trades on that product.
 
-This isn't purely up to the broker either — it's tied to exchange-
-level rules (short-selling restrictions such as Japan's "Rule 201")
-and to any stock-lending restrictions imposed on the broker's own
-cover counterparty. When a broker offering CFDs over the counter
-sees its cover counterparty hit a stock-lending restriction, it
-restricts new client short-selling accordingly.
+This isn't purely up to the broker either — it's also tied to
+market-level rules. The typical example is rules that restrict the
+price at which a stock that has fallen sharply can be sold short: in
+the US, the SEC (Securities and Exchange Commission) rule known as
+Rule 201, and in Japan, the short-selling price restriction. Neither
+bans short selling outright; both restrict short sales that would
+"pile on" a falling price. It's also tied to any stock-lending
+restrictions imposed on the broker's own cover counterparty. When
+such rules make selling at the cover counterparty difficult, a
+broker offering CFDs over the counter restricts new client short
+selling accordingly.
 
 #### A concrete example: what happens to P&L, long vs. short, when the price rises or falls?
 Say you trade one unit of the Japan 225 CFD at 24,000.
@@ -693,7 +746,8 @@ mind, in a few specific areas:
   position the firm itself is carrying, with a risk that cover
   orders get rejected — so this needs constant monitoring.
 - Short-specific regulatory response: when a stock-lending
-  restriction or a short-selling restriction (such as Rule 201)
+  restriction or a short-selling price restriction (such as the US
+  Rule 201)
   comes into effect, new client short trades on that product are
   halted and a notice is posted on the client trading page. When the
   restriction is lifted, the lift date is posted on the client page
