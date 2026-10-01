@@ -12,8 +12,13 @@ leaning too heavily on jargon.
 - Anyone who wants a systematic understanding of how these products work in practice
 
 ## Notes included
-- `notes/cfd.md` (JP) / `notes/cfd.en.md` (EN) — CFDs (cash-settled
-  contracts for difference): indices, commodities, US stocks, ETFs, etc.
+- [`notes/cfd.md`](./notes/cfd.md) (JP) / [`notes/cfd.en.md`](./notes/cfd.en.md) (EN) — CFDs (cash-settled
+  contracts for difference): indices, commodities, US stocks, ETFs, etc. (contents page)
+  - [`notes/cfd-basics.en.md`](./notes/cfd-basics.en.md) — Basics
+  - [`notes/cfd-pricing-and-cover.en.md`](./notes/cfd-pricing-and-cover.en.md) — Pricing and Risk Management
+  - [`notes/cfd-rollover-and-adjustments.en.md`](./notes/cfd-rollover-and-adjustments.en.md) — Rollover and Adjustments
+  - [`notes/cfd-product-types.en.md`](./notes/cfd-product-types.en.md) — Examples by Product Type
+  - [`notes/cfd-product-listing.en.md`](./notes/cfd-product-listing.en.md) — Adding a New CFD Product in Practice
 - [`notes/fx.md`](./notes/fx.md) (JP) / [`notes/fx.en.md`](./notes/fx.en.md) (EN) — FX
   (margin foreign exchange trading)
 - `notes/binary.md` — Binary options *planned*
