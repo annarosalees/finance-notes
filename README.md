@@ -13,7 +13,12 @@ FX・CFD・バイナリーオプションの仕組みを、実務者の視点で
 
 ## 収録ノート
 
-- `notes/cfd.md` … CFD（差金決済取引）：指数・商品・米国株・ETF など
+- [`notes/cfd.md`](./notes/cfd.md) … CFD（差金決済取引）：指数・商品・米国株・ETF など（目次）
+  - [`notes/cfd-basics.md`](./notes/cfd-basics.md) … 基礎
+  - [`notes/cfd-pricing-and-cover.md`](./notes/cfd-pricing-and-cover.md) … 価格とリスク管理
+  - [`notes/cfd-rollover-and-adjustments.md`](./notes/cfd-rollover-and-adjustments.md) … 乗り換えと調整金
+  - [`notes/cfd-product-types.md`](./notes/cfd-product-types.md) … 商品タイプ別の具体例
+  - [`notes/cfd-product-listing.md`](./notes/cfd-product-listing.md) … 銘柄追加の実務
 - [`notes/fx.md`](./notes/fx.md) … FX（外国為替証拠金取引）
 - `notes/binary.md` … バイナリーオプション ※作成予定
 
