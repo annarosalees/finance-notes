@@ -1957,6 +1957,354 @@ what to watch out for.
 
 ---
 
+### When a Spin-off, Reverse Split, or Stock Split Happens
+
+A foreign stock CFD uses an overseas individual stock as its underlying
+(the instrument the CFD's price is based on). So when the company that
+issued the underlying carries out a corporate action, the CFD is affected
+too.
+
+This applies not only to foreign stocks but also to ETF CFDs (index-tracking
+ETFs, leveraged ETFs, and so on). On the other hand, CFDs on a stock index
+itself, such as Japan 225, or on commodities such as WTI crude oil, are not
+affected by splits or reverse splits.
+
+#### What is a corporate action in the first place?
+
+A corporate action is a financial decision made by a company that issues
+shares. Examples include dividends, stock splits, reverse splits (share
+consolidations), capital increases, mergers, and spin-offs.
+
+From a shareholder's point of view, a corporate action is "something that
+happens to the shares you hold."
+
+| Corporate action | What happens from the shareholder's point of view |
+|---|---|
+| Dividend | You receive part of the company's profit in cash |
+| Stock split | Your share count goes up and the price per share goes down |
+| Reverse split | Your share count goes down and the price per share goes up |
+| Spin-off | You receive shares in a newly separated company |
+
+This section covers the three that require adjustments to positions and
+prices: stock splits, reverse splits, and spin-offs.
+
+#### What are spin-offs, reverse splits, and stock splits, in a nutshell?
+
+- **Stock split**: dividing one share into several, increasing the number
+  of shares outstanding
+- **Reverse split (share consolidation)**: combining several shares into
+  one, decreasing the number of shares outstanding
+- **Spin-off**: a company separating part of its business and making it an
+  independent company
+
+With splits and reverse splits, the share count and the price per share
+simply move in opposite directions, so in theory the value of what you hold
+does not change.
+
+| | Stock split (1 share → 2) | Reverse split (5 shares → 1) |
+|---|---|---|
+| Shares held | Doubles | Becomes 1/5 |
+| Value per share | Halves | Becomes 5x |
+| Total value | Unchanged | Unchanged |
+| Main purpose | Lower the price per share to make it easier to buy | Raise the price per share (to meet listing requirements, improve perception, reduce administrative costs) |
+
+**Note: in English, both splits and reverse splits are often labeled
+"Stock Split."**
+To tell them apart, look at the adjustment factor (the split or
+consolidation ratio). If it is greater than 1, it is a split; if it is less
+than 1, it is a reverse split.
+
+| Event | Adjustment factor | Type |
+|---|---|---|
+| 1 share → 2 | 2 | Split |
+| 1 share → 3 | 3 | Split |
+| 5 shares → 1 | 0.2 | Reverse split |
+| 4 shares → 1 | 0.25 | Reverse split |
+
+**Side note: the value is unchanged in theory, but the share price still
+moves**
+When a split is announced, the price per share falls and the stock becomes
+easier to buy. Because more buyers are expected, buying tends to pick up and
+the share price often rises.
+A reverse split, by contrast, is often seen as something done by companies
+whose share price has fallen, so the share price often falls after the
+announcement.
+
+#### How does this affect a CFD position?
+
+A CFD is not the physical stock, but it is designed so that the holder gains
+or loses the same as a shareholder would. So when a split, reverse split, or
+spin-off happens in the underlying, the CFD's positions and prices are also
+adjusted to produce the same result as for a shareholder.
+
+There are broadly three kinds of adjustment.
+
+| Adjustment | What is adjusted |
+|---|---|
+| Position adjustment | The quantity of the position held |
+| Price adjustment | The prices shown to clients (current price, price history, highs/lows, closing prices) |
+| Stop-out adjustment | Stop-out levels and clients' pending orders such as limit orders |
+
+The stop-out adjustment is needed because the price changes sharply. For
+example, if a 1-for-2 split halves the price but stop-out levels and limit
+prices stay where they were, a stop-out or limit order could be triggered at
+the moment of the split even though the market has not actually moved.
+So stop-out levels are recalculated for the new price level. Pending orders
+such as limit orders, on the other hand, are generally all cancelled before
+the split or reverse split, and clients place them again afterwards.
+
+**For splits and reverse splits**
+The position quantity and price are changed in line with the ratio. When the
+quantity goes up, the price goes down, and vice versa, so the total value of
+the position does not change.
+
+Depending on the ratio, however, a position can end up with a fraction (an
+odd amount less than 1). If the rules do not allow fractional positions, the
+position cannot be managed correctly as is, so it is forcibly closed before
+the split or reverse split.
+
+**For spin-offs**
+The original company's share price falls by the value of the company being
+separated. So the price is adjusted to a level that deducts that amount, and
+the deducted amount is paid or charged as a rights adjustment amount. As
+with dividends, clients holding a long receive it and clients holding a
+short pay it.
+The rights adjustment amount is the same mechanism used for dividends (to be
+covered in detail in "When a Dividend Is Paid").
+<!-- The "When a Dividend Is Paid" section has not been written yet. To be added in a separate issue. -->
+
+Some brokers, instead of settling in cash, give clients a new CFD position
+in the separated company in line with the spin-off ratio (e.g., 1 share for
+every 5 held). This is only possible when they offer a CFD on that company.
+
+#### A concrete example: when a stock you hold is split, how are the position and price adjusted?
+
+**Example 1: Netflix's 10-for-1 split (November 2025)**
+
+On October 30, 2025, Netflix announced it would split each share into 10.
+The split took effect after the close on Friday, November 14, and trading at
+the post-split price began on Monday, November 17. The share price was about
+$1,100 before the split and about $110 after.
+
+Take a client who, before the split, had bought (gone long) 3 Netflix CFDs
+at $1,050. Their position is adjusted as follows.
+
+| | Before split | After split |
+|---|---|---|
+| Quantity | 3 CFDs | 30 CFDs (x10) |
+| Execution price | $1,050 | $105 (÷10) |
+| Current price | about $1,100 | about $110 (÷10) |
+| Unrealized gain | (1,100 − 1,050) × 3 = $150 | (110 − 105) × 30 = $150 |
+
+The quantity goes up 10x and the price drops to 1/10, but the unrealized
+gain does not change. Because the ratio is a whole number, no fraction
+appears and there is no forced close.
+
+Brokers adjust positions in one of two ways: rewriting the quantity and
+price directly in line with the ratio, or closing the position once at the
+pre-split price and reopening it at the adjusted quantity and price. Either
+way, the point is the same: the client's P&L must not change.
+
+**Differences from rounding**
+Dividing the execution price by the ratio can produce a price with too many
+decimal places. For example, an execution price of $1,050.33 becomes
+$105.033 after dividing by 10, but if prices only go to two decimal places,
+it is rounded to $105.03.
+This creates a small difference in unrealized P&L before and after the
+split.
+
+- Before the split: (1,100 − 1,050.33) × 3 = $149.01
+- After the split: (110 − 105.03) × 30 = $149.10
+
+This $0.09 difference is adjusted with a deposit or withdrawal on the
+client's account so that P&L is the same before and after the split.
+
+**Example 2: a ratio that produces fractions (hypothetical)**
+
+Suppose Company B does a 1-for-1.5 split. A client holding 3 CFDs in
+Company B would end up with 4.5 CFDs after the split — a fraction.
+A client holding 2 CFDs would end up with 3, with no fraction, but forced
+closes are decided per instrument, not per client holding. For an
+instrument whose ratio is not a whole number, new orders are stopped as soon
+as the split is announced, and every client's position is forcibly closed
+before the split.
+
+Reverse splits follow the same idea: the ratio determines whether there is a
+forced close.
+
+| Event | Adjustment factor | Forced close |
+|---|---|---|
+| 1 share → 3 (split) | 3 | None |
+| 1 share → 1.5 (split) | 1.5 | Yes (all clients) |
+| 4 shares → 1 (reverse split) | 0.25 | Only the fractional part, for clients who end up with one |
+| 2.5 shares → 1 (reverse split) | 0.4 | Yes (all clients) |
+
+With a reverse split, though, fractions can appear even when the ratio is a
+whole number. For example, in a 4-to-1 reverse split, a client holding 6 CFDs
+would end up with 1.5 CFDs. In that case, only the 0.5 CFD that falls short
+of 1 is forcibly closed from that client's position.
+How fractions are handled in splits and reverse splits may differ from
+broker to broker.
+
+#### What does operations (me) check and handle when a corporate action happens?
+
+For splits, reverse splits, and spin-offs, the operations workflow is
+broadly the same. If the CFD is not adjusted in the same way as what
+happened in the underlying, client positions and P&L will not be processed
+correctly, so action is always required.
+
+The details of the workflow differ from broker to broker. What follows is
+one example.
+
+Also note that CFD split/reverse-split processing can run on a different
+schedule from trading in the physical stock. For physical stock, processing
+centers on the record date, but for CFDs each broker sets its own forced
+close deadline and its own timing for adjusting positions.
+
+**Work done before the record date**
+
+1. Confirm the corporate action: check the details for the instrument
+   (type, ratio, schedule), and check whether any other corporate action
+   overlaps on the same instrument
+2. Notify clients: inform them of the details and schedule. For a spin-off,
+   show the record date, the rights adjustment amount, and the date it is
+   scheduled to be credited/debited
+3. Restrict new trading: if there will be a forced close, stop accepting new
+   orders
+4. Register the forced close: if there will be a forced close, register it
+   in the system
+5. Calculate the rights adjustment amount (for spin-offs; method below)
+6. Register the rights adjustment amount
+7. Unwind the position at the cover counterparty (CP): close out the
+   position held at the cover counterparty before the split or reverse
+   split. For example, if the firm holds a buy of 10 at the CP, it sends a
+   sell of 10 to bring it to zero. In the meantime, the firm temporarily
+   carries the other side of its client positions itself.
+   This is because if the position is carried over at the CP, the split or
+   reverse split also gets processed at the CP, making it hard to reconcile
+   against the firm's own processing.
+   At the same time, the limit (the position size above which a cover trade
+   is executed; see "Position Limits and Cover Strategy") is temporarily
+   widened so that no new cover trades flow to the CP in the meantime
+
+**Work done after the close**
+
+8. Check the results: confirm that position quantities and prices were
+   adjusted according to the ratio
+9. Change price and limit settings: change price-related settings
+   (abnormal-rate thresholds, upper/lower price bounds, etc.) to match the
+   new price level. Quantity-based caps (such as position limits) are also
+   reviewed in line with the ratio, since the split or reverse split changes
+   quantities
+10. Restrict trading and cancel orders: halt trading and cancel all clients'
+    pending orders
+
+**Work done around the open**
+
+11. Resume rate distribution: after confirming that no pre-corporate-action
+    rates are left over, resume generating and distributing rates to
+    clients
+12. Rebuild the cover position: re-establish, at the adjusted quantity, the
+    position at the CP that was unwound in step 7
+
+**How the rights adjustment amount for a spin-off is calculated**
+
+The calculation method differs from broker to broker, but prices from
+before the ex-date are often used. There are two main approaches.
+
+Calculated value 1: using the difference in share price before and after
+the spin-off
+Think about how much the original company's value per share falls because
+of the spin-off. If the share price before the spin-off is x and after is
+x',
+
+　Rights adjustment amount = x − x'
+
+But x' is the price after the spin-off, so normally it cannot be known in
+advance. However, for corporate actions involving rights such as spin-offs
+and splits, the post-ex-date shares start trading as a separate instrument
+before the record date (when-issued trading), so the post-ex-date price can
+be estimated in advance. On major data vendors' terminals, these appear as a
+separate instrument with "-W" added to the end of the existing ticker
+(e.g., GE → GE-W).
+
+Calculated value 2: using the share price of the company being separated
+With a spin-off, the share price of the company being separated also
+becomes available before the effective date. If the original company A's
+price is x, A's price after the spin-off is x', and the separated company
+B's price is y, then
+
+　x' = x − y
+
+In other words, a CFD with company A's shares as its underlying loses value
+by y because of the spin-off. So y is used as the rights adjustment amount.
+
+Another approach is to take the average of the two.
+
+　Rights adjustment amount = {(x − x') + y} ÷ 2
+
+**A concrete example: Kyndryl's spin-off from IBM (November 2021)**
+
+IBM shareholders received 1 Kyndryl share for every 5 IBM shares held on the
+last cum-rights date (November 3). Three instruments are used in the
+calculation.
+
+| Instrument | Role |
+|---|---|
+| Old IBM (IBM) | Pre-spin-off price x |
+| New IBM (IBM-W) | Post-spin-off price x' |
+| Kyndryl (KD-W) | Price of the separated company y |
+
+- Calculated value 1: on the last cum-rights date (November 3), new IBM did
+  not trade, so it had no price. The calculation became 127.13 − (no
+  price), and could not be computed
+- Calculated value 2: since 1 Kyndryl share is given for every 5 IBM shares,
+  each IBM share corresponds to 1/5 of a Kyndryl share. Dividing Kyndryl's
+  price of $28.50 by 5 gives 28.50 ÷ 5 = $5.70
+
+Because value 1 could not be computed, no average could be taken, and
+value 2, $5.70, was used as the rights adjustment amount.
+
+In irregular cases like this, where one of the prices needed for the
+calculation has no quote, the following points need attention.
+
+- Use closing prices from the same business day for all three instruments:
+  new IBM has a closing price for November 2 but not for November 3. If new
+  IBM's November 2 price is used, old IBM and Kyndryl must also use their
+  November 2 closing prices
+- If prices have moved a lot since the previous business day, use the most
+  recent prices: comparing the November 2 and 3 closes for old IBM and
+  Kyndryl, IBM rose while Kyndryl fell — they moved in opposite directions.
+  The November 3 closes better reflect the latest market movement, so
+  calculating with them gives a value closer to the actual market
+
+#### Where my three-years-ago self would get stuck
+
+- Seeing the share price drop sharply after a split and thinking "it
+  crashed" or "I lost money": in reality, the quantity has gone up by the
+  same ratio, so the value of what you hold is unchanged. For example, in
+  Netflix's 10-for-1 split, the price went from about $1,100 to about $110,
+  but the number of CFDs held went up 10x.
+  Price history (the chart) is also adjusted to the new level. Without that
+  adjustment, it would look as if a crash or spike had happened on the day
+  of the split or reverse split, and you could no longer analyze continuous,
+  accurate price movement across it
+- Being surprised that limit orders and other orders placed before a split
+  or reverse split "disappeared": in reality, because the price level
+  changes, the broker cancels all pending orders. They need to be placed
+  again afterwards, at the new price level
+- Assuming the rights adjustment amount for a spin-off is something you only
+  receive: as with dividends, long holders receive it, but short holders
+  pay it. It is the same idea as short-selling a physical stock, where you
+  have to pay what the shareholder receives
+- Assuming "if the ratio is a whole number, there is no forced close": with
+  a split, a whole-number ratio produces no fractions, but with a reverse
+  split, fractions can appear even when the ratio is a whole number. For
+  example, in a 4-to-1 reverse split, a client holding 6 CFDs ends up with
+  1.5 CFDs, so the 0.5 CFD that falls short of 1 is forcibly closed
+
+---
+
 ### Position Limits and Cover Strategy (Capital Adequacy and Market Risk Management)
 The capital adequacy ratio is a metric showing how much financial
 cushion a financial instruments business operator (a broker or an
