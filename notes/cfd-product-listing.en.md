@@ -9,7 +9,7 @@ offering a new CFD product.
 
 ---
 
-### Adding a New CFD Product in Practice (How a New Product Gets Launched)
+### Adding a new CFD product in practice (how a new product gets launched)
 
 The other files in these CFD notes explain how CFDs work (references,
 rollover, adjustments, cover, and so on). Building on that, this
@@ -30,7 +30,7 @@ do it" → "decide how to sell it" → "prepare how it will run" →
 | | Spread | Taking risk and revenue into account, how wide the spread (the gap between bid and ask) needs to be |
 | | Trading rules | Whether any special trading rules are needed; setting trading limits (per order, per day, open position size) and the like |
 | 3. Prepare how it will run | Data integration | Work with data vendors to start getting price data flowing into the broker's systems; coordination with engineers is also needed |
-| | Market risk weighting | For each product, confirm which category it falls into for the regulatory market risk calculation (the weighting for each category is set by law), and decide the settings used for internal risk management (internal weightings, position limits, and so on) (see ["Position Limits and Cover Strategy"](./cfd-pricing-and-cover.en.md)). Since this is configured in the system, it's also confirmed with the finance team |
+| | Market risk weighting | For each product, confirm which category it falls into for the regulatory market risk calculation (the weighting for each category is set by law), and decide the settings used for internal risk management (internal weightings, position limits, and so on) (see ["Position limits and cover strategy"](./cfd-pricing-and-cover.en.md)). Since this is configured in the system, it's also confirmed with the finance team |
 | | Pricing parameters and cover settings | Set the pricing parameters (how the spread is determined, the thresholds for flagging abnormal rates, and so on — covered in detail under "How are the trading rules decided?"). Also select the cover counterparty and set the position limit (the position size above which automatic cover trades are triggered) and the maximum size of each cover trade |
 | 4. Prepare how to announce it | Preparing for launch | Writing the client-facing trading rules, compliance review (checking that advertising and explanations meet regulations), announcements, and preparing historical data for charts |
 
@@ -297,8 +297,8 @@ build the rate are set as well. The main ones are:
   state has lasted. The actual values differ by broker and generally
   aren't disclosed (see "Halting distribution of abnormal rates"
   under "Where do I (in operations) monitor rate generation and
-  distribution?" in ["How Are Rates
-  Generated?"](./cfd-pricing-and-cover.en.md)). The main cases are:
+  distribution?" in ["How are rates
+  generated?"](./cfd-pricing-and-cover.en.md)). The main cases are:
   - At the open, the previous close and the day's opening price are
     far apart (a gap)
   - The price moves by more than a set amount from the previous tick
@@ -468,8 +468,8 @@ Type"](./cfd-product-types.en.md)).
   on a data terminal or similar, and register it once it can be
   registered in the system. If the launch coincides with an ex-date,
   confirm in advance so the registration is in time (for the rights
-  adjustment itself, see ["When a Dividend Is Paid (Rights
-  Adjustment)"](./cfd-rollover-and-adjustments.en.md)).
+  adjustment itself, see ["When a dividend is paid (rights
+  adjustment)"](./cfd-rollover-and-adjustments.en.md)).
 - Check withholding tax: whether dividends are subject to withholding
   tax, and at what rate, depends on the tax rules of the country where
   the issuer (the company, or the fund for an ETF) is resident, so this
@@ -479,8 +479,8 @@ Type"](./cfd-product-types.en.md)).
   together when a position is held over a weekend or holiday).
 - Add it to corporate action monitoring: add the new product to
   monitoring so splits, reverse splits, spin-offs, and the like aren't
-  missed (see ["When a Spin-off, Reverse Split, or Stock Split
-  Happens"](./cfd-rollover-and-adjustments.en.md)).
+  missed (see ["When a spin-off, reverse split, or stock split
+  happens"](./cfd-rollover-and-adjustments.en.md)).
 - Check how shorts are handled: check securities lending (stock
   borrowing) conditions and short-selling restrictions, and decide
   whether to accept shorts from the start.

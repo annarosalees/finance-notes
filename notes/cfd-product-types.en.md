@@ -10,7 +10,7 @@ CFD references.
 
 ---
 
-### Examples by Product Type (Indices / Commodities / US Stocks & ETFs)
+### Examples by product type (indices / commodities / US stocks & ETFs)
 
 The sections so far have used Japan 225 and WTI crude oil as examples
 to explain the mechanics common to all CFDs. This section changes the
@@ -65,16 +65,16 @@ to watch out for.
   that case, client CFD volume can't be mapped one-to-one onto
   futures contracts, and cover trades require converting "how many
   CFD units equal one futures contract" (for cover trades themselves,
-  see ["The Idea Behind Cover Deals"](./cfd-pricing-and-cover.en.md)).
+  see ["The idea behind cover deals"](./cfd-pricing-and-cover.en.md)).
 - US stock & ETF CFDs: they reference the listed stock or ETF itself.
   There's no rollover since they aren't futures, but you need to
   watch the following:
   - Corporate actions (CA): events initiated by the company — stock
     splits, reverse splits, spin-offs, dividends — that change the
     share price or share count. When they happen, the CFD side needs
-    to respond too (covered in ["When a Spin-off, Reverse Split, or
-    Stock Split Happens"](./cfd-rollover-and-adjustments.en.md) and ["When a Dividend Is Paid
-    (Rights Adjustment)"](./cfd-rollover-and-adjustments.en.md)).
+    to respond too (covered in ["When a spin-off, reverse split, or
+    stock split happens"](./cfd-rollover-and-adjustments.en.md) and ["When a dividend is paid
+    (rights adjustment)"](./cfd-rollover-and-adjustments.en.md)).
   - Trading hours: they follow US exchange hours, which means
     overnight trading in Japan time. Regular trading hours are 23:30
     to 6:00 the next morning Japan time, moving an hour earlier to
@@ -88,7 +88,7 @@ to watch out for.
     hours may be extended along with it.
   - Short restrictions: for single stocks, opening a short can be
     restricted depending on stock borrowing conditions (see the stock
-    borrowing part of ["Long and Short"](./cfd-basics.en.md)).
+    borrowing part of ["Long and short"](./cfd-basics.en.md)).
 - ETF CFDs: like single stocks, ETF CFDs reference the listed ETF
   itself, so there's no rollover; instead there are rights
   adjustments (adjustments for dividends and other shareholder
@@ -251,14 +251,14 @@ adjustment.
   (interest, dividends, storage costs, supply and demand) — see
   ["What is a rollover?"](./cfd-rollover-and-adjustments.en.md).
 - Rights adjustment: longs receive, shorts pay (for the dates involved
-  and the full mechanism, see ["When a Dividend Is Paid (Rights
-  Adjustment)"](./cfd-rollover-and-adjustments.en.md)).
+  and the full mechanism, see ["When a dividend is paid (rights
+  adjustment)"](./cfd-rollover-and-adjustments.en.md)).
   A long moves the same way as someone holding the stock, so like a
   shareholder it receives the dividend. A short is in the same
   position as someone who borrowed the stock and sold it; that
   person has to pay the dividend to the lender when one is paid, so
   a CFD short pays the dividend-equivalent too (for how stock
-  borrowing works, see ["Long and Short"](./cfd-basics.en.md)).
+  borrowing works, see ["Long and short"](./cfd-basics.en.md)).
   Depending on the tax rules of the country where the issuer (the
   company, or the fund for an ETF) is resident, dividends may or may
   not be subject to withholding tax (tax deducted at the time of
@@ -552,12 +552,12 @@ they're organized by reference.
   is counted.
 - Corporate actions: when a split, reverse split, spin-off, or
   similar happens, CFD positions and prices need to be adjusted
-  (covered in ["When a Spin-off, Reverse Split, or Stock Split
-  Happens"](./cfd-rollover-and-adjustments.en.md)).
+  (covered in ["When a spin-off, reverse split, or stock split
+  happens"](./cfd-rollover-and-adjustments.en.md)).
 - Checking stock borrowing and short-selling restrictions: for single
   stocks, stock borrowing conditions or short-selling restrictions
   can make it necessary to restrict new shorts (see ["Long and
-  Short"](./cfd-basics.en.md)).
+  short"](./cfd-basics.en.md)).
 - Monitoring single-stock events: single stocks can move sharply
   outside trading hours, for example on earnings. The next session
   then opens with the price jumping away from the prior close (a
@@ -578,7 +578,7 @@ they're organized by reference.
 - Leverage caps and margin rates: for retail CFDs in Japan, the
   leverage cap differs by product type (as of writing, 10x for equity
   indices, 20x for commodities, 5x for single stocks and ETFs, etc. —
-  see ["Leverage and Margin"](./cfd-basics.en.md)). Margin-rate
+  see ["Leverage and margin"](./cfd-basics.en.md)). Margin-rate
   settings and margin-level monitoring also follow each product type's
   standards.
 - Different market holidays: each reference market has its own
@@ -609,8 +609,8 @@ they're organized by reference.
 - Calculating market risk: the method for calculating market risk
   under capital adequacy rules also differs by product type
   (equities, including equity indices; gold; and other commodities
-  are each calculated differently — see ["Position Limits and Cover
-  Strategy"](./cfd-pricing-and-cover.en.md)).
+  are each calculated differently — see ["Position limits and cover
+  strategy"](./cfd-pricing-and-cover.en.md)).
 
 #### Where I would have stumbled three years ago
 
@@ -664,8 +664,8 @@ with spreads that tend to widen.
 In other words, a CFD rate is built in the order "index → futures →
 CFD rate," two steps removed from the index (for the processing from
 futures to CFD rate, see item ① under "Where I would have stumbled
-three years ago" in ["How Are Rates
-Generated?"](./cfd-pricing-and-cover.en.md)). As the first subsection
+three years ago" in ["How are rates
+generated?"](./cfd-pricing-and-cover.en.md)). As the first subsection
 showed, whether the reference is futures changes both whether there's
 a rollover and which adjustments apply. Checking "what does this CFD
 reference?" first is the starting point for understanding differences
@@ -694,7 +694,7 @@ A few other easy misunderstandings, for reference:
   and the like are set at a level roughly meant to cover one day's
   price movement, while commodity CFDs have their caps set separately
   under a different law (the Commodity Derivatives Act) (see
-  ["Leverage and Margin"](./cfd-basics.en.md)).
+  ["Leverage and margin"](./cfd-basics.en.md)).
 - Assuming "if the rate hasn't changed, P&L is zero": holding a long
   on a product that stays in contango means paying the price
   adjustment amount at every rollover, so P&L gets whittled down even
