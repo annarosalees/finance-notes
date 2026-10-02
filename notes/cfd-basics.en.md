@@ -82,7 +82,7 @@ This difference gives rise to a few characteristics:
 
 How the spread gets decided, and how the broker deals with the risk
 it picks up from trading with clients, are covered later under ["How
-Are Rates Generated?"](./cfd-pricing-and-cover.en.md) and ["The Idea Behind Cover Deals."](./cfd-pricing-and-cover.en.md)
+are rates generated?"](./cfd-pricing-and-cover.en.md) and ["The idea behind cover deals."](./cfd-pricing-and-cover.en.md)
 
 #### Why can you trade without holding the underlying?
 
@@ -379,7 +379,7 @@ than they would with the physical asset. "No delivery, so it's
 convenient" and "lower risk" are two different things, and using a
 CFD means understanding its specific costs and risks too.
 
-### Leverage and Margin
+### Leverage and margin
 
 #### What is leverage, in a nutshell?
 
@@ -496,7 +496,7 @@ notifies the client and confirms the deposit.
   triggering margin level and the room to respond are both different
   between the two.
 
-### What Is Cash Settlement?
+### What is cash settlement?
 
 > The basic definition of cash settlement ("a trade with no physical
 > delivery, where only the price difference between entry and exit
@@ -622,7 +622,7 @@ again once the price falls back below 103.
   matches both the internal system's records and the cover
   counterparty's (CP) records. This is the settlement-side
   counterpart to the position reconciliation covered later under
-  Long and Short.
+  "Long and short."
 - Confirming P&L and balance updates: verifying that P&L locked in by
   a close is correctly reflected in the client's account balance.
 - Handling slippage: with market orders and stop orders, the actual
@@ -652,7 +652,7 @@ again once the price falls back below 103.
   conditions, it can execute at a price worse than the one specified
   (slippage).
 
-### Long and Short
+### Long and short
 
 #### What are long and short, in a nutshell?
 
@@ -708,8 +708,8 @@ interest adjustments (see ["Rollover"](./cfd-rollover-and-adjustments.en.md) for
 A CFD itself is cash-settled, so looking only at the trade with the
 client, there's no need to borrow any physical shares. But the
 broker sometimes hedges (covers) the risk from a client's short
-position in the actual stock market (more on this under ["The Idea
-Behind Cover Deals"](./cfd-pricing-and-cover.en.md)). When that hedge requires the broker — or
+position in the actual stock market (more on this under ["The idea
+behind cover deals"](./cfd-pricing-and-cover.en.md)). When that hedge requires the broker — or
 whoever the broker covers with — to sell the physical stock, they
 need to borrow it from somewhere first, just as in margin trading.
 This is called securities lending (or, from the borrower's side,

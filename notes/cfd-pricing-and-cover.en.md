@@ -10,7 +10,7 @@ and position limits).
 
 ---
 
-### How Are Rates Generated?
+### How are rates generated?
 
 A CFD's rate is generated independently by the broker, based on the
 exchange price of whatever it references (a futures contract or the
@@ -103,7 +103,7 @@ actually is.
   That said, errors on the cover side can be a sign that something is
   wrong with the market or the data, so it's still something
   operations keeps in mind when monitoring rate generation (covered in
-  more detail under "The Idea Behind Cover Deals").
+  more detail under "The idea behind cover deals").
 
 - Post-trade monitoring: how often distribution is halted, and which
   triggers are most common, is an important thing middle/back office
@@ -144,12 +144,12 @@ completely normally while, separately, an order to the cover
 counterparty gets rejected (for example, through last look). "Rates
 are being generated correctly" doesn't necessarily mean "cover is
 also going through correctly" — a distinction that's easy to
-conflate at first. This gets covered in more depth under "The Idea
-Behind Cover Deals."
+conflate at first. This gets covered in more depth under "The idea
+behind cover deals."
 
 ---
 
-### The Idea Behind Cover Deals
+### The idea behind cover deals
 
 A cover deal means holding a position outside the broker (with a
 cover counterparty, or CP) in the opposite direction to the position
@@ -312,7 +312,7 @@ advance. How that limit is set is worked out in detail per broker and
 per instrument, and it ties directly into a management-level judgment
 call: how much risk (position) the broker is willing to carry (the
 relationship between limit size and profitability is covered under
-"Position Limits and Cover Strategy").
+"Position limits and cover strategy").
 
 **Day-to-day confirmation work**
 
@@ -390,7 +390,7 @@ A few more misconceptions worth flagging:
 
 ---
 
-### Position Limits and Cover Strategy (Capital Adequacy and Market Risk Management)
+### Position limits and cover strategy (capital adequacy and market risk management)
 
 The capital adequacy ratio is a metric showing how much financial
 cushion a financial instruments business operator (a securities firm

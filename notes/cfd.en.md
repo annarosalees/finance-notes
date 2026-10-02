@@ -16,23 +16,23 @@ ETFs, and more.
 ### [Basics](./cfd-basics.en.md)
 - [x] What is a CFD?
 - [x] Why does a CFD exist as a product? (How it differs from the physical asset)
-- [x] Leverage and Margin
-- [x] What Is Cash Settlement?
-- [x] Long and Short
+- [x] Leverage and margin
+- [x] What is cash settlement?
+- [x] Long and short
 
 ### [Pricing and Risk Management](./cfd-pricing-and-cover.en.md)
-- [x] How Are Rates Generated?
-- [x] The Idea Behind Cover Deals
-- [x] Position Limits and Cover Strategy (Capital Adequacy and Market Risk Management)
+- [x] How are rates generated?
+- [x] The idea behind cover deals
+- [x] Position limits and cover strategy (capital adequacy and market risk management)
 
 ### [Rollover and Adjustments](./cfd-rollover-and-adjustments.en.md)
 - [x] What is a rollover?
 - [x] Why does a rollover happen?
-- [x] When a Spin-off, Reverse Split, or Stock Split Happens
-- [x] When a Dividend Is Paid (Rights Adjustment)
+- [x] When a spin-off, reverse split, or stock split happens
+- [x] When a dividend is paid (rights adjustment)
 
 ### [Examples by Product Type](./cfd-product-types.en.md)
-- [x] Examples by Product Type (Indices / Commodities / US Stocks & ETFs)
+- [x] Examples by product type (indices / commodities / US stocks & ETFs)
 
 ### [Adding a New CFD Product in Practice](./cfd-product-listing.en.md)
-- [x] Adding a New CFD Product in Practice (How a New Product Gets Launched)
+- [x] Adding a new CFD product in practice (how a new product gets launched)

@@ -324,7 +324,7 @@ fall out of one fact: futures contracts expire.
 
 ---
 
-### When a Spin-off, Reverse Split, or Stock Split Happens
+### When a spin-off, reverse split, or stock split happens
 
 A foreign stock CFD uses an overseas individual stock as its underlying
 (the instrument the CFD's price is based on). So when the company that
@@ -440,7 +440,7 @@ the deducted amount is paid or charged as a rights adjustment amount. As
 with dividends, clients holding a long receive it and clients holding a
 short pay it.
 The rights adjustment amount is the same mechanism used for dividends (covered
-in detail in "When a Dividend Is Paid (Rights Adjustment)").
+in detail in "When a dividend is paid (rights adjustment)").
 
 Some brokers, instead of settling in cash, give clients a new CFD position
 in the separated company in line with the spin-off ratio (e.g., 1 share for
@@ -557,8 +557,8 @@ deadline and its own timing for adjusting positions.
    reverse split also gets processed at the CP, making it hard to reconcile
    against the broker's own processing.
    At the same time, the position limit (the position size above which a
-   cover trade is executed automatically; see ["Position Limits and Cover
-   Strategy"](./cfd-pricing-and-cover.en.md)) is temporarily widened so
+   cover trade is executed automatically; see ["Position limits and cover
+   strategy"](./cfd-pricing-and-cover.en.md)) is temporarily widened so
    that no new cover trades flow to the CP in the meantime
 
 **Work done after the close**
@@ -679,7 +679,7 @@ calculation has no quote, the following points need attention.
 
 ---
 
-### When a Dividend Is Paid (Rights Adjustment)
+### When a dividend is paid (rights adjustment)
 
 #### What are a dividend and a CFD rights adjustment, in a nutshell?
 
@@ -702,8 +702,8 @@ be omitted altogether.
 A CFD holder does not hold the physical stock, so they are not a
 shareholder and cannot receive the dividend itself. Instead, an amount
 equivalent to the dividend is passed on as a rights adjustment.
-The rights adjustment amount used in "When a Spin-off, Reverse Split, or
-Stock Split Happens" to pass on the value of the company separated in a
+The rights adjustment amount used in "When a spin-off, reverse split, or
+stock split happens" to pass on the value of the company separated in a
 spin-off is the same mechanism.
 
 Note that the term "rights adjustment" also appears in the rollover
@@ -778,7 +778,7 @@ Why shorts pay can also be explained through securities lending. Someone
 who borrowed a stock and sold it must pay the dividend amount to the lender
 when a dividend is paid. A CFD short is in the same position (for details,
 see "Direction of payment" in ["Examples by Product Type"](./cfd-product-types.en.md) and the stock
-borrowing part of ["Long and Short"](./cfd-basics.en.md)).
+borrowing part of ["Long and short"](./cfd-basics.en.md)).
 
 Also, for stocks from countries where tax is withheld at source on
 dividends, the amount a long receives and the amount a short pays may not
