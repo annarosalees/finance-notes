@@ -11,16 +11,29 @@ and dividends.
 ---
 
 ### What is a rollover?
-A rollover involves two things happening together:
-1. Rollover (contract rollover): When a futures contract reaches its
-   contract month, delivery (settlement) becomes due. So the position
-   is closed out and re-opened under a new contract month.
-2. Reference month shift: The price reference moves from the near
-   month to the far month.
+
+A rollover is switching to the next contract month's futures when the
+futures contract a CFD's price is based on reaches its expiry (its
+contract month). It happens on products that reference futures, such
+as Japan 225 and WTI crude oil.
+
+A rollover involves two things:
+
+1. Rolling the position: when the referenced futures contract expires,
+   delivery or final settlement takes place, so the near-month position
+   is closed out and re-opened in the far month. The hedge position
+   the broker holds with its cover counterparty is rolled this way. How
+   the client's CFD position is handled varies by broker: some carry
+   the position over and offset the jump with a price adjustment
+   amount, while others close it once and re-open it in the far month.
+2. Shifting the reference month: the price reference moves from the
+   near month (the closest contract month) to the far month (the next
+   contract month).
 
 A CFD itself has no expiry, but the futures contract it's based on
-does — so a rollover is needed to keep the CFD running. The contract
-month used as the reference is always the one with the highest
+does — so a rollover is needed to keep the CFD running.
+
+The contract month used as the reference is the one with the highest
 trading volume. A high-volume month trades actively, so its price is
 stable and reliable. Referencing a low-volume month, on the other
 hand, causes problems like these:
@@ -48,17 +61,31 @@ principle is "reference the month with the highest volume," the
 reference month is rolled over in step with that shift (for the
 timing of rollover, see "Why does a rollover happen?" next).
 
+---
+
 ### Why does a rollover happen?
-Futures contracts have a "contract month" — a promise for when and
-at what price the underlying will be delivered in the future. When
-that date arrives, delivery (settlement) is triggered. A CFD,
-however, is cash-settled (no physical delivery), so before the
-contract month's delivery date arrives, the position rolls over into
-the next contract month. This happens shortly before the delivery
-date — not on the day itself — and the exact timing varies by
-product. How the timing is chosen (for example, around the day when
+
+The futures contracts a CFD references have a "contract month" — a
+set date by which the underlying is to be delivered, at a price agreed
+in advance. A "March contract," for example, is delivered on a set day
+in March.
+
+When a futures contract reaches its contract month, delivery of the
+underlying or final settlement takes place (equity index futures, for
+example, are cash-settled against the Special Quotation, or SQ). A
+CFD, by contrast, keeps exchanging only the price difference with no
+expiry, so it can't have delivery or final settlement happen at
+expiry.
+
+That's why the CFD has to roll over into the next contract month
+before the referenced futures contract expires. Even though the CFD
+itself has no expiry, the underlying futures do — and by continuing
+to roll over, the CFD can be offered as a product with no expiry.
+
+The rollover happens shortly before the expiry date, not on the day
+itself. How the timing is chosen (for example, around the day when
 liquidity is about to shift from the near month to the far month)
-is covered in ["Examples by Product Type."](./cfd-product-types.en.md)
+varies by product (see ["Examples by Product Type"](./cfd-product-types.en.md)).
 
 The specific rollover day (the price adjustment day) isn't set by the
 exchange — each CFD provider sets its own. The only common rule is
@@ -72,56 +99,67 @@ referenced futures contract's last trading day is fixed by the
 exchange's rules, and if it falls on a holiday or other non-business
 day it moves to the previous business day (for example, the last
 trading day for Nikkei 225 futures is the business day before the SQ
-date — the second Friday of the contract month — and if that's a
-non-business day, it moves back another business day). Since the
-price adjustment day has to come before that last trading day, it
-ends up being pulled forward as a result.
+date — the second Friday of the contract month, or the previous
+business day if that's a holiday). Since the price adjustment day has
+to come before that last trading day, it ends up being pulled forward
+as a result.
 
 The price adjustment schedule is announced in advance on the
 provider's website or trading screen, so clients can decide ahead of
 time what to do with their positions.
 
-### What happens to the rate and position at rollover?
-Whenever the "front month" (the contract month with the highest
-trading volume at a given time) changes on the exchange, the
-reference contract month rolls over to the next one. This is what
-lets a CFD keep running indefinitely without ever expiring.
+#### What happens to the rate and position at rollover?
+
+This section assumes the approach where the position is carried over
+and offset with a price adjustment amount.
+
+Whenever the most actively traded contract month changes, the broker
+rolls the reference contract month over to the next one. This is what
+lets a CFD keep running without ever expiring, so clients can keep
+trading without having to think about contract months.
 
 The moment the reference month changes, though, the price jumps
 discontinuously — and so does the unrealized P&L on any open
-position. To offset this, an adjustment amount is credited or
-debited in the opposite direction of that P&L jump, so the rollover
-itself leaves the client neither better nor worse off:
+position. To offset this, an amount equal to the change in the
+position's unrealized P&L, but in the opposite direction, is credited
+or debited to the client. This is called an adjustment amount.
 
 - Price rises at rollover → longs gain, so the adjustment is
   negative; shorts lose, so the adjustment is positive
 - Price falls at rollover → longs lose, so the adjustment is
   positive; shorts gain, so the adjustment is negative
 
-The size of the adjustment (the price adjustment) is set by the
-price gap between the near month and the far month — and what
+(In other words, any gain from the rollover is cancelled out by the
+adjustment, and any loss is made up by it — so the rollover itself
+leaves the client neither better nor worse off.)
+
+The size of the adjustment (the price adjustment amount) is set by
+the price gap between the near month and the far month — and what
 creates that gap differs by product type.
 
 For equity index futures, the gap is mainly made up of two
 components:
-1. **Interest adjustment** — a short-term interest equivalent for
-   the time remaining to settlement. It reflects the interest-rate
-   gap between holding the spot asset and holding a futures
-   position, and it's baked into the futures price for every
-   product type (indices, FX, metals, energy, commodities, etc.).
-2. **Rights adjustment** (an adjustment for dividends and other
-   shareholder rights) — the present value of expected future
-   dividends. Since a company's value (and so its share price)
-   drops by roughly the dividend amount when it's paid out, futures
-   prices are set lower in advance to account for it. As a
-   component of the futures price, this only applies to equity
-   indices — not to FX, metals, or energy, which pay no dividends.
 
-The further out a contract month is, the more dividend payments
-fall within its remaining life, so it trades at a correspondingly
-lower price (for indices). As settlement approaches, the interest
-component shrinks and the price converges toward the dividend-
-adjusted level — ending up close to the spot price.
+1. **Interest adjustment** — a short-term interest equivalent for the
+   time remaining to settlement. It reflects the interest-rate gap
+   between holding the spot asset and holding a futures position, and
+   it's built into the futures price in advance (in most cases, added
+   on top). It affects every product type (indices, FX, metals,
+   energy, commodities, etc.).
+2. **Rights adjustment** (an adjustment for dividends and other
+   shareholder rights) — the expected future dividends. Since a
+   company's value (and so its share price) drops by roughly the
+   dividend amount when it's paid out, futures prices are set lower in
+   advance to account for it. As a component of the futures price,
+   this only applies to equity indices — not to FX, metals, or energy,
+   which pay no dividends.
+
+For equity indices, when the dividend effect outweighs interest, the
+further out a contract month is (the longer until settlement), the
+more dividends it deducts, so it trades at a lower price. As expiry
+approaches, both the interest and dividend components for the
+remaining period shrink, and at expiry the futures price matches the
+spot price (for Nikkei 225 futures, the SQ value).
 
 Commodity futures such as oil or grains, on the other hand, pay no
 dividends, so the rights adjustment doesn't apply. Instead, on top
@@ -138,37 +176,42 @@ where the near month is higher is called "backwardation" (see the
 note "Contango and backwardation" below).
 
 The interest adjustment, rights adjustment, and storage costs
-described here are all "ingredients" baked into the futures price —
+described here are all "ingredients" built into the futures price —
 the client never pays or receives them separately. What the client
-actually pays or receives is the price adjustment, which reflects
-all of them at once. (For how this differs from the interest and
-rights adjustments paid directly on single stocks and similar
-products, see ["Examples by Product Type."](./cfd-product-types.en.md))
+actually pays or receives is the price adjustment amount, which
+reflects all of them at once. (For how this differs from the interest
+and rights adjustments paid directly on single stocks and similar
+products, see ["Examples by Product Type"](./cfd-product-types.en.md).)
 
-The direction of the price adjustment (whether longs receive or
-pay) is tied to what's inside that price gap:
+The direction of the price adjustment amount (whether longs receive
+or pay) is tied to what's inside that price gap:
 
-- Equity indices: the further out the month, the more expected
+- Equity indices: when the dividend effect outweighs interest (as
+  with Japan 225), the further out the month, the more expected
   dividends are subtracted, so the price tends to fall at rollover
   and longs tend to receive. This has the same effect as longs
-  receiving the dividend-equivalent — the same idea as longs
-  receiving the rights adjustment on a single-stock CFD.
+  receiving the dividend-equivalent — the same idea as longs receiving
+  the rights adjustment on a single-stock CFD. Conversely, when the
+  interest effect outweighs dividends (as with US equity indices as of
+  writing), the further out the month, the higher the price, so longs
+  pay.
 - Commodities: in contango (far month higher), longs pay; in
   backwardation (near month higher), longs receive. Which one
   applies shifts with supply and demand (see the note below).
 
-The adjustment is calculated as:
+The price adjustment amount is calculated as:
 `(near-month mid − far-month mid) × contract size × FX conversion rate`
 
 (This formula uses the mid price, but some brokers use the
 exchange's official settlement prices for the near and far months
 instead. See "When and at what price are adjustments calculated?"
-under ["Examples by Product Type."](./cfd-product-types.en.md))
+under ["Examples by Product Type"](./cfd-product-types.en.md).)
 
 Worked examples (all figures are illustrative):
 
-- Japan 225 (yen-denominated): near-month mid ¥38,000, far-month mid
-  ¥37,900, contract size "1 lot = index × ¥10."
+- Japan 225 (yen-denominated): near-month mid ¥38,000 (the mid is the
+  midpoint between bid and ask), far-month mid ¥37,900, contract size
+  "1 lot = index × ¥10."
   (38,000 − 37,900) × 10 × 1 (yen-denominated, so the FX conversion
   rate is 1) = +¥1,000
   → A client long 1 lot receives ¥1,000; a client short 1 lot pays
@@ -176,14 +219,15 @@ Worked examples (all figures are illustrative):
   unrealized P&L by ¥1,000, and the adjustment makes up for it.
 - WTI crude oil (USD-denominated): near-month mid $70.00, far-month
   mid $70.50, contract size "1 lot = 10 barrels," FX conversion rate
-  ¥150 per dollar.
+  (the rate for converting dollars into yen) ¥150 per dollar.
   (70.00 − 70.50) × 10 × 150 = −¥750
   → A client long 1 lot pays ¥750; a client short 1 lot receives
   ¥750. This is an example of contango, where the price rises at
   rollover.
 
-It's applied on the same day as the rollover, after that day's
-trading closes.
+The day the price adjustment is applied is called the "price
+adjustment day." It coincides with the rollover, and the adjustment
+is applied after that day's trading closes.
 
 ---
 Note: Contango and backwardation
@@ -199,7 +243,7 @@ name.
 | Price shape | Near < far (higher the further out) | Near > far (lower the further out) |
 | Main reason | The cost of "holding until later" — storage, interest — is added to the far month | Near-term supply shortage makes "right now" demand strong, pushing the near month up |
 | Price at rollover | Rises | Falls |
-| Price adjustment at rollover | Longs pay, shorts receive | Longs receive, shorts pay |
+| Price adjustment amount at rollover | Longs pay, shorts receive | Longs receive, shorts pay |
 
 Example (illustrative figures): with WTI crude's near month at $70.00,
 
@@ -221,52 +265,62 @@ leaving no place to put crude that would be delivered to anyone
 still holding the near-month contract. A rush to dump the near month
 pushed its price far below the far month, and it briefly traded at a
 negative price. That was an extreme case of contango, and the gap
-couldn't be explained by interest or dividends at all — it came from
-storage and supply-and-demand problems.
+couldn't be explained at all by the usual logic of interest or
+storage costs — it came from a lack of storage space and from supply
+and demand.
 
 The terms contango and backwardation apply to futures in general,
-not just commodities. For equity index futures, the further out the
-month, the more expected dividends are subtracted, so when the
-dividend effect outweighs interest the curve takes the shape of
-backwardation (which is why longs on Japan 225 tend to receive the
-price adjustment).
+not just commodities. For equity index futures, when the dividend
+effect outweighs interest, the further out the month, the more
+expected dividends are subtracted, so the curve takes the shape of
+backwardation (which is why, as of writing, longs on Japan 225 tend
+to receive the price adjustment amount). Conversely, when the
+interest effect is larger, the curve takes the shape of contango.
 
 What matters most for CFD clients: holding a long for a long time on
 a product that stays in contango means paying the price adjustment
-at every rollover. Even if the price of crude itself goes nowhere,
-the payments pile up with each rollover and gradually eat into P&L.
-Conversely, holding a short on a product that stays in backwardation
-also means paying at every rollover.
+amount at every rollover. Even if the price of crude itself goes
+nowhere, the payments pile up with each rollover and gradually eat
+into P&L. Conversely, holding a short on a product that stays in
+backwardation also means paying at every rollover.
 
-### What does the operations side do at that point?
-On a rollover day, operations handles four main tasks:
-1. **Scheduling** — pull the rollover schedule from the data
-   provider, confirm the dates, register them in the system, and
-   publish the schedule to clients.
-2. **Rolling the reference contract month** — verify the far
-   month's price settings are correct, and confirm the switch to
-   the new reference month is complete on the day itself.
-3. **Settling the adjustment amount** — the system applies the
+#### What do I (in operations) do at that point?
+
+On a price adjustment (rollover) day, operations handles four main
+tasks:
+
+1. **Setting the price adjustment day** — pull the rollover schedule
+   from the data vendor, confirm the dates, register them in the
+   system, and publish the schedule to clients.
+2. **Rolling the reference contract month** — verify the far month's
+   price settings are correct, and confirm the switch to the new
+   reference month is complete on the price adjustment day itself.
+3. **Settling the price adjustment amount** — the system applies the
    adjustment to client accounts automatically, but since a wrong
    figure directly affects client P&L, checking it beforehand is
-   critical.
-4. **Rolling the cover position** — the firm's own hedging position
-   (the other side of client positions) must also be closed and
-   re-opened in the far month before settlement, and this needs to
-   be confirmed as done *before* the adjustment day — unlike task 2,
-   which is confirmed *on* the day itself.
+   especially important.
+4. **Rolling the cover position** — the hedge position the broker
+   holds with its cover counterparty (which points in the same
+   direction as the client's position) also has to be closed and
+   re-opened in the far month, in the same size, before settlement.
+   Operations confirms this has been done before the price
+   adjustment day.
 
-### Summary
+Note that task 2 is confirmed as complete *on* the price adjustment
+day, whereas task 4 needs to be complete *before* it.
+
+#### Summary
+
 These pieces all trace back to a single thread: because the futures
 contract behind a CFD always has an expiry and a contract month, the
 CFD has to roll over to keep running without interruption. Rolling
-over always creates a price discontinuity, which the adjustment
-amount exists to offset — and that adjustment amount is itself built
-from interest rates plus dividends (for equity indices) or storage
-costs and supply and demand (for commodities), the very things that
-shape the futures price in the first place. Rollover, the
-adjustment, and interest/dividends/storage costs aren't separate
-topics — they all fall out of one fact: futures contracts expire.
+over always creates a price discontinuity, which the price adjustment
+amount exists to offset — and that amount is itself built from
+interest rates plus dividends (for equity indices) or storage costs
+and supply and demand (for commodities), the very things that shape
+the futures price in the first place. Rollover, the adjustment, and
+interest/dividends/storage costs aren't separate topics — they all
+fall out of one fact: futures contracts expire.
 
 ---
 
@@ -314,20 +368,23 @@ With splits and reverse splits, the share count and the price per share
 simply move in opposite directions, so in theory the value of what you hold
 does not change.
 
-| | Stock split (1 share → 2) | Reverse split (5 shares → 1) |
+| | 2-for-1 stock split (1 share → 2) | 1-for-5 reverse split (5 shares → 1) |
 |---|---|---|
 | Shares held | Doubles | Becomes 1/5 |
 | Value per share | Halves | Becomes 5x |
 | Total value | Unchanged | Unchanged |
 | Main purpose | Lower the price per share to make it easier to buy | Raise the price per share (to meet listing requirements, improve perception, reduce administrative costs) |
 
-**Note: in English, both splits and reverse splits are often labeled
-"Stock Split."**
+**Note: in data vendors' feeds, splits and reverse splits can both
+arrive under the same event type, "Stock Split."**
 To tell them apart, look at the adjustment factor (the split or
-consolidation ratio). If it is greater than 1, it is a split; if it is less
-than 1, it is a reverse split.
+consolidation ratio). When it's delivered as a ratio applied to the
+quantity, a factor greater than 1 means a split and less than 1 means a
+reverse split. Some vendors, however, deliver it as a factor applied to
+the price (0.5 for a 2-for-1 split), so you need to check which
+definition is being used.
 
-| Event | Adjustment factor | Type |
+| Event | Adjustment factor (applied to quantity) | Type |
 |---|---|---|
 | 1 share → 2 | 2 | Split |
 | 1 share → 3 | 3 | Split |
@@ -359,7 +416,7 @@ There are broadly three kinds of adjustment.
 | Stop-out adjustment | Stop-out levels and clients' pending orders such as limit orders |
 
 The stop-out adjustment is needed because the price changes sharply. For
-example, if a 1-for-2 split halves the price but stop-out levels and limit
+example, if a 2-for-1 split halves the price but stop-out levels and limit
 prices stay where they were, a stop-out or limit order could be triggered at
 the moment of the split even though the market has not actually moved.
 So stop-out levels are recalculated for the new price level. Pending orders
@@ -433,10 +490,10 @@ client's account so that P&L is the same before and after the split.
 
 **Example 2: a ratio that produces fractions (hypothetical)**
 
-Suppose Company B does a 1-for-1.5 split. A client holding 3 CFDs in
-Company B would end up with 4.5 CFDs after the split — a fraction.
-A client holding 2 CFDs would end up with 3, with no fraction, but forced
-closes are decided per instrument, not per client holding. For an
+Suppose Company B does a 3-for-2 split (1 share → 1.5 shares). A client
+holding 3 CFDs in Company B would end up with 4.5 CFDs after the split — a
+fraction. A client holding 2 CFDs would end up with 3, with no fraction, but
+forced closes are decided per instrument, not per client holding. For an
 instrument whose ratio is not a whole number, new orders are stopped as soon
 as the split is announced, and every client's position is forcibly closed
 before the split.
@@ -452,13 +509,13 @@ forced close.
 | 2.5 shares → 1 (reverse split) | 0.4 | Yes (all clients) |
 
 With a reverse split, though, fractions can appear even when the ratio is a
-whole number. For example, in a 4-to-1 reverse split, a client holding 6 CFDs
-would end up with 1.5 CFDs. In that case, only the 0.5 CFD that falls short
-of 1 is forcibly closed from that client's position.
+whole number. For example, in a 1-for-4 reverse split, a client holding 6
+CFDs would end up with 1.5 CFDs. In that case, only the 0.5 CFD that falls
+short of 1 is forcibly closed from that client's position.
 How fractions are handled in splits and reverse splits may differ from
 broker to broker.
 
-#### What does operations (me) check and handle when a corporate action happens?
+#### What do I (in operations) check and handle when a corporate action happens?
 
 For splits, reverse splits, and spin-offs, the operations workflow is
 broadly the same. If the CFD is not adjusted in the same way as what
@@ -468,12 +525,16 @@ correctly, so action is always required.
 The details of the workflow differ from broker to broker. What follows is
 one example.
 
-Also note that CFD split/reverse-split processing can run on a different
-schedule from trading in the physical stock. For physical stock, processing
-centers on the record date, but for CFDs each broker sets its own forced
-close deadline and its own timing for adjusting positions.
+Also note that CFD processing of splits, reverse splits, and spin-offs can
+run on a different schedule from trading in the physical stock. For physical
+stock, processing centers on the record date, but for large US splits and
+spin-offs, the ex-date (the day trading starts at the post-split or
+post-spin-off price) can come after the record date (for example, in
+Kyndryl's spin-off from IBM, the record date was October 25, 2021, and the
+ex-date was November 4). For CFDs, each broker sets its own forced close
+deadline and its own timing for adjusting positions.
 
-**Work done before the record date**
+**Work done before the ex-date (the effective date of the split or spin-off)**
 
 1. Confirm the corporate action: check the details for the instrument
    (type, ratio, schedule), and check whether any other corporate action
@@ -489,25 +550,26 @@ close deadline and its own timing for adjusting positions.
 6. Register the rights adjustment amount
 7. Unwind the position at the cover counterparty (CP): close out the
    position held at the cover counterparty before the split or reverse
-   split. For example, if the firm holds a buy of 10 at the CP, it sends a
-   sell of 10 to bring it to zero. In the meantime, the firm temporarily
+   split. For example, if the broker holds a buy of 10 at the CP, it sends a
+   sell of 10 to bring it to zero. In the meantime, the broker temporarily
    carries the other side of its client positions itself.
    This is because if the position is carried over at the CP, the split or
    reverse split also gets processed at the CP, making it hard to reconcile
-   against the firm's own processing.
-   At the same time, the limit (the position size above which a cover trade
-   is executed; see ["Position Limits and Cover Strategy"](./cfd-pricing-and-cover.en.md)) is temporarily
-   widened so that no new cover trades flow to the CP in the meantime
+   against the broker's own processing.
+   At the same time, the position limit (the position size above which a
+   cover trade is executed automatically; see ["Position Limits and Cover
+   Strategy"](./cfd-pricing-and-cover.en.md)) is temporarily widened so
+   that no new cover trades flow to the CP in the meantime
 
 **Work done after the close**
 
 8. Check the results: confirm that position quantities and prices were
    adjusted according to the ratio
-9. Change price and limit settings: change price-related settings
-   (abnormal-rate thresholds, upper/lower price bounds, etc.) to match the
-   new price level. Quantity-based caps (such as position limits) are also
-   reviewed in line with the ratio, since the split or reverse split changes
-   quantities
+9. Change price and position-limit settings: change price-related settings
+   (abnormal rate detection thresholds, upper/lower price bounds, etc.) to
+   match the new price level. Quantity-based caps (such as position limits)
+   are also reviewed in line with the ratio, since the split or reverse
+   split changes quantities
 10. Restrict trading and cancel orders: halt trading and cancel all clients'
     pending orders
 
@@ -536,9 +598,9 @@ But x' is the price after the spin-off, so normally it cannot be known in
 advance. However, for corporate actions involving rights such as spin-offs
 and splits, the post-ex-date shares start trading as a separate instrument
 before the record date (when-issued trading), so the post-ex-date price can
-be estimated in advance. On major data vendors' terminals, these appear as a
-separate instrument with "-W" added to the end of the existing ticker
-(e.g., GE → GE-W).
+be estimated in advance. Exchanges and data vendors list these as a separate
+instrument with a suffix such as "WI" added to the existing ticker (the
+notation varies by vendor).
 
 Calculated value 2: using the share price of the company being separated
 With a spin-off, the share price of the company being separated also
@@ -558,18 +620,18 @@ Another approach is to take the average of the two.
 **A concrete example: Kyndryl's spin-off from IBM (November 2021)**
 
 IBM shareholders received 1 Kyndryl share for every 5 IBM shares held on the
-last cum-rights date (November 3). Three instruments are used in the
-calculation.
+last day to trade with entitlement to the distribution (November 3). Three
+instruments are used in the calculation.
 
 | Instrument | Role |
 |---|---|
 | Old IBM (IBM) | Pre-spin-off price x |
-| New IBM (IBM-W) | Post-spin-off price x' |
-| Kyndryl (KD-W) | Price of the separated company y |
+| New IBM (when-issued instrument) | Post-spin-off price x' |
+| Kyndryl (when-issued instrument) | Price of the separated company y |
 
-- Calculated value 1: on the last cum-rights date (November 3), new IBM did
-  not trade, so it had no price. The calculation became 127.13 − (no
-  price), and could not be computed
+- Calculated value 1: on the last day to trade with entitlement
+  (November 3), new IBM did not trade, so it had no price. The calculation
+  became 127.13 − (no price), and could not be computed
 - Calculated value 2: since 1 Kyndryl share is given for every 5 IBM shares,
   each IBM share corresponds to 1/5 of a Kyndryl share. Dividing Kyndryl's
   price of $28.50 by 5 gives 28.50 ÷ 5 = $5.70
@@ -590,7 +652,7 @@ calculation has no quote, the following points need attention.
   The November 3 closes better reflect the latest market movement, so
   calculating with them gives a value closer to the actual market
 
-#### Where my three-years-ago self would get stuck
+#### Where I would have stumbled three years ago
 
 - Seeing the share price drop sharply after a split and thinking "it
   crashed" or "I lost money": in reality, the quantity has gone up by the
@@ -612,7 +674,7 @@ calculation has no quote, the following points need attention.
 - Assuming "if the ratio is a whole number, there is no forced close": with
   a split, a whole-number ratio produces no fractions, but with a reverse
   split, fractions can appear even when the ratio is a whole number. For
-  example, in a 4-to-1 reverse split, a client holding 6 CFDs ends up with
+  example, in a 1-for-4 reverse split, a client holding 6 CFDs ends up with
   1.5 CFDs, so the 0.5 CFD that falls short of 1 is forcibly closed
 
 ---
@@ -626,13 +688,16 @@ calculation has no quote, the following points need attention.
 - **Rights adjustment**: the mechanism for passing an amount equivalent
   to the dividend to CFD holders. Also called a "dividend-equivalent
   amount" (in Japanese, *kenri chōseigaku*, literally a "rights
-  adjustment amount")
+  adjustment amount"). In the English-speaking CFD industry it is
+  commonly called a "dividend adjustment"; these notes use "rights
+  adjustment" because the same mechanism also covers rights other than
+  dividends, such as spin-offs
 
 Part of the profit a company earns is kept as funds to grow the business
 (retained earnings), and the rest is distributed to shareholders. That is
 a dividend. It is usually paid in proportion to the number of shares held,
-as "X dollars per share." Depending on business results, no dividend may
-be paid at all (a zero dividend).
+as "X dollars per share." Depending on business results, the dividend may
+be omitted altogether.
 
 A CFD holder does not hold the physical stock, so they are not a
 shareholder and cannot receive the dividend itself. Instead, an amount
@@ -641,8 +706,8 @@ The rights adjustment amount used in "When a Spin-off, Reverse Split, or
 Stock Split Happens" to pass on the value of the company separated in a
 spin-off is the same mechanism.
 
-Note that the term "rights adjustment" also appears in "What is a
-rollover?", but there it means the expected dividends baked into the
+Note that the term "rights adjustment" also appears in the rollover
+section, but there it means the expected dividends built into the
 futures price — not something paid or received directly in the client's
 account. What this section covers is the rights adjustment paid or
 received directly in the account for single-stock and ETF CFDs (for the
@@ -660,12 +725,14 @@ Dividends come with several dates that have similar-sounding names.
 | Last cum-dividend date | The last day on which holding the stock at the close of trading earns you the right to the dividend |
 | Ex-dividend date | The business day after the last cum-dividend date. Buying the stock on or after this day does not get you this dividend |
 | Record date | The day the company fixes, in its shareholder register, which shareholders will receive the dividend |
-| Payment date | The day the dividend is actually paid to shareholders. Often several weeks after the record date |
+| Payment date | The day the dividend is actually paid to shareholders. Often several weeks after the record date for US stocks, and several months after for Japanese stocks |
 
 A stock trade takes some days from execution until it is actually reflected
 in the shareholder register (settlement). So to be on the register on the
 record date, you have to buy the stock beforehand. The "last day that is
-still in time" is the last cum-dividend date.
+still in time" is the last cum-dividend date. The number of days to
+settlement is set by each market's rules (the table below is as of
+writing).
 
 | | US stocks | Japanese stocks |
 |---|---|---|
@@ -707,11 +774,11 @@ amount of the dividend — longs would lose and shorts would gain. The
 rights adjustment offsets this imbalance so that CFD P&L matches the
 result for the physical stock.
 
-Why shorts pay can also be explained through stock lending. Someone who
-borrowed a stock and sold it must pay the dividend amount to the lender
+Why shorts pay can also be explained through securities lending. Someone
+who borrowed a stock and sold it must pay the dividend amount to the lender
 when a dividend is paid. A CFD short is in the same position (for details,
 see "Direction of payment" in ["Examples by Product Type"](./cfd-product-types.en.md) and the stock
-lending part of ["Long and Short"](./cfd-basics.en.md)).
+borrowing part of ["Long and Short"](./cfd-basics.en.md)).
 
 Also, for stocks from countries where tax is withheld at source on
 dividends, the amount a long receives and the amount a short pays may not
@@ -762,7 +829,7 @@ the rights adjustment.
 
 The rights adjustment is calculated in dollars, but if the client's
 account is in yen, it is converted to yen before being paid or received.
-The conversion uses the yen conversion rate (the rate for exchanging dollars
+The conversion uses the FX conversion rate (the rate for exchanging dollars
 into yen) at mark-to-market on the day it is applied.
 Assuming, for illustration, $1 = 150 yen:
 
@@ -784,9 +851,9 @@ amount as is.
 
 So the amount a long receives and the amount a short pays are not the same.
 The rate also varies with the client's country of residence and the broker;
-some brokers deduct 30%.
+some overseas brokers deduct 30%.
 
-#### What does operations (me) check and handle when a dividend is announced?
+#### What do I (in operations) check and handle when a dividend is announced?
 
 Compared with spin-offs, reverse splits, and splits, dividends involve a
 simpler workflow, since there is no need to halt trading or force-close
@@ -816,14 +883,14 @@ which makes accuracy especially important.
    applied to client accounts
 7. Reconcile with the cover counterparty: dividend-equivalent amounts are
    also paid or received with the cover counterparty (CP). Reconcile the
-   amounts paid or received on the positions the firm holds at the CP
-   against the firm's own records
+   amounts paid or received on the positions the broker holds at the CP
+   against the broker's own records
 
 For checking whether tax is withheld, why adjustments are calculated
 together in daily processing, and the rate used for yen conversion, see
 "When and at what price are adjustments calculated?" and "Does operations
 (me) handle things differently depending on product type?" in ["Examples by
-Product Type."](./cfd-product-types.en.md)
+Product Type"](./cfd-product-types.en.md).
 
 **Cases handled differently from a regular dividend**
 
@@ -838,7 +905,7 @@ Product Type."](./cfd-product-types.en.md)
   number of additional shares, while others leave the position unchanged
   and pay or receive the value of the shares in cash
 
-#### Where my three-years-ago self would get stuck
+#### Where I would have stumbled three years ago
 
 - Being confused that "it's the ex-dividend date, but the price doesn't
   look like it fell by the dividend": for stocks whose dividend is very
@@ -868,10 +935,10 @@ Product Type."](./cfd-product-types.en.md)
   Coca-Cola example, the payment date was October 1, but the CFD rights
   adjustment was paid or received around the ex-dividend date of
   September 15
-- Thinking the rights adjustment that appears in "rollover" is the same
-  thing as the one covered here: for stock index CFDs that reference
-  futures (e.g., Japan 225), expected dividends are already priced into the
-  futures price, so even when dividends are paid, no rights adjustment is
-  paid or received in the client's account (it is settled within the price
-  adjustment at rollover). Rights adjustments are paid or received on
-  single-stock and ETF CFDs
+- Thinking the rights adjustment that appears in the rollover section is
+  the same thing as the one covered here: for stock index CFDs that
+  reference futures (e.g., Japan 225), expected dividends are already
+  priced into the futures price, so even when dividends are paid, no rights
+  adjustment is paid or received in the client's account (it is settled
+  within the price adjustment amount at rollover). Rights adjustments are
+  paid or received on single-stock and ETF CFDs
