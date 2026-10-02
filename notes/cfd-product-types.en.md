@@ -259,9 +259,10 @@ adjustment.
   person has to pay the dividend to the lender when one is paid, so
   a CFD short pays the dividend-equivalent too (for how stock
   borrowing works, see ["Long and Short"](./cfd-basics.en.md)).
-  Depending on the tax rules of the country where the stock is
-  listed, dividends may or may not be subject to withholding tax
-  (tax deducted at the time of payment). Where withholding applies,
+  Depending on the tax rules of the country where the issuer (the
+  company, or the fund for an ETF) is resident, dividends may or may
+  not be subject to withholding tax (tax deducted at the time of
+  payment). Where withholding applies,
   the long receives the after-tax amount, which may not equal what
   the short pays.
 - Interest adjustment: depending on conditions, it can be either a
@@ -538,8 +539,9 @@ they're organized by reference.
   new product coincides with an ex-dividend date, you need to prepare
   in advance so the first rights adjustment is registered in time.
 - Checking withholding tax: whether dividends are subject to
-  withholding tax, and at what rate, depends on the country where the
-  stock is listed. When starting to handle products from a new
+  withholding tax, and at what rate, depends on the tax rules of the
+  country where the issuer (the company, or the fund for an ETF) is
+  resident. When starting to handle products from a new
   country, withholding treatment needs to be confirmed with tax
   specialists in advance.
 - Registering interest adjustment day counts: the day counts used to
