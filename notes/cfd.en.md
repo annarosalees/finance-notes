@@ -14,7 +14,7 @@ ETFs, and more.
 ## Contents
 
 ### [Basics](./cfd-basics.en.md)
-- [x] What is a CFD? (in a nutshell)
+- [x] What is a CFD?
 - [x] Why does a CFD exist as a product? (How it differs from the physical asset)
 - [x] Leverage and Margin
 - [x] What Is Cash Settlement?
