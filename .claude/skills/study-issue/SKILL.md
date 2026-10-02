@@ -234,8 +234,10 @@ finance-notesはユーザー本人の金融知識の学習記録であり、`not
 - 見やすさの改善（CFDノート全5ファイル、1ファイルずつ）：内容と言い回しは
   基本的に残し、長い段落を表・箇条書き・Mermaid の図に組み替える。図は
   ブラウザで描画して確認してから入れる。折り返し幅は、日本語は全角約34字、
-  英語は72字。済：`cfd-rollover-and-adjustments`・`cfd-basics`。残り：
-  pricing-and-cover・product-types・product-listing。
+  英語は72字。済：`cfd-rollover-and-adjustments`・`cfd-basics`・
+  `cfd-pricing-and-cover`。残り：product-types・product-listing。
+  観点が2つ程度の比較は、表より箇条書きのほうが分かりやすいことがある
+  （例：取引所の板と店頭CFDの2本値。値段を「誰が出しているか」を明記）。
 - 追証は「猶予がある」と書かない。100％を切った時点で証拠金はすでに不足
   しており、入金などの期限も短いため（「短い期限内に対応すれば強制決済を
   避けられる」と書く）。（basics の見やすさ改善）
