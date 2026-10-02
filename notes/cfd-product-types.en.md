@@ -11,16 +11,19 @@ CFD references.
 ---
 
 ### Examples by Product Type (Indices / Commodities / US Stocks & ETFs)
+
 The sections so far have used Japan 225 and WTI crude oil as examples
 to explain the mechanics common to all CFDs. This section changes the
 angle and lines product types up side by side to see "what's
 different."
 
 #### Index, commodity, and US stock/ETF CFDs — what's the difference, in a nutshell?
+
 The starting point for every difference is "what the CFD's rate
 references" (its reference). For the reference itself, see the
-concrete example under ["What is a CFD?"](./cfd-basics.en.md) A different reference
-changes whether rollover happens and what you need to watch out for.
+concrete example under ["What is a CFD?"](./cfd-basics.en.md). A
+different reference changes whether rollover happens and what you need
+to watch out for.
 
 | Product type | Reference | Currency examples | Rollover | Key things to watch |
 |---|---|---|---|---|
@@ -44,7 +47,8 @@ changes whether rollover happens and what you need to watch out for.
   futures, so a rollover happens. Precious metals, though, differ in
   character depending on the reference even within "commodities."
   Products that reference spot trading, like spot gold, work the
-  same way as FX (covered in detail in the next subsection). Precious
+  same way as FX (covered in detail under "Do rollover and
+  adjustments work differently by product type?" below). Precious
   metals that reference futures roll over normally, like any other
   commodity.
   Commodities also call for special attention to units. What the
@@ -68,8 +72,9 @@ changes whether rollover happens and what you need to watch out for.
   - Corporate actions (CA): events initiated by the company — stock
     splits, reverse splits, spin-offs, dividends — that change the
     share price or share count. When they happen, the CFD side needs
-    to respond too (covered in the ["When a Spin-off, Reverse Split,
-    or Stock Split Happens"](./cfd-rollover-and-adjustments.en.md) section).
+    to respond too (covered in ["When a Spin-off, Reverse Split, or
+    Stock Split Happens"](./cfd-rollover-and-adjustments.en.md) and ["When a Dividend Is Paid
+    (Rights Adjustment)"](./cfd-rollover-and-adjustments.en.md)).
   - Trading hours: they follow US exchange hours, which means
     overnight trading in Japan time. Regular trading hours are 23:30
     to 6:00 the next morning Japan time, moving an hour earlier to
@@ -78,13 +83,12 @@ changes whether rollover happens and what you need to watch out for.
     before and after the regular session (pre-market and
     after-market).
     Trading hours can also change along with the reference market.
-    In the US, for example, 23-hour trading is scheduled to start on
-    December 6, 2026 (US Eastern Time), with NASDAQ as the main
-    exchange (as of writing), and CFD trading hours may be extended
-    along with it.
+    In the US, for example, Nasdaq plans to start 23-hour trading on
+    December 6, 2026 (US Eastern Time; as of writing), and CFD trading
+    hours may be extended along with it.
   - Short restrictions: for single stocks, opening a short can be
-    restricted depending on stock-lending conditions (see the
-    stock-lending part of ["Long and Short"](./cfd-basics.en.md)).
+    restricted depending on stock borrowing conditions (see the stock
+    borrowing part of ["Long and Short"](./cfd-basics.en.md)).
 - ETF CFDs: like single stocks, ETF CFDs reference the listed ETF
   itself, so there's no rollover; instead there are rights
   adjustments (adjustments for dividends and other shareholder
@@ -140,11 +144,11 @@ Conversion into yen generally works like this:
   exchange rate moves.
 - P&L on closing a position: converted into yen and locked in at the
   exchange rate at the time of closing.
-- Adjustments (price, dividend, and interest adjustments): generally
-  calculated at the mark-to-market point after each day's trading,
-  converted into yen at the FX conversion rate at that time, and
-  applied to the account (see "When and at what price are
-  adjustments calculated?" in the next subsection).
+- Adjustments (price adjustment amounts, rights adjustments, and
+  interest adjustments): generally calculated at the mark-to-market
+  point after each day's trading, converted into yen at the FX
+  conversion rate at that time, and applied to the account (see
+  "When and at what price are adjustments calculated?" below).
 
 The detailed rules for which exchange rate is used and when vary by
 broker.
@@ -153,8 +157,10 @@ broker.
 
 Beyond the indices, commodities, US stocks, and ETFs covered here,
 CFDs come in many other product types. Two representative ones are
-bonds and VIX. For both, thinking in terms of the reference leads
-straight back to the same framework.
+bonds and VIX. For both, thinking in terms of the reference, the same
+framework applies to whether there's a rollover and which adjustments
+apply (although what creates the futures price gap differs by
+product).
 
 - Bond CFDs: CFDs that reference government bond futures prices
   (e.g., US 10-year Treasury note futures). Bond prices move opposite
@@ -167,16 +173,22 @@ straight back to the same framework.
   leverage cap for retail CFDs in Japan is set at 50x (as of writing),
   higher than other product types.
 - VIX CFDs: VIX, also called the "fear index," is a number
-  expressing how much investors expect the major US stock index
-  (the S&P 500) to move over the next 30 days. It spikes when anxiety
+  expressing how much investors expect a major US stock index (the
+  S&P 500) to move over the next 30 days. It spikes when anxiety
   spreads through the market and falls when things calm down. VIX
   itself is a calculated number and can't be traded directly, so the
-  CFD references VIX futures. VIX futures have a contract every month
-  and in normal times tend to be in steep contango (the further out,
-  the more "something might happen" anxiety is priced in). Holding a
-  long therefore tends to pile up price-adjustment payments with each
-  rollover. And just as with Japan 225, the VIX number you see in the
-  news doesn't match the VIX CFD rate.
+  CFD references VIX futures.
+  VIX futures have a contract every month and in normal times tend to
+  be in steep contango. VIX tends to drift back toward its normal
+  level over time even after a spike, so compared with a low VIX in
+  calm periods, contracts further out tend to be priced higher, closer
+  to the longer-run average level. A risk premium — extra paid as
+  protection against volatility rising in the future — is also cited
+  as a reason. This is where VIX futures differ from equity index or
+  crude oil futures, whose price gaps are set by interest, dividends,
+  and storage costs. Holding a long therefore tends to pile up price
+  adjustment payments with each rollover. And just as with Japan 225,
+  the VIX number you see in the news doesn't match the VIX CFD rate.
 
 ---
 Note: the same "Japan 225" isn't always in the same currency
@@ -194,20 +206,22 @@ the reference market's currency, so it's important to check which
 exchange's contract, in which currency, the CFD references.
 
 #### Do rollover and adjustments work differently by product type?
+
 Whether a rollover happens, and which adjustments apply, differ by
 product type. As in the previous subsection, those differences also
 come from the reference.
 
 | Reference | Product types | Contract-month rollover | Adjustments | When they occur |
 |---|---|---|---|---|
-| Futures | Indices (e.g., Japan 225), commodities (e.g., WTI crude, precious-metal futures) | Yes | Price adjustment | Price adjustment day (at rollover) |
+| Futures | Indices (e.g., Japan 225), commodities (e.g., WTI crude, precious-metal futures) | Yes | Price adjustment amount | Price adjustment day (at rollover) |
 | Single stock / ETF | US stocks, ETFs | No | Rights adjustment, interest adjustment | Rights adjustment: ex-dividend date (the day the right to the dividend drops off) / Interest adjustment: according to the number of days the position is carried |
 | Spot | Spot precious metals (e.g., spot gold) | No (but the value date is rolled forward daily) | Interest adjustment | According to the number of days the position is carried |
 
 - Products referencing futures: before the referenced futures
   contract expires, the position rolls to the next contract month.
-  A price adjustment is applied to bridge the price gap that appears
-  at the moment of rollover (see ["What is a rollover?"](./cfd-rollover-and-adjustments.en.md)).
+  A price adjustment amount is applied to bridge the price gap that
+  appears at the moment of rollover (see ["What is a
+  rollover?"](./cfd-rollover-and-adjustments.en.md)).
 - Products referencing single stocks or ETFs: there's no contract
   month, so no rollover. Instead, rights adjustments (dividend
   equivalents) and interest adjustments apply. ETFs pay
@@ -223,8 +237,8 @@ come from the reference.
   are paid or received as the interest adjustment.
   Precious metals that reference futures, on the other hand, are
   handled like "products referencing futures" above, with a normal
-  rollover and price adjustment. In other words, what decides the
-  treatment isn't "is it a precious metal?" but "is the reference
+  rollover and price adjustment amount. In other words, what decides
+  the treatment isn't "is it a precious metal?" but "is the reference
   spot or futures?"
 
 **Direction of payment**
@@ -232,18 +246,19 @@ come from the reference.
 How the direction of payment is decided depends on the type of
 adjustment.
 
-- Price adjustment: decided by whether the price rose or fell at
-  rollover. That direction is tied to what's inside the price gap
+- Price adjustment amount: decided by whether the price rose or fell
+  at rollover. That direction is tied to what's inside the price gap
   (interest, dividends, storage costs, supply and demand) — see
-  ["What is a rollover?"](./cfd-rollover-and-adjustments.en.md)
-- Rights adjustment: longs receive, shorts pay (for the dates involved and
-  the full mechanism, see ["When a Dividend Is Paid (Rights Adjustment)"](./cfd-rollover-and-adjustments.en.md)).
+  ["What is a rollover?"](./cfd-rollover-and-adjustments.en.md).
+- Rights adjustment: longs receive, shorts pay (for the dates involved
+  and the full mechanism, see ["When a Dividend Is Paid (Rights
+  Adjustment)"](./cfd-rollover-and-adjustments.en.md)).
   A long moves the same way as someone holding the stock, so like a
   shareholder it receives the dividend. A short is in the same
   position as someone who borrowed the stock and sold it; that
   person has to pay the dividend to the lender when one is paid, so
-  a CFD short pays the dividend-equivalent too (for how stock lending
-  works, see ["Long and Short"](./cfd-basics.en.md)).
+  a CFD short pays the dividend-equivalent too (for how stock
+  borrowing works, see ["Long and Short"](./cfd-basics.en.md)).
   Depending on the tax rules of the country where the stock is
   listed, dividends may or may not be subject to withholding tax
   (tax deducted at the time of payment). Where withholding applies,
@@ -287,9 +302,10 @@ convert into yen, differ by type of adjustment:
 |---|---|---|
 | Interest adjustment | Based on position value (settlement price used for mark-to-market × quantity) | FX conversion rate at mark-to-market |
 | Rights adjustment | Dividend per share (the announced, confirmed figure) × number of shares; no price is used | FX conversion rate at mark-to-market on the day it's applied |
-| Price adjustment | The near/far month price gap on the price adjustment day | FX conversion rate on the price adjustment day |
+| Price adjustment amount | The near/far month price gap on the price adjustment day | FX conversion rate on the price adjustment day |
 
-Only for the price adjustment does the price used differ by broker:
+Only for the price adjustment amount does the price used differ by
+broker:
 
 - Brokers that use the exchange's official settlement prices (for
   the near and far months respectively)
@@ -304,19 +320,20 @@ can't be offset correctly.
 **Same words — "interest adjustment" and "rights adjustment" — different roles**
 
 What's easy to get confused about here is that the words "interest
-adjustment" and "rights adjustment" also appeared in the rollover
-section. The words are the same, but their role differs between
-products that reference futures and products that don't.
+adjustment" and "rights adjustment" also appeared in the
+["rollover"](./cfd-rollover-and-adjustments.en.md) section. The words
+are the same, but their role differs between products that reference
+futures and products that don't.
 
 The difference comes down to whether the referenced price is "a
 future price" or "today's price."
 
 - A futures price is "the price for a future delivery date," so
   interest until that date and the expected dividends in between are
-  baked into the price from the start. CFDs referencing futures
+  built into the price from the start. CFDs referencing futures
   therefore don't need to pay or receive interest and dividends
   separately; they're settled together inside the price gap at
-  rollover (the price adjustment).
+  rollover (the price adjustment amount).
 - The price of a single stock or spot product is "today's price," so
   interest and dividends over the holding period aren't included in
   it. Interest for the holding period, and a dividend-equivalent when
@@ -325,8 +342,8 @@ future price" or "today's price."
 
 | | Products referencing futures (indices, commodities) | Single stocks, ETFs, spot precious metals |
 |---|---|---|
-| What "interest adjustment" and "rights adjustment" mean | Ingredients baked into the futures price | Adjustments paid or received directly in the client's account |
-| What the client actually pays or receives | The price adjustment (all at once, at rollover) | Interest and rights adjustments (each time they occur) |
+| What "interest adjustment" and "rights adjustment" mean | Ingredients built into the futures price | Adjustments paid or received directly in the client's account |
+| What the client actually pays or receives | The price adjustment amount (all at once, at rollover) | Interest and rights adjustments (each time they occur) |
 | When a dividend is paid | Nothing is paid or received at that moment (expected dividends are already priced into futures) | A rights adjustment is paid or received on the ex-dividend date |
 
 So the purpose — settling up for interest and dividends — is the
@@ -346,11 +363,12 @@ from drifting away from where the real trading is.
 
 | Product | Typical price adjustment day | Why |
 |---|---|---|
-| Equity indices (e.g., Japan 225) | Just before SQ (the special quotation date / final settlement of the futures) | Just before SQ is standard for equity indices |
-| Crude oil (e.g., WTI crude) | Just before the last trading day of the contract month | Near-month liquidity stays ample right up to the last trading day, so the timing looks similar to equity indices |
+| Equity indices (e.g., Japan 225) | Just before SQ (the Special Quotation date / final settlement of the futures) | Just before SQ is standard for equity indices |
+| Crude oil (e.g., WTI crude) | Before the last trading day (how many business days before varies by broker) | As the last trading day approaches, near-month trading thins out and the center of trading moves to the far month, so the rollover follows that shift |
 | Grains such as corn and soybeans | Well before the last trading day | Near-month liquidity drops off well before the last trading day, so the rollover is moved earlier accordingly |
 
-#### A concrete example: Japan 225, WTI crude oil, and US stock CFDs side by side
+#### A concrete example: Japan 225, WTI crude oil, spot gold, and US stock CFDs side by side
+
 Here's everything so far, lined up for representative products.
 
 | | Japan 225 | WTI crude oil | Spot gold | US stocks (single stock) |
@@ -363,18 +381,18 @@ Here's everything so far, lined up for representative products.
 | Trading hours (Japan time) | Nearly 24 hours on weekdays (depends on broker and reference) | Nearly 24 hours on weekdays (depends on broker and reference) | Nearly 24 hours on weekdays (like FX) | Regular hours 23:30–6:00 (22:30–5:00 in daylight saving time); some brokers also offer pre/after-market (*) |
 | Contract-month rollover | Yes | Yes | No (value date rolled forward daily) | No |
 | Rollover frequency | Four times a year (March/June/September/December contracts) | Every month | ― | ― |
-| Adjustments | Price adjustment | Price adjustment | Interest adjustment | Rights adjustment, interest adjustment |
-| When adjustments occur | Price adjustment day | Price adjustment day | According to days carried | Dividend: ex-dividend date / Interest: according to days carried |
-| Dividend treatment | Expected dividends priced into futures (settled via the price adjustment) | No dividends | No dividends | Paid or received as a rights adjustment on the ex-dividend date |
-| Long-side adjustment tendency | Tends to receive (dividend effect) | Pays in contango, receives in backwardation | Depends on conditions | Receives the rights adjustment (after tax where withholding applies); interest adjustment depends on conditions |
+| Adjustments | Price adjustment amount | Price adjustment amount | Interest adjustment | Rights adjustment, interest adjustment |
+| When adjustments occur | Price adjustment day | Price adjustment day | According to days carried | Rights adjustment: ex-dividend date / Interest adjustment: according to days carried |
+| Dividend treatment | Expected dividends priced into futures (settled via the price adjustment amount) | No dividends | No dividends | Paid or received as a rights adjustment on the ex-dividend date |
+| Long-side adjustment tendency | Tends to receive when the dividend effect outweighs interest (as of writing) | Pays in contango, receives in backwardation | Depends on conditions | Receives the rights adjustment (after tax where withholding applies); interest adjustment depends on conditions |
 | FX exposure | None | Yes (USD/JPY) | Yes (USD/JPY) | Yes (USD/JPY) |
 | Key things to watch | Some brokers offer indices with no contract month | Units; longs pay at every rollover while contango persists | Precious metals that reference futures do roll over | Corporate actions, short restrictions, changes to trading hours |
 
-(*) US exchanges are moving to extend trading hours: 23-hour trading
-is scheduled to start on December 6, 2026 (US Eastern Time), with
-NASDAQ as the main exchange (as of writing). CFD trading hours for
-US stocks and related indices may be extended accordingly. Trading
-hours aren't fixed — they can change along with the reference market.
+(*) US exchanges are moving to extend trading hours: Nasdaq plans to
+start 23-hour trading on December 6, 2026 (US Eastern Time; as of
+writing). CFD trading hours for US stocks and related indices may be
+extended accordingly. Trading hours aren't fixed — they can change
+along with the reference market.
 <!-- To confirm: after 23-hour trading starts, check the actual start date, covered products, and changes to CFD trading hours, and update -->
 
 **What happens if you hold a long for one month?**
@@ -395,13 +413,13 @@ product type (adjustments and FX) remain.
 | | Japan 225 | WTI crude oil | Spot gold | US stocks (single stock) |
 |---|---|---|---|---|
 | What happens during the month | One price adjustment day | One price adjustment day | Interest adjustment every day | Interest adjustment every day; rights adjustment if there's an ex-dividend date |
-| Long-side direction | Tends to receive | Pays in contango | Depends on conditions | Receives the rights adjustment; interest adjustment depends on conditions |
+| Long-side direction | Tends to receive (as of writing) | Pays in contango | Depends on conditions | Receives the rights adjustment; interest adjustment depends on conditions |
 | FX exposure | None | Yes | Yes | Yes |
 
 - Japan 225: since it's a contract month, the price adjustment day
   falls mid-month. In the same situation as the rollover section's
   worked example (near ¥38,000, far ¥37,900), a client long 1 lot
-  receives a +¥1,000 price adjustment.
+  receives a +¥1,000 price adjustment amount.
   At the moment of rollover, the rate drops ¥100 and unrealized P&L
   falls ¥1,000, which the +¥1,000 adjustment makes up, so the net is
   zero. But when the rate returns to the start-of-month level by
@@ -425,12 +443,21 @@ product type (adjustments and FX) remain.
   the difference. The interest adjustment is calculated as:
   position value (settlement price used for mark-to-market ×
   quantity) × annual interest rate × days ÷ 365 (or 360)
+  For spot gold, the "annual interest rate" is the difference between
+  the US dollar interest rate and the rate for lending and borrowing
+  gold (the lease rate) — the same idea as FX swap points.
   When the carry spans a weekend or holiday, those days are counted
-  together (e.g., carrying over from Friday counts three days,
-  including Saturday and Sunday). Whether it's a receipt or a payment
-  depends on interest-rate conditions at the time.
+  together. Which day of the week picks up the weekend depends on how
+  the value date is counted. For spot trades that settle two business
+  days after the trade, like spot gold, the three days are usually
+  applied on a Wednesday carry, when the value date spans the
+  weekend, just as in FX (this varies by broker). Whether it's a
+  receipt or a payment depends on interest-rate conditions at the
+  time.
 - US stocks: like spot gold, the interest adjustment moves every day
-  (same formula). On top of that, if a stock you hold goes
+  (same formula; the annual rate is the US dollar rate adjusted up or
+  down by the broker's fee, and the weekend is charged as three days
+  on a Friday carry). On top of that, if a stock you hold goes
   ex-dividend that month, you receive a rights adjustment. Many US
   stocks pay dividends four times a year, so an ex-dividend date
   typically comes around once every three months. The rights
@@ -446,15 +473,15 @@ start of the month, a stronger yen shrinks the yen value and a
 weaker yen increases it.
 
 This example looked at holding long positions; holding short
-positions flips every direction. The Japan 225 price adjustment is
-paid by shorts, shorts receive in WTI crude contango, and shorts pay
-the US stock rights adjustment.
+positions flips every direction. The Japan 225 price adjustment
+amount is paid by shorts, shorts receive in WTI crude contango, and
+shorts pay the US stock rights adjustment.
 
 To sum up, even in the same situation — "held long for a month, and
 the rate didn't change":
 
-- Japan 225 receives in a contract month, and nothing happens
-  otherwise
+- Japan 225 receives in a contract month (when the dividend effect
+  outweighs interest, as of writing), and nothing happens otherwise
 - WTI crude always has a payment or receipt every month, paying in
   contango
 - Spot gold and US stocks have small payments or receipts every day,
@@ -465,34 +492,36 @@ What happens in the account is completely different. That's what
 "differences by product type," born from differences in reference,
 actually look like.
 
-#### Does operations (me) handle things differently depending on product type?
+#### Do I (in operations) handle things differently depending on product type?
+
 Most operations work is common across product types (for the
-overall picture, see "Where does operations (me) notice the
+overall picture, see "Where do I (in operations) notice the
 difference between physical and CFD trading?" under ["Why does a CFD
-exist as a product?"](./cfd-basics.en.md)). But as we've seen, a different reference
-means different things happen, so there are many situations where
-the response changes by product type. Here too, they're organized by
-reference.
+exist as a product?"](./cfd-basics.en.md)). But as we've seen, a
+different reference means different things happen, so there are many
+situations where the response changes by product type. Here too,
+they're organized by reference.
 
 **Products referencing futures (indices, commodities)**
 
 - Setting the price adjustment day: the benchmark for the price
   adjustment day differs by product (just before SQ for equity
-  indices, just before the last trading day for crude oil, well
-  before the last trading day for grains, and so on — see the
-  previous subsections). When starting to handle a new product, the
-  principle for its price adjustment day has to be set by looking at
-  when liquidity flips between its near and far months (for the
-  overall flow of adding a product, see ["Adding a New CFD Product in
-  Practice"](./cfd-product-listing.en.md)).
+  indices, before the last trading day for crude oil, well before the
+  last trading day for grains, and so on — see "How the price
+  adjustment day is chosen also differs by product"). When starting
+  to handle a new product, the principle for its price adjustment day
+  has to be set by looking at when liquidity flips between its near
+  and far months (for the overall flow of adding a product, see
+  ["Adding a New CFD Product in Practice"](./cfd-product-listing.en.md)).
 - Rolling cover positions, and differences in how the reference
   settles: how futures settle at expiry differs by product. Nikkei
   225 futures are simply cash-settled at expiry (SQ), with no
   physical delivery. WTI crude futures, on the other hand, trigger
   actual delivery of crude oil if held to expiry. So for products
   with physical delivery like WTI crude, reliably finishing the cover
-  rollover ahead of expiry matters even more — if it's late, the firm
-  takes on the obligation to receive (or deliver) actual crude.
+  rollover ahead of expiry matters even more — if it's late, the
+  broker takes on the obligation to receive (or deliver) actual
+  crude.
 - Converting trade units: commodities in particular can have very
   different trade units between the exchange futures and the CFD
   (e.g., WTI crude futures are 1,000 barrels per contract). When
@@ -516,20 +545,23 @@ reference.
 - Registering interest adjustment day counts: the day counts used to
   calculate interest adjustments (the days counted together when a
   carry spans a weekend or holiday) are registered in the system in
-  advance.
+  advance. The same applies to products referencing spot trading,
+  such as spot gold, with day counts set to match how the value date
+  is counted.
 - Corporate actions: when a split, reverse split, spin-off, or
   similar happens, CFD positions and prices need to be adjusted
-  (covered in the ["When a Spin-off, Reverse Split, or Stock Split
-  Happens"](./cfd-rollover-and-adjustments.en.md) section).
-- Checking stock lending and short-selling restrictions: for single
-  stocks, stock-lending conditions or short-selling restrictions can
-  make it necessary to restrict new shorts (see ["Long and Short"](./cfd-basics.en.md)).
+  (covered in ["When a Spin-off, Reverse Split, or Stock Split
+  Happens"](./cfd-rollover-and-adjustments.en.md)).
+- Checking stock borrowing and short-selling restrictions: for single
+  stocks, stock borrowing conditions or short-selling restrictions
+  can make it necessary to restrict new shorts (see ["Long and
+  Short"](./cfd-basics.en.md)).
 - Monitoring single-stock events: single stocks can move sharply
   outside trading hours, for example on earnings. The next session
   then opens with the price jumping away from the prior close (a
   gap), which tends to knock some clients' margin levels down at
   once. And when trading in a stock is halted or it's delisted, the
-  firm also has to decide how to handle CFD positions (halting
+  broker also has to decide how to handle CFD positions (halting
   trading, forced liquidation, etc.).
 
 **Products referencing spot (spot gold, etc.) and single stocks/ETFs**
@@ -543,9 +575,10 @@ reference.
 
 - Leverage caps and margin rates: for retail CFDs in Japan, the
   leverage cap differs by product type (as of writing, 10x for equity
-  indices, 20x for commodities, 5x for single stocks, etc. — see ["Leverage and
-  Margin"](./cfd-basics.en.md)). Margin-rate settings and margin-level monitoring also
-  follow each product type's standards.
+  indices, 20x for commodities, 5x for single stocks and ETFs, etc. —
+  see ["Leverage and Margin"](./cfd-basics.en.md)). Margin-rate
+  settings and margin-level monitoring also follow each product type's
+  standards.
 - Different market holidays: each reference market has its own
   holidays (Japanese holidays, US holidays, etc.). How to handle CFD
   rate distribution and trading on days the reference is closed, and
@@ -558,10 +591,10 @@ reference.
   size). US stocks have mechanisms that briefly halt trading in a
   single stock when it moves beyond a set band, and market-wide
   circuit breakers that halt all stocks in a sharp market drop.
-  Bilateral products like spot gold, by contrast, have no
-  exchange-style limits. So the criteria for deciding when to stop
-  CFD rate distribution or cover because of something at the
-  reference also differ by product type.
+  OTC products like spot gold, by contrast, have no exchange-style
+  limits. So the criteria for deciding when to stop CFD rate
+  distribution or cover because of something at the reference also
+  differ by product type.
 - Daylight saving time and trading-hour changes: products that
   reference overseas markets need their trading hours changed when
   daylight saving time switches. And when the reference market
@@ -572,11 +605,13 @@ reference.
   yen (the FX conversion rate) to be managed. It isn't needed for the
   yen-denominated Japan 225.
 - Calculating market risk: the method for calculating market risk
-  under capital adequacy rules also differs by product type (equities
-  and equity indices are calculated differently from gold — see
-  ["Position Limits and Cover Strategy"](./cfd-pricing-and-cover.en.md)).
+  under capital adequacy rules also differs by product type
+  (equities, including equity indices; gold; and other commodities
+  are each calculated differently — see ["Position Limits and Cover
+  Strategy"](./cfd-pricing-and-cover.en.md)).
 
-#### Where my three-years-ago self would get stuck
+#### Where I would have stumbled three years ago
+
 Assuming "the Japan 225 rate = the Nikkei Stock Average itself"
 
 The Nikkei Stock Average you see in the news and the Japan 225 CFD
@@ -585,12 +620,13 @@ references is not the Nikkei Stock Average itself (the index) but the
 price of Nikkei 225 futures.
 
 Futures prices have interest and expected dividends until the
-delivery date baked in (see ["What is a rollover?"](./cfd-rollover-and-adjustments.en.md)). So the futures
-price doesn't match the index itself. For Nikkei 225 futures, the
-dividend effect outweighs interest, so futures often trade slightly
-below the index. The gap narrows as SQ (the final settlement of the
-futures) approaches, and widens again when the reference switches to
-the far month at rollover.
+delivery date built in (see ["What is a
+rollover?"](./cfd-rollover-and-adjustments.en.md)). So the futures
+price doesn't match the index itself. For Nikkei 225 futures, as of
+writing, the dividend effect outweighs interest, so futures often
+trade slightly below the index. The gap narrows as SQ (the final
+settlement of the futures) approaches, and widens again when the
+reference switches to the far month at rollover.
 
 Also, the Nikkei Stock Average is only calculated while the Tokyo
 Stock Exchange is open, but Nikkei 225 futures trade overnight too.
@@ -606,9 +642,9 @@ where the broker chooses the reference to build its rate, it can
 switch which exchange it references depending on the time of day.
 When one exchange is closed, referencing futures trading on another
 lets the CFD offer nearly 24-hour weekday trading without being tied
-to any single exchange's hours. This is a characteristic unique to
-CFDs — something you don't get when trading futures directly on an
-exchange.
+to any single exchange's hours. Exchange-traded futures also have
+night sessions, but combining futures from several exchanges by time
+of day into a single rate is something only an OTC CFD can do.
 
 That said, being able to trade 24 hours doesn't mean conditions are
 the same at all hours. How active trading is at the reference
@@ -625,12 +661,13 @@ with spreads that tend to widen.
 
 In other words, a CFD rate is built in the order "index → futures →
 CFD rate," two steps removed from the index (for the processing from
-futures to CFD rate, see item ① under "Where my three-years-ago self
-would get stuck" in ["How Are Rates Generated?"](./cfd-pricing-and-cover.en.md)). As the first
-subsection showed, whether the reference is futures changes both
-whether there's a rollover and which adjustments apply. Checking
-"what does this CFD reference?" first is the starting point for
-understanding differences by product type.
+futures to CFD rate, see item ① under "Where I would have stumbled
+three years ago" in ["How Are Rates
+Generated?"](./cfd-pricing-and-cover.en.md)). As the first subsection
+showed, whether the reference is futures changes both whether there's
+a rollover and which adjustments apply. Checking "what does this CFD
+reference?" first is the starting point for understanding differences
+by product type.
 (Note that some brokers offer index CFDs that reference the index
 itself rather than futures, with no contract month.)
 
@@ -641,23 +678,27 @@ A few other easy misunderstandings, for reference:
   exchange's futures — or the index itself — is referenced. CME's
   Nikkei 225 futures, for example, come in both yen and dollar
   versions, so the currency depends on the reference. And referencing
-  futures means rollovers and price adjustments, while referencing
-  the index itself means no contract month and no rollover. Same
-  name or not, you can't know the terms without checking the
-  reference.
+  futures means rollovers and price adjustment amounts, while
+  referencing the index itself means no contract month and no
+  rollover. Same name or not, you can't know the terms without
+  checking the reference.
 - Assuming "leverage is the same for every product": for retail CFDs
   in Japan, the leverage cap differs by product type (as of writing,
   10x for equity indices, 20x for commodities, 5x for single stocks
-  and ETFs). It's
-  easy to mix this up with FX's 25x, but with the same ¥100,000 of
-  margin you can trade up to ¥1,000,000 on an equity index CFD but
-  only ¥500,000 on a single-stock CFD. The more volatile the product,
-  the lower its cap.
+  and ETFs). It's easy to mix this up with FX's 25x, but with the same
+  ¥100,000 of margin you can trade up to ¥1,000,000 on an equity index
+  CFD but only ¥500,000 on a single-stock CFD. The caps aren't set by
+  volatility alone, though: caps for equity indices, single stocks,
+  and the like are set at a level roughly meant to cover one day's
+  price movement, while commodity CFDs have their caps set separately
+  under a different law (the Commodity Derivatives Act) (see
+  ["Leverage and Margin"](./cfd-basics.en.md)).
 - Assuming "if the rate hasn't changed, P&L is zero": holding a long
   on a product that stays in contango means paying the price
-  adjustment at every rollover, so P&L gets whittled down even when
-  the rate is back where it started (see the one-month holding
-  example above and the note in the rollover section).
+  adjustment amount at every rollover, so P&L gets whittled down even
+  when the rate is back where it started (see the example under "What
+  happens if you hold a long for one month?" and the note in the
+  ["rollover"](./cfd-rollover-and-adjustments.en.md) section).
 - Assuming "the VIX number in the news equals the VIX CFD rate": it's
   the same structure as Japan 225. VIX is a calculated number that
   can't be traded directly, so a VIX CFD references VIX futures. In
@@ -668,6 +709,7 @@ A few other easy misunderstandings, for reference:
   reference is futures, it won't match the index number.
 
 #### Summary
+
 From indices and commodities to US stocks and ETFs, product types
 differ in many ways — whether there's a rollover, which adjustments
 apply, currency, trading hours, leverage caps, and even how

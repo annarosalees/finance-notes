@@ -888,9 +888,9 @@ which makes accuracy especially important.
 
 For checking whether tax is withheld, why adjustments are calculated
 together in daily processing, and the rate used for yen conversion, see
-"When and at what price are adjustments calculated?" and "Does operations
-(me) handle things differently depending on product type?" in ["Examples by
-Product Type"](./cfd-product-types.en.md).
+"When and at what price are adjustments calculated?" and "Do I (in
+operations) handle things differently depending on product type?" in
+["Examples by Product Type"](./cfd-product-types.en.md).
 
 **Cases handled differently from a regular dividend**
 
