@@ -2,150 +2,70 @@
 
 🇯🇵 [日本語版](./fx.md)
 
-Notes on FX (Foreign Exchange margin trading), organized from both a
-mechanics and an operations perspective. This note pairs with the
-[CFD note](./cfd.en.md) and focuses on the terms and practices that are
-specific to FX.
+Notes on FX (foreign exchange margin trading), organized from both a
+mechanics and an operations perspective. Examples: USD/JPY, EUR/USD,
+and other currency pairs. The first half (sections 1–6) covers how
+trading works; the second half (sections 7–13) looks inside the
+broker — the operational flow that supports each trade. This note
+pairs with the [CFD note](./cfd.en.md) and focuses on the terms and
+practices that are specific to FX.
+
+## Contents
+
+- [x] 0 Introduction: why FX gets its own note
+
+### How trading works
+- [ ] 1 FX market structure (the interbank market)
+- [ ] 2 How to read a currency pair
+- [ ] 3 Pips, trade units, and P&L calculation
+- [ ] 4 Leverage and margin regulation
+- [ ] 5 Swap points and rollover (how they differ from CFD rollover)
+- [ ] 6 24-hour trading and liquidity risk
+
+### Inside the broker
+- [ ] 7 How are rates generated? (LP aggregation)
+- [ ] 8 Cover deals and internal netting (internalization)
+- [ ] 9 Post-trade processing and settlement infrastructure (matching, reconciliation, and CLS settlement)
+- [ ] 10 Client asset protection and regulatory compliance (client fund segregation via trust and regulatory reporting)
+- [ ] 11 Risks and operations in abnormal conditions
+- [ ] 12 A-book/B-book and how brokers make money
+- [ ] 13 Working with the PB (prime broker)
 
 ---
 
-## What FX Is
+## 0 Introduction: why FX gets its own note
 
-FX stands for "Foreign Exchange" — margin trading on currency pairs
-such as USD/JPY or EUR/JPY, where you aim to profit from changes in
-the exchange rate between the two currencies.
+FX is a CFD on currencies (currency pairs). Within the broad CFD
+category, FX sits alongside equity indices and commodities.
 
-FX is actually a type of the "CFD (Contract for Difference)" described
-in the [CFD note](./cfd.en.md). If a CFD in general is "a trade that
-settles only the price difference, with no delivery of the underlying
-asset," then FX is the CFD version of that idea applied to currency
-pairs. CFD is the umbrella term, and stock indices, commodities, and
-FX all sit under it.
+Even so, in practice FX is usually handled as a separate product from
+other CFDs. The main reasons are:
 
-The main way FX differs from other CFD products (such as CFDs based on
-stock-index or commodity futures) is the price it references. Instead
-of an exchange-traded futures price, FX references the spot price
-formed through over-the-counter (OTC) dealing directly between
-financial institutions. Because there is no exchange involved, FX has
-no futures expiry (contract month), so there's no futures-style
-contract-month rollover, and it trades almost 24 hours a day on
-weekdays.
+| Aspect | What's specific to FX | See |
+|---|---|---|
+| Market size | Japan is one of the world's largest markets for retail FX by trading volume, and it is correspondingly subject to many regulations | 4, 10 |
+| Pricing | The reference price isn't an exchange-traded future but the spot price set through bilateral trading between financial institutions. With no contract months, there's no contract-month rollover as with CFDs. Instead, FX brokers roll the settlement date forward every day (a rollover), which gives rise to swap points | 1, 5 |
+| Trading hours | Trading runs almost 24 hours on weekdays, so brokers need to be ready for price gaps over the weekend and for liquidity that changes by time of day | 6 |
+| Counterparties | Multiple LPs (liquidity providers: financial institutions that quote tradable prices) act as price sources, and separately there's a PB (prime broker) where positions are held. With this many counterparties (CPs) involved, the setup is complex | 7, 8, 13 |
+| Settlement | Cover trades involve actual delivery of currencies, so post-trade work such as matching, reconciliation, and CLS settlement carries a lot of weight | 9 |
+| Regulation | Leverage caps, trust-based protection of client funds, regulatory reporting, and more are set out in particular detail for FX | 4, 10 |
+| Brokers and trading style | Many brokers specialize in FX and compete hard on tight spreads (the gap between the bid and ask prices). Short-term and automated trading are common, so fast rate distribution and execution matter | 7 |
+| Relationship to CFDs | The yen-conversion rate used when trading overseas CFD products in yen is itself an exchange rate. FX is also the foundation that supports CFD operations | [CFD Notes: Basics](./cfd-basics.en.md) |
 
-That doesn't mean delivery never comes into play, though. A spot
-trade settles (delivers) two business days after the trade. To avoid
-delivery, FX rolls the value date forward every time a position is
-carried to the next day, and this daily rolling forward is also
-called a "rollover" in the industry. The swap points described below
-arise from this daily rollover (spot gold, covered in "Examples by
-Product Type" in the CFD notes, works the same way).
+Many of the basic ideas in FX are shared with CFDs. The following
+topics are explained in the [CFD notes](./cfd.en.md), so this note
+doesn't repeat them in detail. Read them first as needed.
 
-## How Price and P&L Work
+| CFD notes topic | Related FX section |
+|---|---|
+| ["What is cash settlement?"](./cfd-basics.en.md) | The whole note |
+| ["Long and short"](./cfd-basics.en.md) | 2, 3 |
+| ["Leverage and margin"](./cfd-basics.en.md) | 4 |
+| ["How are rates generated?"](./cfd-pricing-and-cover.en.md) | 7 |
+| ["The idea behind cover deals"](./cfd-pricing-and-cover.en.md) | 8 |
+| ["Position limits and cover strategy"](./cfd-pricing-and-cover.en.md) | 8 |
+| ["What is a rollover?"](./cfd-rollover-and-adjustments.en.md) | 5 (to compare with CFDs) |
 
-To understand P&L in FX, it helps to know at least these four terms.
-
-### Pips
-
-A pip is the common unit used to express price movement in a currency
-pair. For most pairs — such as USD/JPY — 1 pip equals 0.01 yen (there
-are exceptions where the unit is defined differently, such as some
-pairs quoted against the euro or pound). Rather than talking about
-price moves in raw yen or dollar amounts, which would differ pair by
-pair, pips give traders a common ruler to compare price movement
-across currency pairs.
-
-### Leverage
-
-Leverage lets you trade a position many times larger than the funds
-(margin) you actually put down. This is the FX-specific term for the
-same idea the CFD note describes as "settling only the price
-difference lets you trade with less capital." For example, with 25x
-leverage, 100,000 yen of margin lets you control a position worth
-2.5 million yen. Trading a larger position with less capital also
-means both gains and losses are magnified by the same multiple — see
-"Common Pitfalls" below.
-
-### Margin
-
-Margin is the collateral you deposit into your trading account in
-advance in order to trade with leverage. The margin itself is not the
-capital used to make the trade; it exists as collateral in case a
-large loss occurs. As the unrealized P&L on your open positions moves,
-your margin level (the ratio of equity to required margin) moves with
-it, and if that level falls below a certain threshold, a forced
-liquidation ("margin call" / stop-out) is triggered.
-
-### Swap Points
-
-Swap points are the gain or loss that arises from the interest-rate
-differential between the two currencies in a pair. Because an FX trade
-is effectively "buying one currency while selling the other," a
-position that sells the lower-interest-rate currency and buys the
-higher-interest-rate one earns that interest differential each day it
-is held (the opposite combination results in a daily payment instead).
-Swap points accrue each time a position is carried over to the next
-day, and — as covered under "Common Pitfalls" below — they can be
-either a receipt or a payment.
-
-## How It's Handled in Practice
-
-When a broker quotes FX rates to clients, two practices are typically
-involved: how the rate itself is generated, and how the broker manages
-its own resulting risk.
-
-### How rates are generated
-
-Since FX has no exchange-traded futures price like the one described
-in the CFD note, brokers instead generate their own internal rates
-based on the interbank rate — the rate formed in the interbank market,
-where banks trade currencies with one another. The general flow is:
-start from the interbank rate, then add a spread (the difference
-between the bid and ask price) and adjustments reflecting the broker's
-own risk position to arrive at the rate quoted to clients. The reason
-the same currency pair can show slightly different rates at different
-brokers comes down to differences in how each one sets its spread and
-builds its rate feed.
-
-### The idea behind cover deals
-
-When a client buys (or sells) a currency pair, the broker ends up
-holding the opposite position. Left unmanaged, this would leave the
-broker itself exposed to currency risk. To offset this, the broker
-executes an opposite trade in the interbank market (or similar venues)
-to cancel out its own inventory risk — this is called a cover deal.
-The purpose of a cover deal is not for the broker to profit from
-currency movements itself, but purely to manage the inventory risk
-created by the position it took on from the client.
-
-## Common Pitfalls
-
-Here are some points that are easy to misunderstand when first
-learning about FX.
-
-- **Swap points can be a payment, not just a receipt.** A position
-  that buys the higher-interest-rate currency and sells the
-  lower-interest-rate one earns swap, but the opposite combination
-  (buying the lower-interest-rate currency and selling the
-  higher-interest-rate one) means you pay swap instead. Assuming
-  "swap always means income" can hide an unexpected ongoing cost.
-- **Leverage is capped by domestic regulation.** For individuals
-  trading through a Japan-based FX broker, leverage is capped by the
-  Financial Services Agency (at the time of writing, a maximum of 25x
-  for retail clients). This cap is a general figure that can change
-  with future regulatory revisions, so treat it as a general
-  reference point rather than a fixed constant.
-- **A "gap" can occur at the start of the week.** The FX market runs
-  almost 24 hours a day on weekdays, but it is closed over the
-  weekend. If major news breaks while the market is closed, the rate
-  on Monday morning can open at a level sharply discontinuous from
-  Friday's close — a "gap." Anyone carrying a position over the
-  weekend should keep this gap risk in mind.
-- **Falling margin levels trigger a forced liquidation.** If
-  unrealized losses grow and your margin level drops below a certain
-  threshold, your position is closed automatically, regardless of
-  your own intent. The higher the leverage used, the less price
-  movement it takes to reach that threshold.
-
----
-
-This note is a personal study record intended to explain general
-financial concepts. It is not investment advice.
+The first draft of this note is kept for reference in
+[fx-v1.en.md](./fx-v1.en.md). It will be deleted once this note is
+complete.

@@ -36,3 +36,7 @@ ETFs, and more.
 
 ### [Adding a New CFD Product in Practice](./cfd-product-listing.en.md)
 - [x] Adding a new CFD product in practice (how a new product gets launched)
+
+## Related notes
+
+- [FX notes](./fx.en.md): FX (foreign exchange margin trading) is a type of CFD on currencies, but since it's handled separately in practice, it has its own set of notes.
