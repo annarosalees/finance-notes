@@ -42,10 +42,12 @@ the Special Quotation (SQ), the final settlement price).
   at 100 and sell at 120, you never actually receive 100 worth of the
   underlying or hand over 120 worth of it; only the 20 difference is
   settled.
-- FX (foreign exchange trading), which you've probably heard of, is
-  actually a type of CFD too — you can think of FX as "a CFD on a
-  currency pair." CFD is the umbrella category, and equity indices,
-  commodities, and FX all sit inside it.
+- FX (foreign exchange margin trading), which you've probably heard
+  of, is actually a type of CFD too — you can think of FX as "a CFD on
+  a currency pair." CFD is the umbrella category, and equity indices,
+  commodities, and FX all sit inside it. Because FX is handled
+  separately in practice, it's covered in detail in the separate
+  [FX notes](./fx.en.md).
 
 **CFDs as an over-the-counter product**
 
