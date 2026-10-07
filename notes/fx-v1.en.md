@@ -1,6 +1,9 @@
 # FX (Foreign Exchange Margin Trading) Notes
 
-🇯🇵 [日本語版](./fx.md)
+🇯🇵 [日本語版](./fx-v1.md)
+
+> This is the first draft of the FX note, kept for reference. See the
+> [FX note](./fx.en.md) for the latest version.
 
 Notes on FX (Foreign Exchange margin trading), organized from both a
 mechanics and an operations perspective. This note pairs with the
@@ -46,9 +49,9 @@ To understand P&L in FX, it helps to know at least these four terms.
 ### Pips
 
 A pip is the common unit used to express price movement in a currency
-pair. For most pairs — such as USD/JPY — 1 pip equals 0.01 yen (there
-are exceptions where the unit is defined differently, such as some
-pairs quoted against the euro or pound). Rather than talking about
+pair. For pairs involving the yen (such as USD/JPY and EUR/JPY), 1 pip
+equals 0.01 yen. For pairs that don't involve the yen (such as
+EUR/USD), 1 pip equals 0.0001 (0.0001 dollars for EUR/USD). Rather than talking about
 price moves in raw yen or dollar amounts, which would differ pair by
 pair, pips give traders a common ruler to compare price movement
 across currency pairs.
